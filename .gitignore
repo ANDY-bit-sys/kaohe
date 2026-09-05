@@ -1,0 +1,15 @@
+# 临时渲染文件和本地工具
+tmp/
+.tools/
+
+# 私密配置
+.env
+.env.*
+!.env.example
+
+# 系统文件
+Thumbs.db
+.DS_Store
+
+# 原始考核材料仅保留在本地
+大一考核任务书.pdf
