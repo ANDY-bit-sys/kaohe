@@ -65,6 +65,5 @@
 
 - 查证过程：查阅 GNU 的 `ls` 文档和 Microsoft 的 `Get-ChildItem` 文档，并在本机 PowerShell 中运行 `Get-Alias ls`，结果显示 `ls` 是 `Get-ChildItem` 的别名。
 - 查证结论：`ls` 的基本用途是列出目录中的文件和子目录；不指定路径时，通常列出当前目录内容。GNU `ls` 默认列出名称，使用 `ls -l` 才显示权限、大小、修改时间等详细信息；Windows PowerShell 中的 `ls` 默认就会显示模式（文件属性）、修改时间、大小和名称，其中模式不等同于完整的访问权限。
-- 这次核对说明：解释命令时需要说明使用环境和参数，不能把某一种环境下的输出当成通用规则。本条记录实际查证结果，不将本次聊天中未出现的解释冒充为 AI 原话。
 
 参考：[GNU ls 文档](https://www.gnu.org/software/coreutils/manual/html_node/ls-invocation.html)、[GNU 详细输出格式](https://www.gnu.org/software/coreutils/manual/html_node/General-output-formatting.html)、[Microsoft Get-ChildItem 文档](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-childitem?view=powershell-7.5)。
