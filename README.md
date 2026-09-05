@@ -1,5 +1,7 @@
 # 大一招新考核
 
+**个人网站： [https://andy-bit-sys.github.io/kaohe/](https://andy-bit-sys.github.io/kaohe/)**
+
 本仓库用于逐步完成协会招新考核，保存个人网站、个人简介 PDF、小游戏、进阶项目及开发记录。
 
 ## 当前进度
