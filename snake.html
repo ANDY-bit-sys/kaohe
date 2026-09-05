@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="刘锦桉的贪吃蛇：手动挑战、AI 自动演示与深浅主题切换。">
+<title>贪吃蛇 · 刘锦桉</title>
+<style>
+  :root{color-scheme:dark;--bg:#101915;--panel:#18251e;--board:#111d16;--grid:#23362a;--ink:#edf7ee;--muted:#9bb0a0;--line:#314638;--green:#adf079;--green-ink:#182615;--body:#659b51;--food:#ffb583;--shadow:#0003}
+  :root[data-theme="light"]{color-scheme:light;--bg:#f4f6ee;--panel:#fffef8;--board:#ebf0e4;--grid:#dbe3d2;--ink:#223923;--muted:#61765f;--line:#d6dfcf;--green:#3d6a30;--green-ink:#fff;--body:#7f9f5c;--food:#bd4c22;--shadow:#2541260b}
+  *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC",sans-serif;line-height:1.7}a{color:inherit;text-decoration:none}button,select,input{font:inherit}button,a,select,input{touch-action:manipulation}button{cursor:pointer}button:disabled{opacity:.4;cursor:default}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--food);outline-offset:4px}button,select{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:9px}button:hover:not(:disabled){border-color:var(--green)}.wrap{max-width:1100px;margin:auto;padding:0 32px}.top{height:83px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.back{font-size:13px;color:var(--muted)}.top button{padding:8px 14px;font-size:12px}.heading{display:flex;justify-content:space-between;align-items:end;gap:24px;margin:40px 0 26px}.eyebrow{color:var(--green);font-size:10px;letter-spacing:3px;margin:0 0 8px}h1{font-size:40px;letter-spacing:1px;margin:0;line-height:1.3}h1 span{font-size:12px;font-weight:400;color:var(--muted);letter-spacing:2px;margin-left:16px}.intro{font-size:13px;color:var(--muted);margin:0 0 4px}.layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(260px,1fr);gap:24px;align-items:start}.game-panel{background:var(--panel);padding:22px;border:1px solid var(--line);border-radius:16px;box-shadow:0 16px 40px var(--shadow)}.board-top{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:15px;gap:10px}.live-label{color:var(--green)}.live-label:before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:currentColor;margin-right:8px}.board-wrap{position:relative;aspect-ratio:1;overflow:hidden;border:1px solid var(--line);border-radius:9px;background:var(--board)}canvas{display:block;width:100%;height:100%;touch-action:none}.overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:color-mix(in srgb,var(--board) 83%,transparent);text-align:center;padding:25px;pointer-events:none}.overlay[hidden]{display:none}.overlay strong{font-size:27px;display:block;margin-bottom:8px}.overlay p{font-size:13px;color:var(--muted);margin:0}.board-foot{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:15px;gap:15px}.legend{display:flex;gap:14px}.dot{display:inline-block;height:7px;width:7px;border-radius:2px;background:var(--green);margin-right:5px}.dot.food{background:var(--food)}.sidebar{display:flex;flex-direction:column;gap:18px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}.stat{border:1px solid var(--line);border-radius:12px;padding:17px 20px;background:var(--panel)}.stat span{font-size:11px;color:var(--muted);display:block}.stat strong{font-size:31px;font-weight:500;line-height:1.5;font-variant-numeric:tabular-nums}.card{padding:23px;background:var(--panel);border:1px solid var(--line);border-radius:12px}.card h2{font-size:14px;margin:0 0 16px;display:flex;justify-content:space-between;gap:12px}.chip{font-size:10px;font-weight:400;border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:var(--muted)}.modes{display:grid;grid-template-columns:1fr 1fr;gap:10px}.modes button{padding:11px 6px;font-size:12px;font-weight:700}.modes .primary{background:var(--green);border-color:var(--green);color:var(--green-ink)}.pause{width:100%;padding:9px;font-size:12px;margin-top:10px}.setting{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:18px;font-size:12px;color:var(--muted)}select{padding:5px 8px;max-width:155px}.setting label{display:flex;align-items:center;gap:7px}input{accent-color:var(--green)}.progress-title{display:flex;justify-content:space-between;align-items:center;font-size:12px}.progress-title span{color:var(--green);font-variant-numeric:tabular-nums}.track{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:13px 0}.track div{height:100%;background:var(--green);width:0;transition:width .15s}.hint{font-size:12px;color:var(--muted);margin:0;line-height:1.9}.rule-list{padding:0;list-style:none;margin:0;display:grid;gap:10px;font-size:12px;color:var(--muted)}.rule-list b{color:var(--ink);font-weight:400}.keys{font:11px monospace;border:1px solid var(--line);border-radius:4px;padding:2px 5px;color:var(--ink)}.dpad{display:grid;grid-template-columns:repeat(3,44px);gap:6px;justify-content:center;margin-top:18px}.dpad button{height:37px}.dpad button:first-child{grid-column:2}.dpad button:nth-child(2){grid-column:1}.storage-note{font-size:11px;color:var(--food);margin:12px 0 0}.storage-note:empty{display:none}footer{padding:28px 0 35px;color:var(--muted);font-size:10px;display:flex;justify-content:space-between;gap:20px}.detail-link{color:var(--green)}
+  @media(max-width:760px){.wrap{padding:0 18px}.top{height:67px}.heading{display:block;margin:27px 0 22px}h1{font-size:33px}.intro{margin-top:13px}.layout{grid-template-columns:1fr;gap:18px}.game-panel{padding:14px}.sidebar{gap:14px}.card{padding:20px}.dpad{grid-template-columns:repeat(3,58px)}.dpad button{height:42px}.board-foot{font-size:10px}.overlay strong{font-size:23px}footer{flex-direction:column;gap:5px}.stats .stat{padding:12px 20px}.stat strong{font-size:27px}}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top"><a class="back" href="index.html">← 刘锦桉的个人主页</a><button id="theme" type="button">切换到浅色</button></header>
+  <div class="heading"><div><p class="eyebrow">LJA / PLAYGROUND 01</p><h1>贪吃蛇<span>SNAKE</span></h1></div><p class="intro">自己挑战一次，或看 AI 走完下一步。</p></div>
+  <main class="layout">
+    <section class="game-panel" aria-label="游戏区域">
+      <div class="board-top"><span class="live-label" id="mode-label">准备开始</span><span>12 × 12 棋盘</span></div>
+      <div class="board-wrap"><canvas id="board" width="576" height="576" tabindex="0" aria-label="贪吃蛇棋盘，使用方向键或下方方向按钮控制">你的浏览器不支持 Canvas，请使用较新的浏览器。</canvas><div class="overlay" id="overlay"><div><strong id="overlay-title">一口一口，向前走。</strong><p id="overlay-text">选择手动新局，或开启 AI 自动演示。</p></div></div></div>
+      <div class="board-foot"><div class="legend"><span><i class="dot"></i>蛇</span><span><i class="dot food"></i>食物</span></div><span id="steps">0 步 · 长度 4</span></div>
+      <div class="dpad" aria-label="触屏方向控制"><button data-direction="up" aria-label="向上">↑</button><button data-direction="left" aria-label="向左">←</button><button data-direction="down" aria-label="向下">↓</button><button data-direction="right" aria-label="向右">→</button></div>
+    </section>
+    <aside class="sidebar">
+      <div class="stats"><div class="stat"><span>本局得分</span><strong id="score">0</strong></div><div class="stat"><span>吃到食物</span><strong id="eaten">0</strong></div></div>
+      <section class="card"><h2>开始一局<span class="chip" id="state-label">等待开始</span></h2><div class="modes"><button id="manual">手动新局</button><button class="primary" id="auto">AI 自动新局</button></div><button class="pause" id="pause" disabled>暂停游戏</button><div class="setting"><label for="speed">AI 演示速度</label><select id="speed"><option value="12">慢速 · 12 步/秒</option><option value="45" selected>标准 · 45 步/秒</option><option value="100">快速 · 100 步/秒</option></select></div><div class="setting"><label><input id="route" type="checkbox">显示 AI 巡航路线</label></div><p class="storage-note" id="storage-note"></p></section>
+      <section class="card"><h2>AI 自动挑战<span class="chip">连续 15 个</span></h2><div class="progress-title"><strong id="challenge-label">等待 AI 开始</strong><span id="progress-text">0 / 15</span></div><div class="track" role="progressbar" aria-label="AI 吃到的食物数量" aria-valuemin="0" aria-valuemax="15" aria-valuenow="0" id="progress"><div id="progress-fill"></div></div><p class="hint" id="challenge-note" aria-live="polite">点击“AI 自动新局”后无需操作。达到 15 个后，AI 会继续挑战填满棋盘。</p></section>
+      <section class="card"><h2>怎么玩</h2><ul class="rule-list"><li><b>转向</b>　<span class="keys">↑ ↓ ← →</span> / <span class="keys">W A S D</span><br>也支持下方按钮和棋盘滑动。</li><li><b>暂停 / 继续</b>　<span class="keys">Space</span> 或暂停按钮</li><li><b>规则</b>　每个食物 10 分。撞墙或撞到身体结束，填满棋盘即获胜。</li><li><b>自动模式</b>　AI 沿一条覆盖全棋盘的闭合路线前进。开始 AI 新局会重置棋盘。</li></ul></section>
+    </aside>
+  </main>
+  <footer><span>刘锦桉 · 2026级集成电路1班</span><a class="detail-link" href="https://github.com/ANDY-bit-sys/kaohe#贪吃蛇小游戏" target="_blank" rel="noopener noreferrer">查看项目说明 ↗</a></footer>
+</div>
+<script id="game-engine">
+// Engine is independent of the page so tests exercise the same game rules as the UI.
+class SnakeGame {
+  constructor(size = 12, random = Math.random) {
+    if (size < 4 || size % 2 !== 0) throw new Error('Board size must be even and at least 4');
+    this.size = size;
+    this.random = random;
+    this.cycle = [];
+    for (let x = 0; x < size; x++) this.cycle.push({x, y: 0});
+    for (let x = size - 1; x >= 1; x--) {
+      if ((size - 1 - x) % 2 === 0) for (let y = 1; y < size; y++) this.cycle.push({x, y});
+      else for (let y = size - 1; y >= 1; y--) this.cycle.push({x, y});
+    }
+    for (let y = size - 1; y >= 1; y--) this.cycle.push({x: 0, y});
+    this.cycleIndex = new Map(this.cycle.map((p, i) => [this.key(p), i]));
+    this.reset('manual');
+  }
+  key(p) { return p.x + ',' + p.y; }
+  reset(mode) {
+    this.mode = mode;
+    this.snake = mode === 'ai'
+      ? [3, 2, 1, 0].map(i => ({...this.cycle[i]}))
+      : [0, 1, 2, 3].map(i => ({x: Math.floor(this.size / 2) + 1 - i, y: Math.floor(this.size / 2)}));
+    this.direction = {x: 1, y: 0};
+    this.pending = null;
+    this.eaten = 0;
+    this.steps = 0;
+    this.status = 'ready';
+    this.reason = '';
+    this.spawnFood();
+  }
+  spawnFood() {
+    const occupied = new Set(this.snake.map(p => this.key(p)));
+    const empty = this.cycle.filter(p => !occupied.has(this.key(p)));
+    this.food = empty.length ? {...empty[Math.floor(this.random() * empty.length)]} : null;
+  }
+  turn(x, y) {
+    if (this.mode !== 'manual' || this.status !== 'running' || this.pending) return false;
+    if (Math.abs(x) + Math.abs(y) !== 1 || (x === -this.direction.x && y === -this.direction.y)) return false;
+    if (x === this.direction.x && y === this.direction.y) return false;
+    this.pending = {x, y};
+    return true;
+  }
+  tick() {
+    if (this.status !== 'running') return;
+    const head = this.snake[0];
+    let next;
+    if (this.mode === 'ai') {
+      const i = this.cycleIndex.get(this.key(head));
+      next = {...this.cycle[(i + 1) % this.cycle.length]};
+      this.direction = {x: next.x - head.x, y: next.y - head.y};
+    } else {
+      if (this.pending) this.direction = this.pending;
+      next = {x: head.x + this.direction.x, y: head.y + this.direction.y};
+    }
+    this.pending = null;
+    const grows = this.food && this.key(next) === this.key(this.food);
+    // The tail vacates its cell this tick unless the snake eats, so entering it is legal.
+    const body = grows ? this.snake : this.snake.slice(0, -1);
+    const wall = next.x < 0 || next.y < 0 || next.x >= this.size || next.y >= this.size;
+    if (wall || body.some(p => this.key(p) === this.key(next))) {
+      this.status = 'lost';
+      this.reason = wall ? '撞到墙壁了' : '撞到自己的身体了';
+      return;
+    }
+    this.snake.unshift(next);
+    this.steps++;
+    if (grows) {
+      this.eaten++;
+      if (this.snake.length === this.size * this.size) {
+        this.food = null;
+        this.status = 'won';
+      } else this.spawnFood();
+    } else this.snake.pop();
+  }
+}
+if (typeof module !== 'undefined' && module.exports) module.exports = {SnakeGame};
+</script>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const game = new SnakeGame();
+  const canvas = $('board');
+  const ctx = canvas.getContext('2d');
+  let last = 0, elapsed = 0, theme = 'dark';
+  try { if (localStorage.getItem('lja-snake-theme') === 'light') theme = 'light'; }
+  catch { $('storage-note').textContent = '浏览器限制了本地存储，主题仍可切换，但无法保证刷新后保留。'; }
+  const colors = {};
+  function applyTheme() {
+    document.documentElement.dataset.theme = theme;
+    $('theme').textContent = theme === 'dark' ? '切换到浅色' : '切换到深色';
+    const css = getComputedStyle(document.documentElement);
+    for (const name of ['board','grid','green','body','food']) colors[name] = css.getPropertyValue('--' + name).trim();
+    draw();
+  }
+  function draw() {
+    const cell = canvas.width / game.size;
+    ctx.fillStyle = colors.board;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = colors.grid;
+    ctx.lineWidth = 1;
+    for (let i = 1; i < game.size; i++) {
+      ctx.beginPath(); ctx.moveTo(i * cell, 0); ctx.lineTo(i * cell, canvas.height); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(0, i * cell); ctx.lineTo(canvas.width, i * cell); ctx.stroke();
+    }
+    if ($('route').checked) {
+      ctx.strokeStyle = colors.body; ctx.globalAlpha = .3; ctx.lineWidth = 2;
+      ctx.beginPath();
+      game.cycle.forEach((p, i) => i ? ctx.lineTo((p.x + .5) * cell, (p.y + .5) * cell) : ctx.moveTo((p.x + .5) * cell, (p.y + .5) * cell));
+      ctx.closePath(); ctx.stroke(); ctx.globalAlpha = 1;
+    }
+    if (game.food) {
+      ctx.fillStyle = colors.food; ctx.beginPath();
+      ctx.arc((game.food.x + .5) * cell, (game.food.y + .5) * cell, cell * .23, 0, Math.PI * 2); ctx.fill();
+    }
+    [...game.snake].reverse().forEach((p, i) => {
+      ctx.fillStyle = i === game.snake.length - 1 ? colors.green : colors.body;
+      ctx.beginPath(); ctx.roundRect(p.x * cell + 3, p.y * cell + 3, cell - 6, cell - 6, 9); ctx.fill();
+    });
+    const head = game.snake[0], d = game.direction;
+    ctx.fillStyle = colors.board;
+    for (const side of [-1, 1]) {
+      const x = (head.x + .5 + .17 * d.x + side * .14 * d.y) * cell;
+      const y = (head.y + .5 + .17 * d.y + side * .14 * d.x) * cell;
+      ctx.beginPath(); ctx.arc(x, y, cell * .045, 0, Math.PI * 2); ctx.fill();
+    }
+  }
+  function sync() {
+    const ai = game.mode === 'ai';
+    const active = game.status === 'running' || game.status === 'paused';
+    const labels = {ready:'等待开始',running:'进行中',paused:'已暂停',lost:'本局结束',won:'填满棋盘'};
+    $('score').textContent = game.eaten * 10;
+    $('eaten').textContent = game.eaten;
+    $('steps').textContent = game.steps + ' 步 · 长度 ' + game.snake.length;
+    $('state-label').textContent = labels[game.status];
+    $('mode-label').textContent = game.status === 'ready' ? '准备开始' : (ai ? 'AI 自动模式' : '手动模式');
+    $('pause').disabled = !active;
+    $('pause').textContent = game.status === 'paused' ? '继续游戏' : '暂停游戏';
+    document.querySelectorAll('[data-direction]').forEach(b => b.disabled = ai || game.status === 'paused' || game.status === 'lost' || game.status === 'won');
+    const count = ai ? game.eaten : 0;
+    $('progress-text').textContent = count + ' / 15';
+    $('progress-fill').style.width = Math.min(100, count / 15 * 100) + '%';
+    $('progress').setAttribute('aria-valuenow', Math.min(15, count));
+    const passed = ai && count >= 15;
+    $('challenge-label').textContent = passed ? '15 个挑战已达标 ✓' : ai ? game.status === 'paused' ? '自动挑战已暂停' : '正在自动挑战' : '等待 AI 开始';
+    const note = game.status === 'won' && ai ? '本局自动吃到 140 个食物，已经填满棋盘，挑战完成！' : passed ? '本局已自动连续吃到 15 个食物。AI 将继续前进，直到填满棋盘。' : '点击“AI 自动新局”后无需操作。达到 15 个后，AI 会继续挑战填满棋盘。';
+    if ($('challenge-note').textContent !== note) $('challenge-note').textContent = note;
+    $('overlay').hidden = game.status === 'running';
+    if (game.status === 'paused') { $('overlay-title').textContent = '歇一会儿。'; $('overlay-text').textContent = '按空格或点击“继续游戏”返回。'; }
+    if (game.status === 'lost') { $('overlay-title').textContent = game.reason; $('overlay-text').textContent = '本局 ' + game.eaten * 10 + ' 分，选择新局再试一次。'; }
+    if (game.status === 'won') { $('overlay-title').textContent = '整个棋盘，都走到了。'; $('overlay-text').textContent = '吃到 ' + game.eaten + ' 个食物，恭喜通关！'; }
+  }
+  function start(mode) {
+    game.reset(mode); game.status = 'running'; elapsed = 0; last = performance.now(); sync(); draw();
+    canvas.focus({preventScroll:true});
+    if (matchMedia('(max-width:760px)').matches) document.querySelector('.game-panel').scrollIntoView({block:'start',behavior:'instant'});
+  }
+  function pause() {
+    if (game.status === 'running') game.status = 'paused';
+    else if (game.status === 'paused') { game.status = 'running'; last = performance.now(); elapsed = 0; }
+    sync();
+    canvas.focus({preventScroll:true});
+  }
+  const directions = {up:[0,-1],down:[0,1],left:[-1,0],right:[1,0]};
+  function steer(name) { if (game.status === 'ready') start('manual'); game.turn(...directions[name]); canvas.focus({preventScroll:true}); }
+  $('manual').onclick = () => start('manual');
+  $('auto').onclick = () => start('ai');
+  $('pause').onclick = pause;
+  $('theme').onclick = () => {
+    theme = theme === 'dark' ? 'light' : 'dark'; applyTheme();
+    try { localStorage.setItem('lja-snake-theme', theme); }
+    catch { $('storage-note').textContent = '浏览器限制了本地存储，本次主题选择无法保存。'; }
+  };
+  $('route').onchange = draw;
+  $('speed').onchange = () => { elapsed = 0; };
+  document.querySelectorAll('[data-direction]').forEach(b => b.onclick = () => steer(b.dataset.direction));
+  const keys = {ArrowUp:'up',w:'up',ArrowDown:'down',s:'down',ArrowLeft:'left',a:'left',ArrowRight:'right',d:'right'};
+  document.addEventListener('keydown', e => {
+    if (['INPUT','SELECT','BUTTON','A'].includes(e.target.tagName)) {
+      if (e.code === 'Space' || e.target.tagName === 'SELECT') return;
+    }
+    const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+    if (keys[key]) { e.preventDefault(); steer(keys[key]); }
+    else if (e.code === 'Space') { e.preventDefault(); if (game.status === 'ready') start('manual'); else pause(); }
+  });
+  let touch = null;
+  canvas.addEventListener('pointerdown', e => { touch = {x:e.clientX,y:e.clientY}; canvas.setPointerCapture(e.pointerId); });
+  canvas.addEventListener('pointerup', e => {
+    if (!touch) return;
+    const dx = e.clientX - touch.x, dy = e.clientY - touch.y; touch = null;
+    if (Math.max(Math.abs(dx),Math.abs(dy)) < 15) return;
+    steer(Math.abs(dx) > Math.abs(dy) ? dx > 0 ? 'right' : 'left' : dy > 0 ? 'down' : 'up');
+  });
+  canvas.addEventListener('pointercancel', () => { touch = null; });
+  // Pause hidden tabs to prevent manual games advancing while the player cannot see them.
+  document.addEventListener('visibilitychange', () => { if (document.hidden && game.status === 'running') pause(); });
+  function frame(now) {
+    if (game.status === 'running') {
+      elapsed += Math.min(200, now - (last || now));
+      const interval = game.mode === 'ai' ? 1000 / Number($('speed').value) : 150;
+      let moved = false;
+      while (elapsed >= interval && game.status === 'running') { game.tick(); elapsed -= interval; moved = true; }
+      if (moved) { sync(); draw(); }
+    }
+    last = now; requestAnimationFrame(frame);
+  }
+  applyTheme(); sync(); requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
