@@ -17,7 +17,14 @@
 - [x] 完成小游戏的手动操作和 AI 自动演示
 - [x] 完成进阶挑战 1 的三个电路代码、图表和仿真验证
 - [ ] 本人复核电路图、计算过程，并能独立讲解三个电路
-- [ ] 补齐验证结果、提示词迭代记录和代码逻辑说明
+- [x] 补齐验证结果、提示词迭代记录和两处代码逻辑说明草稿
+- [x] 添加 MIT LICENSE 并说明选择原因
+- [x] 保存真实 AI 代码错误的复现程序、依据与修复过程
+- [ ] 本人复现查错过程，并用自己的话确认两处代码逻辑说明
+- [ ] 确认 GitHub 两步验证已开启
+- [ ] 截止前将仓库链接提交至群内收集表
+
+逐项状态和验收入口：[考核核对表](docs/acceptance.md)。
 
 ## 开发记录
 
@@ -32,6 +39,7 @@
 
 - 已完成：[刘锦桉的个人简介（详细版）](output/pdf/刘锦桉_个人简介_详细版.pdf)。
 - 内容涵盖个人背景、项目兴趣、足球爱好和大学期待，采用一页蓝白排版。
+- 补齐可点击的 GitHub 联系入口；生成代码见 [create_profile.py](scripts/create_profile.py)。Windows 下安装 `reportlab`、`pdfplumber`、`pypdfium2` 后运行 `python scripts/create_profile.py`，使用系统微软雅黑字体。
 - 验证：检查 PDF 为单页，核对姓名、籍贯、年级班级，并渲染检查中文显示和排版。
 
 ### 个人网站
@@ -42,6 +50,7 @@
 - 验证：使用浏览器检查桌面、390px 和 320px 手机宽度；检查导航跳转、PDF 文件路径和页面错误。
 - 在线访问：[刘锦桉的个人主页](https://andy-bit-sys.github.io/kaohe/)。
 - GitHub Pages 从 `main` 分支根目录发布；修改并推送网站文件后会自动更新。
+- AI 协作：本人提供资料、提出扩写和删除要求并审阅简介；Codex 协助写作、PDF 排版及 HTML/CSS 实现。个人资料未添加未经提供的经历或成绩。
 
 ### 贪吃蛇小游戏
 
@@ -52,7 +61,7 @@
 - 操作：点击“手动新局”，使用方向键或 WASD 转向；手机支持方向按钮、棋盘滑动。空格或暂停按钮用于暂停与继续。手动默认每秒 2 步，也可选择每秒 4 或 6 步，调整即时生效。
 - 规则：12 × 12 棋盘，初始长度为 4；每吃一个食物加 10 分、增长一格；食物只生成在空格。撞墙或撞到身体结束，填满 144 格获胜。
 - 实现：用坐标数组保存蛇身，按固定时间间隔推进；每步最多接受一次有效转向，禁止立即反向。切换新局会重置本局分数和进度；隐藏页面时自动暂停。
-- 视觉：用 Canvas 绘制相连的圆润蛇身、渐细尾部、背部斑点，以及会随方向旋转的头部；头部带大眼睛、腮红、笑脸和间歇出现的小蛇信子。全部由代码绘制，没有增加图片依赖。
+- 视觉：使用 Canvas 中的原生 WebGL 绘制三维蛇与森林场景。球体、圆柱体组成蛇身、眼睛和装饰物，带透视和光照；头部随方向转动，带腮红和间歇出现的蛇信子。初版二维造型已在后续迭代中替换，没有外部图片或框架依赖。
 - 验证：自动测试覆盖移动、增长、反向输入、撞墙、自撞、进入刚移走的尾格、暂停和重新开局；浏览器检查键盘、按钮、滑动与手机布局。
 
 #### 阶段二：AI 自动演示
@@ -95,7 +104,7 @@
 
 AI 协作：游戏代码、测试和本节初稿由 Codex 生成并调试；本人选择游戏与开发方式，代码逻辑说明需要本人理解后确认。
 
-规则测试文件：[tests/snake.test.cjs](tests/snake.test.cjs)。安装 Node.js 后，在仓库目录运行 `node tests/snake.test.cjs`；测试直接读取 HTML 中的同一份游戏逻辑，运行游戏本身不需要 Node.js。
+规则测试文件：[tests/snake.test.cjs](tests/snake.test.cjs)。安装 Node.js 后，在仓库目录运行 `node tests/snake.test.cjs`；测试直接读取 HTML 中的同一份游戏逻辑，运行游戏本身不需要 Node.js。浏览器与战绩检查程序也已提交，[复核命令见这里](tests/README.md)。
 
 <a id="circuits"></a>
 
@@ -342,9 +351,19 @@ $$
 
 ## 待完善的提交材料
 
-本人对三个电路图及计算过程的复核与讲解、两处关键代码逻辑的说明确认、真实 AI 错误信息的查证记录、许可证及选择原因、GitHub 两步验证确认。
+文件与技术验证已补齐；尚需本人复核电路图和计算、独立讲解两处代码逻辑、亲自运行 AI 错误复现，确认两步验证并完成群内收集表提交。[讲解练习](docs/self-review.md)可用于准备。
+
+## Git 操作与版本记录
 
 分支是在不影响主线的情况下独立开发功能，合并是把分支上完成的改动整合回主线或其他分支
+
+2026-09-06 本轮检查开始时已有 23 次提交，满足不少于 3 次的要求。例如：`480d1c6` 完成游戏初版、`0204d9c` 改进 AI 寻路、`2184ef9` 增加三维渲染、`178a86e` 完成三个电路、`e296b07` 整理开发记录顺序。用 `git log --oneline --reverse` 查看从早到晚的真实开发历史，用 `git rev-list --count HEAD` 查询当前总数。
+
+## 许可证与账号安全
+
+项目代码采用 [MIT License](LICENSE)。选择它是因为条款简洁，方便同学学习、修改和分享；分发时需要保留版权及许可声明，软件按原样提供。第三方工具仍遵循各自许可证。[MIT 官方模板说明](https://choosealicense.com/licenses/mit/)。
+
+GitHub 两步验证：**待本人确认**。本轮只读接口未返回该字段，不能据此判断已开启或未开启。请在 [GitHub 密码与身份验证设置](https://github.com/settings/security) 查看 Two-factor authentication，按页面提示完成后确认。验证码、密钥和恢复码不写入仓库。
 
 ## 常用命令
 
@@ -358,8 +377,44 @@ $$
 | `git commit -m "说明"` | 保存一次有说明的提交 |
 | `git log --oneline` | 查看简洁的提交历史 |
 | `git push` | 将本地提交上传到远程仓库 |
+| `git clone 仓库网址` | 将远程仓库复制到电脑 |
+| `git pull` | 获取远程更新并整合到当前分支 |
+| `git switch -c 分支名` | 新建分支并切换过去 |
+| `git merge 分支名` | 把指定分支的改动合并到当前分支 |
 
 提交对应真实开发阶段，随实际进度逐步记录。
+
+例如在 PowerShell 中，`cd "C:\Users\anan6\Desktop\集协考核"` 进入项目，`ls` 查看文件，`mkdir practice` 新建练习目录。编辑文件后，先用 `git status` 看改动，再用 `git add 文件名` 暂存、`git commit -m "修改说明"` 保存；`git push` 才会上传。空文件夹不会被 Git 单独记录。这些是用法示例，不表示已经创建练习目录或执行合并。
+
+## AI 生成代码错误查证：PySpice save 调用
+
+这是本次三个电路开发中真实出现的错误。记录由 Codex 复现整理，保留原错误代码和证据供本人亲自运行、理解后确认。
+
+AI 最初生成了以下调用，想同时保存工作点参数：
+
+```python
+sim.save('all', '@m1[gm]', '@m1[gds]', '@m1[id]')
+```
+
+实际运行 PySpice 1.5 后得到 `TypeError: set expected at most 1 argument, got 4`。核对安装版本的源码，并对照 [PySpice 官方源码页面](https://pyspice.fabrice-salvaire.fr/releases/v1.5/_modules/PySpice/Spice/Simulation.html)，发现 `save()` 内部调用 `set(*args)`。把四个字符串分开传入会让 `set()` 收到四个位置参数，因此原调用在这个版本中不成立。
+
+修复方式是传入一个列表；最终实验还显式列出电压等变量，避免 `all` 在多次序列化时被移除。可运行 [pyspice-save-repro.py](tests/pyspice-save-repro.py) 独立复核：
+
+```powershell
+.\.venv-circuits\Scripts\python.exe tests/pyspice-save-repro.py
+```
+
+本轮真实输出：
+
+```text
+PySpice version: 1.5
+Original call failed: set expected at most 1 argument, got 4
+Implementation evidence:
+self._saved_nodes |= set(*args)
+PASS: one list argument works; explicit vectors survive serialization.
+```
+
+结论：AI 生成的库调用也可能不符合实际版本。查证要核对版本、运行原代码、阅读实现、修复后再运行，而不能只看代码外观是否合理。
 
 ## 命令说明查证：ls 的用途
 

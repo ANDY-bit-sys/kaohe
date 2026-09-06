@@ -3,6 +3,7 @@ tmp/
 .tools/
 .venv-circuits/
 __pycache__/
+node_modules/
 
 # 私密配置
 .env
