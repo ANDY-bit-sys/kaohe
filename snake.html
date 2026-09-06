@@ -19,7 +19,7 @@
   <div class="heading"><div><p class="eyebrow">LJA / PLAYGROUND 01</p><h1>贪吃蛇<span>SNAKE</span></h1></div><p class="intro">自己挑战一次，或看 AI 走完下一步。</p></div>
   <main class="layout">
     <section class="game-panel" aria-label="游戏区域">
-      <div class="board-top"><span class="live-label" id="mode-label">准备开始</span><span>原生 WebGL · 3D 棋盘</span></div>
+      <div class="board-top"><span class="live-label" id="mode-label">准备开始</span><span>原生 WebGL · 3D 森林棋盘</span></div>
       <div class="board-wrap"><canvas id="board" width="576" height="576" tabindex="0" aria-label="贪吃蛇棋盘，使用方向键或下方方向按钮控制">你的浏览器不支持 Canvas，请使用较新的浏览器。</canvas><div class="overlay" id="overlay"><div><strong id="overlay-title">一口一口，向前走。</strong><p id="overlay-text">选择手动新局，或开启 AI 自动演示。</p></div></div></div>
       <div class="board-foot"><div class="legend"><span><i class="dot"></i>蛇</span><span><i class="dot food"></i>食物</span></div><span id="steps">0 步 · 长度 4</span></div>
       <div class="dpad" aria-label="触屏方向控制"><button data-direction="up" aria-label="向上">↑</button><button data-direction="left" aria-label="向左">←</button><button data-direction="down" aria-label="向下">↓</button><button data-direction="right" aria-label="向右">→</button></div>
@@ -260,7 +260,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {SnakeGame
   };
   const compose = (...matrices) => matrices.reduce((a,b) => M.multiply(a,b));
   const projection = M.perspective(Math.PI/5.2, 1, .1, 80);
-  const view = M.lookAt([9.5,16.5,18.5],[0,0,0],[0,1,0]);
+  const view = M.lookAt([10.5,18,20],[0,.1,0],[0,1,0]);
   const viewProjection = M.multiply(projection, view);
   function makeMesh(positions, normals, indices, mode=gl.TRIANGLES) {
     const mesh = {mode, count:indices.length, position:gl.createBuffer(), normal:gl.createBuffer(), index:gl.createBuffer()};
@@ -305,6 +305,54 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {SnakeGame
     const [ax,az]=world(a),[bx,bz]=world(b),dx=bx-ax,dz=bz-az,length=Math.hypot(dx,dz),yaw=Math.atan2(dz,dx);
     const model=compose(M.translate((ax+bx)/2,.56,(az+bz)/2),M.rotateY(-yaw),M.rotateZ(Math.PI/2),M.scale(r,length,r)); drawMesh(cylinder,model,color);
   }
+  function cylinderBetween(a,b,r,color) {
+    const dx=b[0]-a[0],dy=b[1]-a[1],dz=b[2]-a[2],length=Math.hypot(dx,dy,dz),horizontal=Math.hypot(dx,dz);
+    const yaw=Math.atan2(dz,dx),tilt=Math.atan2(horizontal,dy);
+    drawMesh(cylinder,compose(M.translate((a[0]+b[0])/2,(a[1]+b[1])/2,(a[2]+b[2])/2),M.rotateY(-yaw),M.rotateZ(tilt),M.scale(r,length,r)),color);
+  }
+  function drawTree(x,z,scale,p) {
+    drawMesh(cylinder,compose(M.translate(x,.52*scale,z),M.scale(.18*scale,1.25*scale,.18*scale)),p.trunk);
+    [[0,1.3,0,.62],[-.34,1.18,.06,.46],[.33,1.2,.08,.48],[.04,1.42,-.28,.43]].forEach((q,i)=>
+      drawMesh(sphere,compose(M.translate(x+q[0]*scale,q[1]*scale,z+q[2]*scale),M.scale(q[3]*scale,q[3]*scale*(i? .88:1),q[3]*scale)),i%2?p.leaf2:p.leaf));
+  }
+  function drawMushroom(x,z,scale,p) {
+    drawMesh(cylinder,compose(M.translate(x,.18*scale,z),M.scale(.11*scale,.42*scale,.11*scale)),p.mushroomStem);
+    drawMesh(sphere,compose(M.translate(x,.43*scale,z),M.scale(.31*scale,.16*scale,.31*scale)),p.mushroom);
+    for(const q of [[-.12,.04],[.11,-.03],[.02,.13]]) drawMesh(sphere,compose(M.translate(x+q[0]*scale,.54*scale,z+q[1]*scale),M.scale(.045*scale,.025*scale,.045*scale)),p.mushroomDot);
+  }
+  function drawFlower(x,z,scale,p,petalColor) {
+    drawMesh(cylinder,compose(M.translate(x,.2*scale,z),M.scale(.035*scale,.45*scale,.035*scale)),p.stem);
+    for(let i=0;i<6;i++){ const a=i*Math.PI/3; drawMesh(sphere,compose(M.translate(x+Math.cos(a)*.15*scale,.48*scale,z+Math.sin(a)*.15*scale),M.scale(.12*scale,.055*scale,.09*scale)),petalColor); }
+    drawMesh(sphere,compose(M.translate(x,.51*scale,z),M.scale(.105*scale,.07*scale,.105*scale)),p.flowerCenter);
+  }
+  function drawRock(x,z,scale,p) {
+    drawMesh(sphere,compose(M.translate(x,.14*scale,z),M.rotateY(.45),M.scale(.42*scale,.24*scale,.33*scale)),p.rock);
+    drawMesh(sphere,compose(M.translate(x+.28*scale,.1*scale,z+.08*scale),M.scale(.23*scale,.16*scale,.2*scale)),p.rock2);
+  }
+  function drawFence(z,p) {
+    for(const x of [-4.8,-2.4,0,2.4,4.8]) drawMesh(cylinder,compose(M.translate(x,.24,z),M.scale(.075,.7,.075)),p.fence);
+    cylinderBetween([-5,.2,z],[-.25,.2,z],.055,p.fence); cylinderBetween([.25,.2,z],[5,.2,z],.055,p.fence);
+    cylinderBetween([-5,.46,z],[-.25,.46,z],.05,p.fence); cylinderBetween([.25,.46,z],[5,.46,z],.05,p.fence);
+  }
+  function drawScenery() {
+    const p=theme==='dark'?{
+      grass:[.15,.29,.19,1],grassEdge:[.09,.20,.13,1],tileA:[.12,.24,.16,1],tileB:[.145,.27,.175,1],trunk:[.38,.25,.14,1],leaf:[.31,.61,.27,1],leaf2:[.42,.72,.32,1],mushroom:[.92,.38,.38,1],mushroomStem:[.92,.82,.66,1],mushroomDot:[1,.91,.72,1],stem:[.31,.59,.25,1],flowerCenter:[1,.72,.23,1],rock:[.35,.43,.39,1],rock2:[.43,.5,.45,1],fence:[.65,.45,.25,1]
+    }:{
+      grass:[.64,.81,.5,1],grassEdge:[.44,.66,.34,1],tileA:[.72,.86,.59,1],tileB:[.66,.82,.53,1],trunk:[.51,.33,.18,1],leaf:[.35,.68,.29,1],leaf2:[.48,.77,.34,1],mushroom:[.96,.42,.43,1],mushroomStem:[.98,.88,.72,1],mushroomDot:[1,.96,.82,1],stem:[.29,.62,.24,1],flowerCenter:[1,.69,.16,1],rock:[.52,.59,.54,1],rock2:[.61,.67,.62,1],fence:[.72,.49,.27,1]
+    };
+    drawMesh(cube,compose(M.translate(0,-.52,0),M.scale(6.86,.72,6.86)),p.grassEdge);
+    drawMesh(cube,compose(M.translate(0,-.17,0),M.scale(6.66,.16,6.66)),p.grass);
+    for(let y=0;y<game.size;y++) for(let x=0;x<game.size;x++) {
+      const px=x-(game.size-1)/2,pz=y-(game.size-1)/2;
+      drawMesh(cube,compose(M.translate(px,-.035,pz),M.scale(.49,.045,.49)),(x+y)%2?p.tileA:p.tileB);
+    }
+    drawFence(-6.28,p);
+    drawTree(-6.28,-4.55,.72,p); drawTree(6.22,4.35,.66,p);
+    drawMushroom(-6.3,1.3,.95,p); drawMushroom(6.25,-1.65,.82,p);
+    drawRock(-6.22,4.15,.9,p); drawRock(6.2,-4.25,.75,p);
+    drawFlower(-6.28,-.15,.9,p,[1,.55,.72,1]); drawFlower(6.28,.15,.86,p,[.72,.56,1,1]);
+    drawFlower(-4.15,6.25,.72,p,[1,.77,.34,1]); drawFlower(4.1,6.25,.72,p,[.47,.74,1,1]);
+  }
   function applyTheme() {
     document.documentElement.dataset.theme = theme;
     $('theme').textContent = theme === 'dark' ? '切换到浅色' : '切换到深色';
@@ -315,11 +363,10 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {SnakeGame
   function draw() {
     gl.viewport(0,0,canvas.width,canvas.height); gl.useProgram(program); gl.enable(gl.DEPTH_TEST); gl.enable(gl.CULL_FACE); gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
     const bg=cssColor(colors.board); gl.clearColor(bg[0],bg[1],bg[2],1); gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
-    const boardColor=theme==='dark'?[.075,.13,.09,1]:[.84,.89,.80,1];
-    drawMesh(cube,compose(M.translate(0,-.22,0),M.scale(game.size/2+.28,.36,game.size/2+.28)),boardColor);
+    drawScenery();
     const edge=game.size/2, grid=[];
     for(let i=0;i<=game.size;i++){ const q=-edge+i; grid.push([q,.015,-edge],[q,.015,edge],[-edge,.015,q],[edge,.015,q]); }
-    for(let i=0;i<grid.length;i+=2) lineMesh([grid[i],grid[i+1]],cssColor(colors.grid,.72));
+    for(let i=0;i<grid.length;i+=2) lineMesh([grid[i],grid[i+1]],cssColor(colors.grid,.46));
     if ($('route').checked) {
       lineMesh(game.cycle.map(p=>{const [x,z]=world(p);return [x,.055,z];}),cssColor(colors.green,.48),true);
     }
