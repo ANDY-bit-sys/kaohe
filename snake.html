@@ -6,8 +6,8 @@
 <meta name="description" content="刘锦桉的贪吃蛇：手动挑战、AI 自动演示与深浅主题切换。">
 <title>贪吃蛇 · 刘锦桉</title>
 <style>
-  :root{color-scheme:dark;--bg:#101915;--panel:#18251e;--board:#111d16;--grid:#23362a;--ink:#edf7ee;--muted:#9bb0a0;--line:#314638;--green:#adf079;--green-ink:#182615;--body:#659b51;--food:#ffb583;--shadow:#0003}
-  :root[data-theme="light"]{color-scheme:light;--bg:#f4f6ee;--panel:#fffef8;--board:#ebf0e4;--grid:#dbe3d2;--ink:#223923;--muted:#61765f;--line:#d6dfcf;--green:#3d6a30;--green-ink:#fff;--body:#7f9f5c;--food:#bd4c22;--shadow:#2541260b}
+  :root{color-scheme:dark;--bg:#101915;--panel:#18251e;--board:#111d16;--grid:#23362a;--ink:#edf7ee;--muted:#9bb0a0;--line:#314638;--green:#adf079;--green-ink:#182615;--head:#a8ef70;--body:#659b51;--spot:#416f3b;--eye:#172318;--blush:#ff9fa5;--tongue:#ff8da1;--food:#ffb583;--shadow:#0003}
+  :root[data-theme="light"]{color-scheme:light;--bg:#f4f6ee;--panel:#fffef8;--board:#ebf0e4;--grid:#dbe3d2;--ink:#223923;--muted:#61765f;--line:#d6dfcf;--green:#3d6a30;--green-ink:#fff;--head:#70a34d;--body:#88ab67;--spot:#5d8547;--eye:#172318;--blush:#e9878c;--tongue:#c84c68;--food:#bd4c22;--shadow:#2541260b}
   *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC",sans-serif;line-height:1.7}a{color:inherit;text-decoration:none}button,select,input{font:inherit}button,a,select,input{touch-action:manipulation}button{cursor:pointer}button:disabled{opacity:.4;cursor:default}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--food);outline-offset:4px}button,select{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:9px}button:hover:not(:disabled){border-color:var(--green)}.wrap{max-width:1100px;margin:auto;padding:0 32px}.top{height:83px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.back{font-size:13px;color:var(--muted)}.top button{padding:8px 14px;font-size:12px}.heading{display:flex;justify-content:space-between;align-items:end;gap:24px;margin:40px 0 26px}.eyebrow{color:var(--green);font-size:10px;letter-spacing:3px;margin:0 0 8px}h1{font-size:40px;letter-spacing:1px;margin:0;line-height:1.3}h1 span{font-size:12px;font-weight:400;color:var(--muted);letter-spacing:2px;margin-left:16px}.intro{font-size:13px;color:var(--muted);margin:0 0 4px}.layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(260px,1fr);gap:24px;align-items:start}.game-panel{background:var(--panel);padding:22px;border:1px solid var(--line);border-radius:16px;box-shadow:0 16px 40px var(--shadow)}.board-top{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:15px;gap:10px}.live-label{color:var(--green)}.live-label:before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:currentColor;margin-right:8px}.board-wrap{position:relative;aspect-ratio:1;overflow:hidden;border:1px solid var(--line);border-radius:9px;background:var(--board)}canvas{display:block;width:100%;height:100%;touch-action:none}.overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:color-mix(in srgb,var(--board) 83%,transparent);text-align:center;padding:25px;pointer-events:none}.overlay[hidden]{display:none}.overlay strong{font-size:27px;display:block;margin-bottom:8px}.overlay p{font-size:13px;color:var(--muted);margin:0}.board-foot{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:15px;gap:15px}.legend{display:flex;gap:14px}.dot{display:inline-block;height:7px;width:7px;border-radius:2px;background:var(--green);margin-right:5px}.dot.food{background:var(--food)}.sidebar{display:flex;flex-direction:column;gap:18px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}.stat{border:1px solid var(--line);border-radius:12px;padding:17px 20px;background:var(--panel)}.stat span{font-size:11px;color:var(--muted);display:block}.stat strong{font-size:31px;font-weight:500;line-height:1.5;font-variant-numeric:tabular-nums}.card{padding:23px;background:var(--panel);border:1px solid var(--line);border-radius:12px}.card h2{font-size:14px;margin:0 0 16px;display:flex;justify-content:space-between;gap:12px}.chip{font-size:10px;font-weight:400;border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:var(--muted)}.modes{display:grid;grid-template-columns:1fr 1fr;gap:10px}.modes button{padding:11px 6px;font-size:12px;font-weight:700}.modes .primary{background:var(--green);border-color:var(--green);color:var(--green-ink)}.pause{width:100%;padding:9px;font-size:12px;margin-top:10px}.setting{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:18px;font-size:12px;color:var(--muted)}select{padding:5px 8px;max-width:155px}.setting label{display:flex;align-items:center;gap:7px}input{accent-color:var(--green)}.progress-title{display:flex;justify-content:space-between;align-items:center;font-size:12px}.progress-title span{color:var(--green);font-variant-numeric:tabular-nums}.track{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:13px 0}.track div{height:100%;background:var(--green);width:0;transition:width .15s}.hint{font-size:12px;color:var(--muted);margin:0;line-height:1.9}.rule-list{padding:0;list-style:none;margin:0;display:grid;gap:10px;font-size:12px;color:var(--muted)}.rule-list b{color:var(--ink);font-weight:400}.keys{font:11px monospace;border:1px solid var(--line);border-radius:4px;padding:2px 5px;color:var(--ink)}.dpad{display:grid;grid-template-columns:repeat(3,44px);gap:6px;justify-content:center;margin-top:18px}.dpad button{height:37px}.dpad button:first-child{grid-column:2}.dpad button:nth-child(2){grid-column:1}.history{list-style:none;margin:0;padding:0;display:grid}.history li{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border-top:1px solid var(--line);font-size:11px}.history li:first-child{border-top:0;padding-top:0}.history:not(.expanded) li:nth-child(n+4){display:none}.history b{display:block;font-size:12px;font-weight:500}.history span{color:var(--muted)}.history strong{white-space:nowrap;color:var(--green);font-weight:500}.empty-history{font-size:12px;color:var(--muted);margin:0 0 13px}.empty-history[hidden]{display:none}.history-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.history-actions button{padding:8px 5px;font-size:10px}.storage-note{font-size:11px;color:var(--food);margin:12px 0 0}.storage-note:empty{display:none}footer{padding:28px 0 35px;color:var(--muted);font-size:10px;display:flex;justify-content:space-between;gap:20px}.detail-link{color:var(--green)}
   @media(max-width:760px){.wrap{padding:0 18px}.top{height:67px}.heading{display:block;margin:27px 0 22px}h1{font-size:33px}.intro{margin-top:13px}.layout{grid-template-columns:1fr;gap:18px}.game-panel{padding:14px}.sidebar{gap:14px}.card{padding:20px}.dpad{grid-template-columns:repeat(3,58px)}.dpad button{height:42px}.board-foot{font-size:10px}.overlay strong{font-size:23px}footer{flex-direction:column;gap:5px}.stats .stat{padding:12px 20px}.stat strong{font-size:27px}}
   @media(prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -205,7 +205,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {SnakeGame
     document.documentElement.dataset.theme = theme;
     $('theme').textContent = theme === 'dark' ? '切换到浅色' : '切换到深色';
     const css = getComputedStyle(document.documentElement);
-    for (const name of ['board','grid','green','body','food']) colors[name] = css.getPropertyValue('--' + name).trim();
+    for (const name of ['board','grid','green','head','body','spot','eye','blush','tongue','food']) colors[name] = css.getPropertyValue('--' + name).trim();
     draw();
   }
   function draw() {
@@ -228,17 +228,39 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {SnakeGame
       ctx.fillStyle = colors.food; ctx.beginPath();
       ctx.arc((game.food.x + .5) * cell, (game.food.y + .5) * cell, cell * .23, 0, Math.PI * 2); ctx.fill();
     }
-    [...game.snake].reverse().forEach((p, i) => {
-      ctx.fillStyle = i === game.snake.length - 1 ? colors.green : colors.body;
-      ctx.beginPath(); ctx.roundRect(p.x * cell + 3, p.y * cell + 3, cell - 6, cell - 6, 9); ctx.fill();
-    });
-    const head = game.snake[0], d = game.direction;
-    ctx.fillStyle = colors.board;
-    for (const side of [-1, 1]) {
-      const x = (head.x + .5 + .17 * d.x + side * .14 * d.y) * cell;
-      const y = (head.y + .5 + .17 * d.y + side * .14 * d.x) * cell;
-      ctx.beginPath(); ctx.arc(x, y, cell * .045, 0, Math.PI * 2); ctx.fill();
+    // Draw a connected, rounded body first so turns look like one snake rather than loose blocks.
+    ctx.strokeStyle = colors.body; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.lineWidth = cell * .52;
+    for (let i = 1; i < game.snake.length; i++) {
+      const a = game.snake[i - 1], b = game.snake[i];
+      ctx.beginPath(); ctx.moveTo((a.x + .5) * cell, (a.y + .5) * cell); ctx.lineTo((b.x + .5) * cell, (b.y + .5) * cell); ctx.stroke();
     }
+    // Body beads and a smaller final bead create a soft tapered tail.
+    for (let i = game.snake.length - 1; i >= 1; i--) {
+      const p = game.snake[i], tail = i === game.snake.length - 1;
+      const radius = cell * (tail ? .21 : .29);
+      ctx.fillStyle = colors.body; ctx.beginPath(); ctx.arc((p.x + .5) * cell, (p.y + .5) * cell, radius, 0, Math.PI * 2); ctx.fill();
+      if (!tail && i % 3 === 0) {
+        ctx.fillStyle = colors.spot; ctx.globalAlpha = .75; ctx.beginPath();
+        ctx.arc((p.x + .5) * cell, (p.y + .5) * cell, cell * .095, 0, Math.PI * 2); ctx.fill(); ctx.globalAlpha = 1;
+      }
+    }
+    const head = game.snake[0], d = game.direction;
+    const angle = Math.atan2(d.y, d.x);
+    ctx.save(); ctx.translate((head.x + .5) * cell, (head.y + .5) * cell); ctx.rotate(angle);
+    ctx.fillStyle = colors.head; ctx.beginPath(); ctx.ellipse(0, 0, cell * .39, cell * .34, 0, 0, Math.PI * 2); ctx.fill();
+    // Large eyes, tiny highlights and rosy cheeks make the head friendly and readable at small sizes.
+    for (const side of [-1, 1]) {
+      ctx.fillStyle = colors.eye; ctx.beginPath(); ctx.arc(cell * .13, side * cell * .17, cell * .065, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(cell * .15, side * cell * .19, cell * .021, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = colors.blush; ctx.globalAlpha = .58; ctx.beginPath(); ctx.ellipse(cell * .02, side * cell * .275, cell * .07, cell * .035, 0, 0, Math.PI * 2); ctx.fill(); ctx.globalAlpha = 1;
+    }
+    ctx.strokeStyle = colors.eye; ctx.lineWidth = Math.max(1.5, cell * .025); ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.arc(cell * .12, 0, cell * .07, .25, Math.PI - .25); ctx.stroke();
+    if (game.status === 'running' && game.steps % 4 < 2) {
+      ctx.strokeStyle = colors.tongue; ctx.lineWidth = Math.max(2, cell * .032);
+      ctx.beginPath(); ctx.moveTo(cell * .34, 0); ctx.lineTo(cell * .52, 0); ctx.lineTo(cell * .62, -cell * .07); ctx.moveTo(cell * .52, 0); ctx.lineTo(cell * .62, cell * .07); ctx.stroke();
+    }
+    ctx.restore();
   }
   function sync() {
     const ai = game.mode === 'ai';
