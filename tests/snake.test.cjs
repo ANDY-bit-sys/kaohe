@@ -79,21 +79,33 @@ test('restart clears score, pending input, body length and mode', () => {
   g.reset('ai'); assert.equal(g.mode, 'ai'); assert.equal(g.eaten, 0); assert.equal(g.steps, 0);
   assert.equal(g.snake.length, 4); assert.equal(g.pending, null); assert.equal(g.status, 'ready');
 });
-let min = Infinity, max = 0;
-test('AI eats 15 foods without collision for 200 independent seeded layouts', () => {
-  for (let seed = 1; seed <= 200; seed++) {
+let min = Infinity, max = 0, smartTotal = 0, cycleTotal = 0;
+test('AI tracks food and eats 15 without collision for 1000 independent seeded layouts', () => {
+  let shortcutRuns = 0;
+  for (let seed = 1; seed <= 1000; seed++) {
     const g = playing('ai', seed);
     while (g.eaten < 15 && g.status === 'running' && g.steps < 2160) { g.tick(); invariant(g); }
     assert(g.eaten >= 15, 'seed ' + seed + ' did not reach 15');
-    assert.equal(g.status, 'running'); min = Math.min(min, g.steps); max = Math.max(max, g.steps);
+    assert.equal(g.status, 'running');
+    if (g.shortcuts > 0) shortcutRuns++;
+    min = Math.min(min, g.steps); max = Math.max(max, g.steps); smartTotal += g.steps;
+    const baseline = playing('ai', seed);
+    baseline.chooseAiMove = function() {
+      const i = this.cycleIndex.get(this.key(this.snake[0]));
+      return {...this.cycle[(i + 1) % this.cycle.length]};
+    };
+    while (baseline.eaten < 15 && baseline.status === 'running') baseline.tick();
+    assert.equal(baseline.status, 'running'); cycleTotal += baseline.steps;
   }
+  assert.equal(shortcutRuns, 1000, 'AI did not use food-tracking shortcuts in every run');
+  assert(smartTotal < cycleTotal, 'smart tracking did not improve average route length');
 });
-test('AI fills the board and wins for 5 independent seeded layouts', () => {
-  for (let seed = 1; seed <= 5; seed++) {
+test('AI fills the board and wins for 20 independent seeded layouts', () => {
+  for (let seed = 1; seed <= 20; seed++) {
     const g = playing('ai', seed);
     while (g.status === 'running' && g.steps < 20160) { g.tick(); invariant(g); }
     assert.equal(g.status, 'won'); assert.equal(g.eaten, 140);
     assert.equal(g.snake.length, 144); assert.equal(g.food, null);
   }
 });
-console.log(JSON.stringify({testGroups: passed, aiSeeds: 200, foodTarget: 15, minSteps: min, maxSteps: max, fullBoardWins: 5}));
+console.log(JSON.stringify({testGroups: passed, aiSeeds: 1000, foodTarget: 15, minSteps: min, maxSteps: max, averageSmartSteps: Math.round(smartTotal/1000), averageCycleSteps: Math.round(cycleTotal/1000), fullBoardWins: 20, strategy:'BFS safe food path with cycle fallback'}));

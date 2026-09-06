@@ -28,7 +28,7 @@
       <div class="stats"><div class="stat"><span>本局得分</span><strong id="score">0</strong></div><div class="stat"><span>吃到食物</span><strong id="eaten">0</strong></div></div>
       <section class="card"><h2>开始一局<span class="chip" id="state-label">等待开始</span></h2><div class="modes"><button id="manual">手动新局</button><button class="primary" id="auto">AI 自动新局</button></div><button class="pause" id="pause" disabled>暂停游戏</button><div class="setting"><label for="manual-speed">手动速度</label><select id="manual-speed"><option value="2" selected>舒缓 · 2 步/秒</option><option value="4">标准 · 4 步/秒</option><option value="6">快速 · 6 步/秒</option></select></div><div class="setting"><label for="speed">AI 演示速度</label><select id="speed"><option value="8" selected>舒缓 · 8 步/秒</option><option value="20">标准 · 20 步/秒</option><option value="45">快速 · 45 步/秒</option></select></div><div class="setting"><label><input id="route" type="checkbox">显示 AI 巡航路线</label></div><p class="storage-note" id="storage-note"></p></section>
       <section class="card"><h2>AI 自动挑战<span class="chip">连续 15 个</span></h2><div class="progress-title"><strong id="challenge-label">等待 AI 开始</strong><span id="progress-text">0 / 15</span></div><div class="track" role="progressbar" aria-label="AI 吃到的食物数量" aria-valuemin="0" aria-valuemax="15" aria-valuenow="0" id="progress"><div id="progress-fill"></div></div><p class="hint" id="challenge-note" aria-live="polite">点击“AI 自动新局”后无需操作。达到 15 个后，AI 会继续挑战填满棋盘。</p></section>
-      <section class="card"><h2>怎么玩</h2><ul class="rule-list"><li><b>转向</b>　<span class="keys">↑ ↓ ← →</span> / <span class="keys">W A S D</span><br>也支持下方按钮和棋盘滑动。</li><li><b>暂停 / 继续</b>　<span class="keys">Space</span> 或暂停按钮</li><li><b>规则</b>　每个食物 10 分。撞墙或撞到身体结束，填满棋盘即获胜。</li><li><b>自动模式</b>　AI 沿一条覆盖全棋盘的闭合路线前进。开始 AI 新局会重置棋盘。</li></ul></section>
+      <section class="card"><h2>怎么玩</h2><ul class="rule-list"><li><b>转向</b>　<span class="keys">↑ ↓ ← →</span> / <span class="keys">W A S D</span><br>也支持下方按钮和棋盘滑动。</li><li><b>暂停 / 继续</b>　<span class="keys">Space</span> 或暂停按钮</li><li><b>规则</b>　每个食物 10 分。撞墙或撞到身体结束，填满棋盘即获胜。</li><li><b>自动模式</b>　AI 用 BFS 追踪食物，只走不会越过蛇尾的安全捷径；不安全时回到闭合巡航路线。</li></ul></section>
     </aside>
   </main>
   <footer><span>刘锦桉 · 2026级集成电路1班</span><a class="detail-link" href="https://github.com/ANDY-bit-sys/kaohe#贪吃蛇小游戏" target="_blank" rel="noopener noreferrer">查看项目说明 ↗</a></footer>
@@ -51,6 +51,11 @@ class SnakeGame {
     this.reset('manual');
   }
   key(p) { return p.x + ',' + p.y; }
+  distanceOnCycle(from, to) { return (to - from + this.cycle.length) % this.cycle.length; }
+  neighbors(p) {
+    return [{x:p.x+1,y:p.y},{x:p.x-1,y:p.y},{x:p.x,y:p.y+1},{x:p.x,y:p.y-1}]
+      .filter(q => q.x >= 0 && q.y >= 0 && q.x < this.size && q.y < this.size);
+  }
   reset(mode) {
     this.mode = mode;
     this.snake = mode === 'ai'
@@ -60,6 +65,7 @@ class SnakeGame {
     this.pending = null;
     this.eaten = 0;
     this.steps = 0;
+    this.shortcuts = 0;
     this.status = 'ready';
     this.reason = '';
     this.spawnFood();
@@ -76,13 +82,80 @@ class SnakeGame {
     this.pending = {x, y};
     return true;
   }
+  bfsPath(start, goal, blocked) {
+    if (this.key(start) === this.key(goal)) return [];
+    const queue = [start], seen = new Set([this.key(start)]), parent = new Map();
+    for (let i = 0; i < queue.length; i++) {
+      const p = queue[i];
+      for (const next of this.neighbors(p)) {
+        const key = this.key(next);
+        if (seen.has(key) || blocked.has(key)) continue;
+        seen.add(key); parent.set(key, p); queue.push(next);
+        if (key === this.key(goal)) {
+          const path = [next];
+          while (this.key(path[0]) !== this.key(start)) path.unshift(parent.get(this.key(path[0])));
+          path.shift();
+          return path;
+        }
+      }
+    }
+    return null;
+  }
+  safeFoodPath(path) {
+    if (!path || !path.length || !this.food) return null;
+    let body = this.snake.map(p => ({...p}));
+    for (const next of path) {
+      const head = body[0], tail = body[body.length - 1];
+      const grows = this.key(next) === this.key(this.food);
+      const occupied = grows ? body : body.slice(0, -1);
+      if (occupied.some(p => this.key(p) === this.key(next))) return null;
+      const headIndex = this.cycleIndex.get(this.key(head));
+      const advance = this.distanceOnCycle(headIndex, this.cycleIndex.get(this.key(next)));
+      const gap = this.distanceOnCycle(headIndex, this.cycleIndex.get(this.key(tail)));
+      const foodDistance = this.distanceOnCycle(headIndex, this.cycleIndex.get(this.key(this.food)));
+      if (advance < 1 || advance > foodDistance || (grows ? advance >= gap : advance > gap)) return null;
+      body.unshift({...next});
+      if (!grows) body.pop();
+    }
+    if (this.key(body[0]) !== this.key(this.food)) return null;
+    if (body.length === this.size * this.size) return body;
+    const blocked = new Set(body.slice(1, -1).map(p => this.key(p)));
+    return this.bfsPath(body[0], body[body.length - 1], blocked) ? body : null;
+  }
+  chooseAiMove() {
+    const head = this.snake[0], tail = this.snake[this.snake.length - 1];
+    const headIndex = this.cycleIndex.get(this.key(head));
+    const tailIndex = this.cycleIndex.get(this.key(tail));
+    const gapToTail = this.distanceOnCycle(headIndex, tailIndex);
+    const foodDistance = this.food ? this.distanceOnCycle(headIndex, this.cycleIndex.get(this.key(this.food))) : 0;
+    const blocked = new Set(this.snake.slice(0, -1).map(p => this.key(p)));
+    blocked.delete(this.key(head));
+    const candidates = this.neighbors(head).filter(next => {
+      const grows = this.food && this.key(next) === this.key(this.food);
+      const body = grows ? this.snake : this.snake.slice(0, -1);
+      if (body.some(p => this.key(p) === this.key(next))) return false;
+      const advance = this.distanceOnCycle(headIndex, this.cycleIndex.get(this.key(next)));
+      // Moving forward without reaching/passing the tail keeps body order on the safe cycle.
+      return advance > 0 && advance <= foodDistance && (grows ? advance < gapToTail : advance <= gapToTail);
+    });
+    const cycleNext = this.cycle[(headIndex + 1) % this.cycle.length];
+    if (!this.food || !candidates.length) return {...cycleNext};
+    const options = candidates.map(first => {
+      const firstKey = this.key(first);
+      const rest = firstKey === this.key(this.food) ? [] : this.bfsPath(first, this.food, new Set([...blocked].filter(k => k !== firstKey)));
+      const path = rest === null ? null : [first, ...rest];
+      return {first, path, safe: this.safeFoodPath(path)};
+    }).filter(option => option.safe).sort((a, b) => a.path.length - b.path.length);
+    const chosen = options.length ? options[0].first : cycleNext;
+    if (this.key(chosen) !== this.key(cycleNext)) this.shortcuts++;
+    return {...chosen};
+  }
   tick() {
     if (this.status !== 'running') return;
     const head = this.snake[0];
     let next;
     if (this.mode === 'ai') {
-      const i = this.cycleIndex.get(this.key(head));
-      next = {...this.cycle[(i + 1) % this.cycle.length]};
+      next = this.chooseAiMove();
       this.direction = {x: next.x - head.x, y: next.y - head.y};
     } else {
       if (this.pending) this.direction = this.pending;
