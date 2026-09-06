@@ -19,7 +19,7 @@
   <div class="heading"><div><p class="eyebrow">LJA / PLAYGROUND 01</p><h1>贪吃蛇<span>SNAKE</span></h1></div><p class="intro">自己挑战一次，或看 AI 走完下一步。</p></div>
   <main class="layout">
     <section class="game-panel" aria-label="游戏区域">
-      <div class="board-top"><span class="live-label" id="mode-label">准备开始</span><span>12 × 12 棋盘</span></div>
+      <div class="board-top"><span class="live-label" id="mode-label">准备开始</span><span>原生 WebGL · 3D 棋盘</span></div>
       <div class="board-wrap"><canvas id="board" width="576" height="576" tabindex="0" aria-label="贪吃蛇棋盘，使用方向键或下方方向按钮控制">你的浏览器不支持 Canvas，请使用较新的浏览器。</canvas><div class="overlay" id="overlay"><div><strong id="overlay-title">一口一口，向前走。</strong><p id="overlay-text">选择手动新局，或开启 AI 自动演示。</p></div></div></div>
       <div class="board-foot"><div class="legend"><span><i class="dot"></i>蛇</span><span><i class="dot food"></i>食物</span></div><span id="steps">0 步 · 长度 4</span></div>
       <div class="dpad" aria-label="触屏方向控制"><button data-direction="up" aria-label="向上">↑</button><button data-direction="left" aria-label="向左">←</button><button data-direction="down" aria-label="向下">↓</button><button data-direction="right" aria-label="向右">→</button></div>
@@ -190,7 +190,8 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {SnakeGame
   const $ = id => document.getElementById(id);
   const game = new SnakeGame();
   const canvas = $('board');
-  const ctx = canvas.getContext('2d');
+  const gl = canvas.getContext('webgl', {antialias:true, alpha:false});
+  if (!gl) throw new Error('当前浏览器不支持 WebGL，无法显示 3D 棋盘');
   const historyKey = 'lja-snake-history-v1';
   let last = 0, elapsed = 0, theme = 'dark', history = [], historyExpanded = false;
   let currentStarted = false, currentRecorded = false;
@@ -201,6 +202,109 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {SnakeGame
     if (Array.isArray(saved)) history = saved.slice(0, 10);
   } catch { history = []; $('storage-note').textContent = '战绩存储内容无法读取，已从空记录开始。'; }
   const colors = {};
+  const vertexShader = `
+    attribute vec3 aPosition;
+    attribute vec3 aNormal;
+    uniform mat4 uMVP;
+    uniform mat4 uModel;
+    varying vec3 vNormal;
+    varying vec3 vWorld;
+    void main(){
+      vec4 world = uModel * vec4(aPosition, 1.0);
+      vWorld = world.xyz;
+      vNormal = normalize(mat3(uModel) * aNormal);
+      gl_Position = uMVP * vec4(aPosition, 1.0);
+    }`;
+  const fragmentShader = `
+    precision mediump float;
+    uniform vec4 uColor;
+    varying vec3 vNormal;
+    varying vec3 vWorld;
+    void main(){
+      vec3 normal = normalize(vNormal);
+      vec3 light = normalize(vec3(-0.45, 1.0, 0.65));
+      float diffuse = max(dot(normal, light), 0.0);
+      float rim = pow(1.0 - max(normal.y, 0.0), 2.0) * 0.13;
+      vec3 color = uColor.rgb * (0.48 + diffuse * 0.52) + rim;
+      gl_FragColor = vec4(color, uColor.a);
+    }`;
+  function compile(type, source) {
+    const shader = gl.createShader(type); gl.shaderSource(shader, source); gl.compileShader(shader);
+    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(shader));
+    return shader;
+  }
+  const program = gl.createProgram();
+  gl.attachShader(program, compile(gl.VERTEX_SHADER, vertexShader));
+  gl.attachShader(program, compile(gl.FRAGMENT_SHADER, fragmentShader));
+  gl.linkProgram(program);
+  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(program));
+  const locations = {
+    position: gl.getAttribLocation(program, 'aPosition'), normal: gl.getAttribLocation(program, 'aNormal'),
+    mvp: gl.getUniformLocation(program, 'uMVP'), model: gl.getUniformLocation(program, 'uModel'), color: gl.getUniformLocation(program, 'uColor')
+  };
+  const M = {
+    identity: () => [1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1],
+    multiply(a,b) { const out = new Array(16).fill(0); for(let c=0;c<4;c++) for(let r=0;r<4;r++) for(let k=0;k<4;k++) out[c*4+r]+=a[k*4+r]*b[c*4+k]; return out; },
+    translate: (x,y,z) => [1,0,0,0, 0,1,0,0, 0,0,1,0, x,y,z,1],
+    scale: (x,y,z) => [x,0,0,0, 0,y,0,0, 0,0,z,0, 0,0,0,1],
+    rotateX(a) { const c=Math.cos(a),s=Math.sin(a); return [1,0,0,0, 0,c,s,0, 0,-s,c,0, 0,0,0,1]; },
+    rotateY(a) { const c=Math.cos(a),s=Math.sin(a); return [c,0,-s,0, 0,1,0,0, s,0,c,0, 0,0,0,1]; },
+    rotateZ(a) { const c=Math.cos(a),s=Math.sin(a); return [c,s,0,0, -s,c,0,0, 0,0,1,0, 0,0,0,1]; },
+    perspective(fov,aspect,near,far) { const f=1/Math.tan(fov/2),nf=1/(near-far); return [f/aspect,0,0,0, 0,f,0,0, 0,0,(far+near)*nf,-1, 0,0,2*far*near*nf,0]; },
+    lookAt(eye,target,up) {
+      let zx=eye[0]-target[0],zy=eye[1]-target[1],zz=eye[2]-target[2],zl=Math.hypot(zx,zy,zz); zx/=zl;zy/=zl;zz/=zl;
+      let xx=up[1]*zz-up[2]*zy,xy=up[2]*zx-up[0]*zz,xz=up[0]*zy-up[1]*zx,xl=Math.hypot(xx,xy,xz); xx/=xl;xy/=xl;xz/=xl;
+      const yx=zy*xz-zz*xy,yy=zz*xx-zx*xz,yz=zx*xy-zy*xx;
+      return [xx,yx,zx,0, xy,yy,zy,0, xz,yz,zz,0, -(xx*eye[0]+xy*eye[1]+xz*eye[2]),-(yx*eye[0]+yy*eye[1]+yz*eye[2]),-(zx*eye[0]+zy*eye[1]+zz*eye[2]),1];
+    }
+  };
+  const compose = (...matrices) => matrices.reduce((a,b) => M.multiply(a,b));
+  const projection = M.perspective(Math.PI/5.2, 1, .1, 80);
+  const view = M.lookAt([9.5,16.5,18.5],[0,0,0],[0,1,0]);
+  const viewProjection = M.multiply(projection, view);
+  function makeMesh(positions, normals, indices, mode=gl.TRIANGLES) {
+    const mesh = {mode, count:indices.length, position:gl.createBuffer(), normal:gl.createBuffer(), index:gl.createBuffer()};
+    gl.bindBuffer(gl.ARRAY_BUFFER, mesh.position); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+    gl.bindBuffer(gl.ARRAY_BUFFER, mesh.normal); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(normals), gl.STATIC_DRAW);
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, mesh.index); gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), gl.STATIC_DRAW);
+    return mesh;
+  }
+  function sphereMesh(rows=14, columns=20) {
+    const positions=[], normals=[], indices=[];
+    for(let y=0;y<=rows;y++) { const v=y/rows,phi=v*Math.PI; for(let x=0;x<=columns;x++) { const u=x/columns,theta=u*Math.PI*2,nx=Math.sin(phi)*Math.cos(theta),ny=Math.cos(phi),nz=Math.sin(phi)*Math.sin(theta); positions.push(nx,ny,nz); normals.push(nx,ny,nz); } }
+    for(let y=0;y<rows;y++) for(let x=0;x<columns;x++) { const a=y*(columns+1)+x,b=a+columns+1; indices.push(a,b,a+1,b,b+1,a+1); }
+    return makeMesh(positions,normals,indices);
+  }
+  function cylinderMesh(sides=18) {
+    const positions=[],normals=[],indices=[];
+    for(let y=0;y<2;y++) for(let i=0;i<=sides;i++) { const a=i/sides*Math.PI*2,x=Math.cos(a),z=Math.sin(a); positions.push(x,y-.5,z); normals.push(x,0,z); }
+    for(let i=0;i<sides;i++) { const a=i,b=i+sides+1; indices.push(a,b,a+1,b,b+1,a+1); }
+    return makeMesh(positions,normals,indices);
+  }
+  function cubeMesh() {
+    const p=[],n=[],i=[]; const faces=[[[0,1,0],[-1,.5,-1],[1,.5,-1],[1,.5,1],[-1,.5,1]],[[0,-1,0],[-1,-.5,1],[1,-.5,1],[1,-.5,-1],[-1,-.5,-1]],[[1,0,0],[1,-.5,-1],[1,-.5,1],[1,.5,1],[1,.5,-1]],[[-1,0,0],[-1,-.5,1],[-1,-.5,-1],[-1,.5,-1],[-1,.5,1]],[[0,0,1],[-1,-.5,1],[-1,.5,1],[1,.5,1],[1,-.5,1]],[[0,0,-1],[1,-.5,-1],[1,.5,-1],[-1,.5,-1],[-1,-.5,-1]]];
+    faces.forEach((f,k)=>{ const base=k*4; for(let q=1;q<5;q++){p.push(...f[q]);n.push(...f[0]);} i.push(base,base+1,base+2,base,base+2,base+3); }); return makeMesh(p,n,i);
+  }
+  const sphere=sphereMesh(), cylinder=cylinderMesh(), cube=cubeMesh();
+  function cssColor(value, alpha=1) {
+    let hex=value.trim(); if(hex[0]==='#'){ if(hex.length===4) hex='#'+[1,2,3].map(i=>hex[i]+hex[i]).join(''); return [parseInt(hex.slice(1,3),16)/255,parseInt(hex.slice(3,5),16)/255,parseInt(hex.slice(5,7),16)/255,alpha]; }
+    const nums=(hex.match(/[\d.]+/g)||[0,0,0]).map(Number); return [nums[0]/255,nums[1]/255,nums[2]/255,alpha];
+  }
+  function drawMesh(mesh, model, color) {
+    gl.bindBuffer(gl.ARRAY_BUFFER,mesh.position); gl.vertexAttribPointer(locations.position,3,gl.FLOAT,false,0,0); gl.enableVertexAttribArray(locations.position);
+    gl.bindBuffer(gl.ARRAY_BUFFER,mesh.normal); gl.vertexAttribPointer(locations.normal,3,gl.FLOAT,false,0,0); gl.enableVertexAttribArray(locations.normal);
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,mesh.index); gl.uniformMatrix4fv(locations.model,false,new Float32Array(model)); gl.uniformMatrix4fv(locations.mvp,false,new Float32Array(M.multiply(viewProjection,model))); gl.uniform4fv(locations.color,color); gl.drawElements(mesh.mode,mesh.count,gl.UNSIGNED_SHORT,0);
+  }
+  function lineMesh(points, color, close=false) {
+    const positions=points.flat(), normals=points.flatMap(()=>[0,1,0]), indices=points.map((_,i)=>i); if(close) indices.push(0);
+    const mesh=makeMesh(positions,normals,indices,gl.LINE_STRIP); drawMesh(mesh,M.identity(),color);
+    gl.deleteBuffer(mesh.position); gl.deleteBuffer(mesh.normal); gl.deleteBuffer(mesh.index);
+  }
+  function world(p) { return [p.x-(game.size-1)/2, p.y-(game.size-1)/2]; }
+  function connector(a,b,r,color) {
+    const [ax,az]=world(a),[bx,bz]=world(b),dx=bx-ax,dz=bz-az,length=Math.hypot(dx,dz),yaw=Math.atan2(dz,dx);
+    const model=compose(M.translate((ax+bx)/2,.56,(az+bz)/2),M.rotateY(-yaw),M.rotateZ(Math.PI/2),M.scale(r,length,r)); drawMesh(cylinder,model,color);
+  }
   function applyTheme() {
     document.documentElement.dataset.theme = theme;
     $('theme').textContent = theme === 'dark' ? '切换到浅色' : '切换到深色';
@@ -209,58 +313,48 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {SnakeGame
     draw();
   }
   function draw() {
-    const cell = canvas.width / game.size;
-    ctx.fillStyle = colors.board;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.strokeStyle = colors.grid;
-    ctx.lineWidth = 1;
-    for (let i = 1; i < game.size; i++) {
-      ctx.beginPath(); ctx.moveTo(i * cell, 0); ctx.lineTo(i * cell, canvas.height); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(0, i * cell); ctx.lineTo(canvas.width, i * cell); ctx.stroke();
-    }
+    gl.viewport(0,0,canvas.width,canvas.height); gl.useProgram(program); gl.enable(gl.DEPTH_TEST); gl.enable(gl.CULL_FACE); gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
+    const bg=cssColor(colors.board); gl.clearColor(bg[0],bg[1],bg[2],1); gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+    const boardColor=theme==='dark'?[.075,.13,.09,1]:[.84,.89,.80,1];
+    drawMesh(cube,compose(M.translate(0,-.22,0),M.scale(game.size/2+.28,.36,game.size/2+.28)),boardColor);
+    const edge=game.size/2, grid=[];
+    for(let i=0;i<=game.size;i++){ const q=-edge+i; grid.push([q,.015,-edge],[q,.015,edge],[-edge,.015,q],[edge,.015,q]); }
+    for(let i=0;i<grid.length;i+=2) lineMesh([grid[i],grid[i+1]],cssColor(colors.grid,.72));
     if ($('route').checked) {
-      ctx.strokeStyle = colors.body; ctx.globalAlpha = .3; ctx.lineWidth = 2;
-      ctx.beginPath();
-      game.cycle.forEach((p, i) => i ? ctx.lineTo((p.x + .5) * cell, (p.y + .5) * cell) : ctx.moveTo((p.x + .5) * cell, (p.y + .5) * cell));
-      ctx.closePath(); ctx.stroke(); ctx.globalAlpha = 1;
+      lineMesh(game.cycle.map(p=>{const [x,z]=world(p);return [x,.055,z];}),cssColor(colors.green,.48),true);
     }
+    gl.depthMask(false);
+    for(const p of game.snake){ const [x,z]=world(p); drawMesh(sphere,compose(M.translate(x,.035,z),M.scale(.46,.025,.46)),[0,0,0,.22]); }
+    if(game.food){ const [x,z]=world(game.food); drawMesh(sphere,compose(M.translate(x,.03,z),M.scale(.38,.02,.38)),[0,0,0,.2]); }
+    gl.depthMask(true);
     if (game.food) {
-      ctx.fillStyle = colors.food; ctx.beginPath();
-      ctx.arc((game.food.x + .5) * cell, (game.food.y + .5) * cell, cell * .23, 0, Math.PI * 2); ctx.fill();
+      const [x,z]=world(game.food), food=cssColor(colors.food);
+      drawMesh(sphere,compose(M.translate(x,.42,z),M.scale(.34,.34,.34)),food);
+      drawMesh(cylinder,compose(M.translate(x,.78,z),M.scale(.055,.25,.055)),[.26,.42,.15,1]);
+      drawMesh(sphere,compose(M.translate(x+.13,.86,z),M.rotateZ(-.55),M.scale(.18,.055,.1)),[.38,.68,.24,1]);
     }
-    // Draw a connected, rounded body first so turns look like one snake rather than loose blocks.
-    ctx.strokeStyle = colors.body; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.lineWidth = cell * .52;
-    for (let i = 1; i < game.snake.length; i++) {
-      const a = game.snake[i - 1], b = game.snake[i];
-      ctx.beginPath(); ctx.moveTo((a.x + .5) * cell, (a.y + .5) * cell); ctx.lineTo((b.x + .5) * cell, (b.y + .5) * cell); ctx.stroke();
-    }
-    // Body beads and a smaller final bead create a soft tapered tail.
+    const bodyColor=cssColor(colors.body),spotColor=cssColor(colors.spot);
+    for(let i=1;i<game.snake.length;i++) connector(game.snake[i-1],game.snake[i],i===game.snake.length-1?.24:.34,bodyColor);
     for (let i = game.snake.length - 1; i >= 1; i--) {
-      const p = game.snake[i], tail = i === game.snake.length - 1;
-      const radius = cell * (tail ? .21 : .29);
-      ctx.fillStyle = colors.body; ctx.beginPath(); ctx.arc((p.x + .5) * cell, (p.y + .5) * cell, radius, 0, Math.PI * 2); ctx.fill();
+      const p=game.snake[i],[x,z]=world(p),tail=i===game.snake.length-1,radius=tail?.27:.39;
+      drawMesh(sphere,compose(M.translate(x,.56,z),M.scale(radius,radius*.92,radius)),bodyColor);
       if (!tail && i % 3 === 0) {
-        ctx.fillStyle = colors.spot; ctx.globalAlpha = .75; ctx.beginPath();
-        ctx.arc((p.x + .5) * cell, (p.y + .5) * cell, cell * .095, 0, Math.PI * 2); ctx.fill(); ctx.globalAlpha = 1;
+        drawMesh(sphere,compose(M.translate(x,.88,z),M.scale(.11,.045,.11)),spotColor);
       }
     }
-    const head = game.snake[0], d = game.direction;
-    const angle = Math.atan2(d.y, d.x);
-    ctx.save(); ctx.translate((head.x + .5) * cell, (head.y + .5) * cell); ctx.rotate(angle);
-    ctx.fillStyle = colors.head; ctx.beginPath(); ctx.ellipse(0, 0, cell * .39, cell * .34, 0, 0, Math.PI * 2); ctx.fill();
-    // Large eyes, tiny highlights and rosy cheeks make the head friendly and readable at small sizes.
-    for (const side of [-1, 1]) {
-      ctx.fillStyle = colors.eye; ctx.beginPath(); ctx.arc(cell * .13, side * cell * .17, cell * .065, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(cell * .15, side * cell * .19, cell * .021, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = colors.blush; ctx.globalAlpha = .58; ctx.beginPath(); ctx.ellipse(cell * .02, side * cell * .275, cell * .07, cell * .035, 0, 0, Math.PI * 2); ctx.fill(); ctx.globalAlpha = 1;
+    const head=game.snake[0],d=game.direction,[hx,hz]=world(head),forward=[d.x,d.y],side=[-d.y,d.x],yaw=-Math.atan2(d.y,d.x);
+    drawMesh(sphere,compose(M.translate(hx,.61,hz),M.rotateY(yaw),M.scale(.53,.48,.45)),cssColor(colors.head));
+    for(const s of [-1,1]){
+      const ex=hx+forward[0]*.25+side[0]*s*.29,ez=hz+forward[1]*.25+side[1]*s*.29;
+      drawMesh(sphere,compose(M.translate(ex,.89,ez),M.scale(.13,.16,.13)),[1,1,1,1]);
+      drawMesh(sphere,compose(M.translate(ex+forward[0]*.09,.91,ez+forward[1]*.09),M.scale(.07,.085,.07)),cssColor(colors.eye));
+      drawMesh(sphere,compose(M.translate(hx+forward[0]*.27+side[0]*s*.4,.65,hz+forward[1]*.27+side[1]*s*.4),M.scale(.09,.045,.09)),cssColor(colors.blush,.82));
     }
-    ctx.strokeStyle = colors.eye; ctx.lineWidth = Math.max(1.5, cell * .025); ctx.lineCap = 'round';
-    ctx.beginPath(); ctx.arc(cell * .12, 0, cell * .07, .25, Math.PI - .25); ctx.stroke();
     if (game.status === 'running' && game.steps % 4 < 2) {
-      ctx.strokeStyle = colors.tongue; ctx.lineWidth = Math.max(2, cell * .032);
-      ctx.beginPath(); ctx.moveTo(cell * .34, 0); ctx.lineTo(cell * .52, 0); ctx.lineTo(cell * .62, -cell * .07); ctx.moveTo(cell * .52, 0); ctx.lineTo(cell * .62, cell * .07); ctx.stroke();
+      const tip=[hx+forward[0]*.83,.58,hz+forward[1]*.83],root=[hx+forward[0]*.48,.58,hz+forward[1]*.48];
+      lineMesh([root,tip,[tip[0]+forward[0]*.12+side[0]*.08,.58,tip[2]+forward[1]*.12+side[1]*.08]],cssColor(colors.tongue));
+      lineMesh([tip,[tip[0]+forward[0]*.12-side[0]*.08,.58,tip[2]+forward[1]*.12-side[1]*.08]],cssColor(colors.tongue));
     }
-    ctx.restore();
   }
   function sync() {
     const ai = game.mode === 'ai';
