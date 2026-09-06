@@ -1,0 +1,90 @@
+{
+  "experiment": "mos",
+  "python": "3.12.14",
+  "PySpice": "1.5",
+  "ngspice": 34,
+  "comparisons": [
+    {
+      "quantity": "VGS",
+      "theory": 2.0,
+      "simulation": 2.0,
+      "unit": "V",
+      "relative_error_percent": 0.0,
+      "passed": true
+    },
+    {
+      "quantity": "ID",
+      "theory": 0.8527131782945737,
+      "simulation": 0.8527131814966799,
+      "unit": "mA",
+      "relative_error_percent": 3.755197195622692e-07,
+      "passed": true
+    },
+    {
+      "quantity": "VDS",
+      "theory": 3.2945736434108523,
+      "simulation": 3.294573637006641,
+      "unit": "V",
+      "relative_error_percent": 1.9438665140281796e-07,
+      "passed": true
+    },
+    {
+      "quantity": "gm",
+      "theory": 1.7054263565891472,
+      "simulation": 1.7054263563842125,
+      "unit": "mS",
+      "relative_error_percent": 1.201662769290124e-08,
+      "passed": true
+    },
+    {
+      "quantity": "ro",
+      "theory": 62499.99999999999,
+      "simulation": 62499.99999999999,
+      "unit": "ohm",
+      "relative_error_percent": 0.0,
+      "passed": true
+    },
+    {
+      "quantity": "Gain at 1kHz (AC magnitude)",
+      "theory": 3.305089111624706,
+      "simulation": 3.3050891048223345,
+      "unit": "V/V",
+      "relative_error_percent": 2.0581507261031224e-07,
+      "passed": true
+    },
+    {
+      "quantity": "Gain (transient signed real)",
+      "theory": -3.3050898383510607,
+      "simulation": -3.3050540387654794,
+      "unit": "V/V",
+      "relative_error_percent": 0.001083165279379196,
+      "passed": true
+    }
+  ],
+  "convention": "Id = K*(Vgs-Vto)^2*(1+lambda*Vds); KP=2*K; W=L=10um",
+  "parameters": {
+    "K_A_per_V2": 0.0008,
+    "KP_A_per_V2": 0.0016,
+    "lambda_per_V": 0.02,
+    "Cb1_F": 1e-05,
+    "input_peak_V": 0.01,
+    "frequency_Hz": 1000.0
+  },
+  "saturation": {
+    "VDS_V": 3.294573637006641,
+    "VOV_V": 1.0,
+    "DC_passed": true,
+    "last_10ms_passed": true
+  },
+  "theory_gain": -3.3050898383510607,
+  "ac_gain_real": -3.305088378096142,
+  "ac_gain_imag": -0.002191754803039901,
+  "transient_gain_real": -3.3050540387654794,
+  "transient_phase_deg": -179.96205516296905,
+  "input_peak_measured_V": 0.010000000000000002,
+  "output_peak_measured_V": 0.03305054763549764,
+  "fit_window_s": [
+    0.02,
+    0.03
+  ]
+}

@@ -1,0 +1,17 @@
+.title NMOS common-source amplifier
+Vdd vdd 0 5.0
+Vin vin 0 DC 0 AC 1 SIN(0 0.01 1000.0)
+Rg1 vdd gate 60000.0
+Rg2 gate 0 40000.0
+Cb1 vin gate 1e-05
+Rd vdd drain 2000.0
+M1 drain gate 0 0 NM l=1e-05 w=1e-05
+.model NM NMOS (gamma=0 kp=0.0016 lambda=0.02 level=1 vto=1.0)
+.options TEMP = 27C
+.options TNOM = 27C
+.options reltol = 1e-07
+.options abstol = 1e-12
+.options vntol = 1e-09
+.save @m1[gm] @m1[gds] v(vin) v(drain) @m1[id] v(vdd) i(vin) i(vdd) v(gate)
+.op
+.end

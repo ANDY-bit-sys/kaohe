@@ -1,6 +1,8 @@
 # 临时渲染文件和本地工具
 tmp/
 .tools/
+.venv-circuits/
+__pycache__/
 
 # 私密配置
 .env

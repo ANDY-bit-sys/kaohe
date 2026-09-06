@@ -1,0 +1,4 @@
+PySpice==1.5
+numpy==2.5.2
+matplotlib==3.11.1
+schemdraw==0.23

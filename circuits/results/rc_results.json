@@ -1,0 +1,31 @@
+{
+  "experiment": "rc",
+  "python": "3.12.14",
+  "PySpice": "1.5",
+  "ngspice": 34,
+  "comparisons": [
+    {
+      "quantity": "Time constant",
+      "theory": 1.0,
+      "simulation": 1.0000020766585842,
+      "unit": "ms",
+      "relative_error_percent": 0.00020766585842046936,
+      "passed": true
+    },
+    {
+      "quantity": "Cutoff frequency",
+      "theory": 159.15494309189535,
+      "simulation": 159.1525050123641,
+      "unit": "Hz",
+      "relative_error_percent": 0.0015318905488545097,
+      "passed": true
+    }
+  ],
+  "parameters": {
+    "R_ohm": 10000.0,
+    "C_F": 1e-07,
+    "pulse_Hz": 50,
+    "rise_time_s": 1e-06
+  },
+  "measurement": "tau: 63.212% crossing; fc: interpolated -3.0103 dB crossing"
+}

@@ -1,0 +1,11 @@
+.title Thevenin equivalent
+Vs supply 0 8.0
+R1 supply a 666.6666666666666
+Rload a 0 10000.0
+.options TEMP = 27C
+.options TNOM = 27C
+.options reltol = 1e-07
+.options abstol = 1e-12
+.options vntol = 1e-09
+.op
+.end

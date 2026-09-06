@@ -1,0 +1,170 @@
+{
+  "experiment": "thevenin",
+  "python": "3.12.14",
+  "PySpice": "1.5",
+  "ngspice": 34,
+  "comparisons": [
+    {
+      "quantity": "Open-circuit voltage",
+      "theory": 8.0,
+      "simulation": 8.0,
+      "unit": "V",
+      "relative_error_percent": 0.0,
+      "passed": true
+    },
+    {
+      "quantity": "Short-circuit current",
+      "theory": 12.0,
+      "simulation": 12.0,
+      "unit": "mA",
+      "relative_error_percent": 0.0,
+      "passed": true
+    },
+    {
+      "quantity": "Thevenin resistance",
+      "theory": 666.6666666666666,
+      "simulation": 666.6666666666666,
+      "unit": "ohm",
+      "relative_error_percent": 0.0,
+      "passed": true
+    }
+  ],
+  "load_checks": [
+    {
+      "quantity": "RL=100 original voltage",
+      "theory": 1.0434782608695652,
+      "simulation": 1.0434782608695652,
+      "unit": "V",
+      "relative_error_percent": 0.0,
+      "passed": true
+    },
+    {
+      "quantity": "RL=100 equivalent voltage",
+      "theory": 1.0434782608695652,
+      "simulation": 1.0434782608695652,
+      "unit": "V",
+      "relative_error_percent": 0.0,
+      "passed": true
+    },
+    {
+      "quantity": "RL=470 original voltage",
+      "theory": 3.3079178885630505,
+      "simulation": 3.3079178885630496,
+      "unit": "V",
+      "relative_error_percent": 2.6850074567175766e-14,
+      "passed": true
+    },
+    {
+      "quantity": "RL=470 equivalent voltage",
+      "theory": 3.3079178885630505,
+      "simulation": 3.3079178885630496,
+      "unit": "V",
+      "relative_error_percent": 2.6850074567175766e-14,
+      "passed": true
+    },
+    {
+      "quantity": "RL=1000 original voltage",
+      "theory": 4.800000000000001,
+      "simulation": 4.8,
+      "unit": "V",
+      "relative_error_percent": 1.850371707708594e-14,
+      "passed": true
+    },
+    {
+      "quantity": "RL=1000 equivalent voltage",
+      "theory": 4.800000000000001,
+      "simulation": 4.8,
+      "unit": "V",
+      "relative_error_percent": 1.850371707708594e-14,
+      "passed": true
+    },
+    {
+      "quantity": "RL=2000 original voltage",
+      "theory": 6.0,
+      "simulation": 6.0,
+      "unit": "V",
+      "relative_error_percent": 0.0,
+      "passed": true
+    },
+    {
+      "quantity": "RL=2000 equivalent voltage",
+      "theory": 6.0,
+      "simulation": 6.0,
+      "unit": "V",
+      "relative_error_percent": 0.0,
+      "passed": true
+    },
+    {
+      "quantity": "RL=10000 original voltage",
+      "theory": 7.5,
+      "simulation": 7.5,
+      "unit": "V",
+      "relative_error_percent": 0.0,
+      "passed": true
+    },
+    {
+      "quantity": "RL=10000 equivalent voltage",
+      "theory": 7.5,
+      "simulation": 7.5,
+      "unit": "V",
+      "relative_error_percent": 0.0,
+      "passed": true
+    }
+  ],
+  "load_table": [
+    [
+      100.0,
+      1.0434782608695652,
+      1.0434782608695652,
+      1.0434782608695652,
+      10.43478260869565,
+      10.43478260869565,
+      10.43478260869565
+    ],
+    [
+      470.0,
+      3.3079178885630505,
+      3.3079178885630496,
+      3.3079178885630496,
+      7.038123167155427,
+      7.038123167155424,
+      7.038123167155424
+    ],
+    [
+      1000.0,
+      4.800000000000001,
+      4.8,
+      4.8,
+      4.800000000000001,
+      4.8,
+      4.8
+    ],
+    [
+      2000.0,
+      6.0,
+      6.0,
+      6.0,
+      3.0,
+      3.0,
+      3.0
+    ],
+    [
+      10000.0,
+      7.5,
+      7.5,
+      7.5,
+      0.75,
+      0.75,
+      0.75
+    ]
+  ],
+  "load_columns": [
+    "RL_ohm",
+    "theory_V",
+    "original_V",
+    "equivalent_V",
+    "theory_mA",
+    "original_mA",
+    "equivalent_mA"
+  ]
+}
