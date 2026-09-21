@@ -3,33 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="刘锦桉的贪吃蛇：手动挑战、AI 自动演示与深浅主题切换。">
-<title>贪吃蛇 · 刘锦桉</title>
+<meta name="description" content="芯片寻迹：在立体芯片上收集信号节点，支持手动贪吃蛇、AI 自动演示与深浅主题。">
+<title>芯片寻迹 · 贪吃蛇 · 刘锦桉</title>
 <style>
-  :root{color-scheme:dark;--bg:#101915;--panel:#18251e;--board:#111d16;--grid:#23362a;--ink:#edf7ee;--muted:#9bb0a0;--line:#314638;--green:#adf079;--green-ink:#182615;--head:#a8ef70;--body:#659b51;--spot:#416f3b;--eye:#172318;--blush:#ff9fa5;--tongue:#ff8da1;--food:#ffb583;--shadow:#0003}
-  :root[data-theme="light"]{color-scheme:light;--bg:#f4f6ee;--panel:#fffef8;--board:#ebf0e4;--grid:#dbe3d2;--ink:#223923;--muted:#61765f;--line:#d6dfcf;--green:#3d6a30;--green-ink:#fff;--head:#70a34d;--body:#88ab67;--spot:#5d8547;--eye:#172318;--blush:#e9878c;--tongue:#c84c68;--food:#bd4c22;--shadow:#2541260b}
-  *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC",sans-serif;line-height:1.7}a{color:inherit;text-decoration:none}button,select,input{font:inherit}button,a,select,input{touch-action:manipulation}button{cursor:pointer}button:disabled{opacity:.4;cursor:default}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--food);outline-offset:4px}button,select{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:9px}button:hover:not(:disabled){border-color:var(--green)}.wrap{max-width:1100px;margin:auto;padding:0 32px}.top{height:83px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.back{font-size:13px;color:var(--muted)}.top button{padding:8px 14px;font-size:12px}.heading{display:flex;justify-content:space-between;align-items:end;gap:24px;margin:40px 0 26px}.eyebrow{color:var(--green);font-size:10px;letter-spacing:3px;margin:0 0 8px}h1{font-size:40px;letter-spacing:1px;margin:0;line-height:1.3}h1 span{font-size:12px;font-weight:400;color:var(--muted);letter-spacing:2px;margin-left:16px}.intro{font-size:13px;color:var(--muted);margin:0 0 4px}.layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(260px,1fr);gap:24px;align-items:start}.game-panel{background:var(--panel);padding:22px;border:1px solid var(--line);border-radius:16px;box-shadow:0 16px 40px var(--shadow)}.board-top{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:15px;gap:10px}.live-label{color:var(--green)}.live-label:before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:currentColor;margin-right:8px}.board-wrap{position:relative;aspect-ratio:1;overflow:hidden;border:1px solid var(--line);border-radius:9px;background:var(--board)}canvas{display:block;width:100%;height:100%;touch-action:none}.overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:color-mix(in srgb,var(--board) 83%,transparent);text-align:center;padding:25px;pointer-events:none}.overlay[hidden]{display:none}.overlay strong{font-size:27px;display:block;margin-bottom:8px}.overlay p{font-size:13px;color:var(--muted);margin:0}.board-foot{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:15px;gap:15px}.legend{display:flex;gap:14px}.dot{display:inline-block;height:7px;width:7px;border-radius:2px;background:var(--green);margin-right:5px}.dot.food{background:var(--food)}.sidebar{display:flex;flex-direction:column;gap:18px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}.stat{border:1px solid var(--line);border-radius:12px;padding:17px 20px;background:var(--panel)}.stat span{font-size:11px;color:var(--muted);display:block}.stat strong{font-size:31px;font-weight:500;line-height:1.5;font-variant-numeric:tabular-nums}.card{padding:23px;background:var(--panel);border:1px solid var(--line);border-radius:12px}.card h2{font-size:14px;margin:0 0 16px;display:flex;justify-content:space-between;gap:12px}.chip{font-size:10px;font-weight:400;border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:var(--muted)}.modes{display:grid;grid-template-columns:1fr 1fr;gap:10px}.modes button{padding:11px 6px;font-size:12px;font-weight:700}.modes .primary{background:var(--green);border-color:var(--green);color:var(--green-ink)}.pause{width:100%;padding:9px;font-size:12px;margin-top:10px}.setting{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:18px;font-size:12px;color:var(--muted)}select{padding:5px 8px;max-width:155px}.setting label{display:flex;align-items:center;gap:7px}input{accent-color:var(--green)}.progress-title{display:flex;justify-content:space-between;align-items:center;font-size:12px}.progress-title span{color:var(--green);font-variant-numeric:tabular-nums}.track{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:13px 0}.track div{height:100%;background:var(--green);width:0;transition:width .15s}.hint{font-size:12px;color:var(--muted);margin:0;line-height:1.9}.rule-list{padding:0;list-style:none;margin:0;display:grid;gap:10px;font-size:12px;color:var(--muted)}.rule-list b{color:var(--ink);font-weight:400}.keys{font:11px monospace;border:1px solid var(--line);border-radius:4px;padding:2px 5px;color:var(--ink)}.dpad{display:grid;grid-template-columns:repeat(3,44px);gap:6px;justify-content:center;margin-top:18px}.dpad button{height:37px}.dpad button:first-child{grid-column:2}.dpad button:nth-child(2){grid-column:1}.history{list-style:none;margin:0;padding:0;display:grid}.history li{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border-top:1px solid var(--line);font-size:11px}.history li:first-child{border-top:0;padding-top:0}.history:not(.expanded) li:nth-child(n+4){display:none}.history b{display:block;font-size:12px;font-weight:500}.history span{color:var(--muted)}.history strong{white-space:nowrap;color:var(--green);font-weight:500}.empty-history{font-size:12px;color:var(--muted);margin:0 0 13px}.empty-history[hidden]{display:none}.history-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.history-actions button{padding:8px 5px;font-size:10px}.storage-note{font-size:11px;color:var(--food);margin:12px 0 0}.storage-note:empty{display:none}footer{padding:28px 0 35px;color:var(--muted);font-size:10px;display:flex;justify-content:space-between;gap:20px}.detail-link{color:var(--green)}
+  :root{color-scheme:dark;--bg:#080f19;--panel:#101c2b;--board:#0b1421;--grid:#326075;--ink:#e8f3fa;--muted:#8ba6b9;--line:#26394a;--green:#63e7dc;--green-ink:#072322;--head:#91fff0;--body:#289caa;--spot:#a5f8ef;--eye:#09222d;--food:#ffbd59;--shadow:#0004}
+  :root[data-theme="light"]{color-scheme:light;--bg:#eef3f7;--panel:#ffffff;--board:#dce7ee;--grid:#456878;--ink:#183246;--muted:#526b7d;--line:#c8d7e0;--green:#007e7b;--green-ink:#fff;--head:#71e8df;--body:#218594;--spot:#b4fff6;--eye:#09222d;--food:#b45d00;--shadow:#16354b12}
+  *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC",sans-serif;line-height:1.7}a{color:inherit;text-decoration:none}button,select,input{font:inherit}button,a,select,input{touch-action:manipulation}button{cursor:pointer}button:disabled{opacity:.4;cursor:default}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--food);outline-offset:4px}button,select{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:9px}button:hover:not(:disabled){border-color:var(--green)}.wrap{max-width:1280px;margin:auto;padding:0 32px}.top{height:83px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.back{font-size:13px;color:var(--muted)}.top button{padding:8px 14px;font-size:12px}.heading{display:flex;justify-content:space-between;align-items:end;gap:24px;margin:40px 0 26px}.eyebrow{color:var(--green);font-size:10px;letter-spacing:3px;margin:0 0 8px}h1{font-size:40px;letter-spacing:1px;margin:0;line-height:1.3}h1 span{font-size:12px;font-weight:400;color:var(--muted);letter-spacing:2px;margin-left:16px}.intro{font-size:13px;color:var(--muted);margin:0 0 4px}.layout{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(285px,1fr);gap:24px;align-items:start}.game-panel{background:var(--panel);padding:22px;border:1px solid var(--line);border-radius:16px;box-shadow:0 16px 40px var(--shadow)}.board-top{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:15px;gap:10px}.live-label{color:var(--green)}.live-label:before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:currentColor;margin-right:8px}.board-wrap{position:relative;aspect-ratio:1;overflow:hidden;border:1px solid var(--line);border-radius:9px;background:var(--board)}canvas{display:block;width:100%;height:100%;touch-action:none}.overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:color-mix(in srgb,var(--board) 83%,transparent);text-align:center;padding:25px;pointer-events:none}.overlay[hidden]{display:none}.overlay strong{font-size:27px;display:block;margin-bottom:8px}.overlay p{font-size:13px;color:var(--muted);margin:0}.board-foot{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:15px;gap:15px}.legend{display:flex;gap:14px}.dot{display:inline-block;height:7px;width:7px;border-radius:2px;background:var(--green);margin-right:5px}.dot.food{background:var(--food)}.sidebar{display:flex;flex-direction:column;gap:18px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}.stat{border:1px solid var(--line);border-radius:12px;padding:17px 20px;background:var(--panel)}.stat span{font-size:11px;color:var(--muted);display:block}.stat strong{font-size:31px;font-weight:500;line-height:1.5;font-variant-numeric:tabular-nums}.card{padding:23px;background:var(--panel);border:1px solid var(--line);border-radius:12px}.card h2{font-size:14px;margin:0 0 16px;display:flex;justify-content:space-between;gap:12px}.chip{font-size:10px;font-weight:400;border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:var(--muted)}.modes{display:grid;grid-template-columns:1fr 1fr;gap:10px}.modes button{padding:11px 6px;font-size:12px;font-weight:700}.modes .primary{background:var(--green);border-color:var(--green);color:var(--green-ink)}.pause{width:100%;padding:9px;font-size:12px;margin-top:10px}.setting{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:18px;font-size:12px;color:var(--muted)}select{padding:5px 8px;max-width:155px}.setting label{display:flex;align-items:center;gap:7px}input{accent-color:var(--green)}.progress-title{display:flex;justify-content:space-between;align-items:center;font-size:12px}.progress-title span{color:var(--green);font-variant-numeric:tabular-nums}.track{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:13px 0}.track div{height:100%;background:var(--green);width:0;transition:width .15s}.hint{font-size:12px;color:var(--muted);margin:0;line-height:1.9}.rule-list{padding:0;list-style:none;margin:0;display:grid;gap:10px;font-size:12px;color:var(--muted)}.rule-list b{color:var(--ink);font-weight:400}.keys{font:11px monospace;border:1px solid var(--line);border-radius:4px;padding:2px 5px;color:var(--ink)}.dpad{display:grid;grid-template-columns:repeat(3,44px);gap:6px;justify-content:center;margin-top:18px}.dpad button{height:37px}.dpad button:first-child{grid-column:2}.dpad button:nth-child(2){grid-column:1}.history{list-style:none;margin:0;padding:0;display:grid}.history li{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border-top:1px solid var(--line);font-size:11px}.history li:first-child{border-top:0;padding-top:0}.history:not(.expanded) li:nth-child(n+4){display:none}.history b{display:block;font-size:12px;font-weight:500}.history span{color:var(--muted)}.history strong{white-space:nowrap;color:var(--green);font-weight:500}.empty-history{font-size:12px;color:var(--muted);margin:0 0 13px}.empty-history[hidden]{display:none}.history-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.history-actions button{padding:8px 5px;font-size:10px}.storage-note{font-size:11px;color:var(--food);margin:12px 0 0}.storage-note:empty{display:none}footer{padding:28px 0 35px;color:var(--muted);font-size:10px;display:flex;justify-content:space-between;gap:20px}.detail-link{color:var(--green)}
   @media(max-width:760px){.wrap{padding:0 18px}.top{height:67px}.heading{display:block;margin:27px 0 22px}h1{font-size:33px}.intro{margin-top:13px}.layout{grid-template-columns:1fr;gap:18px}.game-panel{padding:14px}.sidebar{gap:14px}.card{padding:20px}.dpad{grid-template-columns:repeat(3,58px)}.dpad button{height:42px}.board-foot{font-size:10px}.overlay strong{font-size:23px}footer{flex-direction:column;gap:5px}.stats .stat{padding:12px 20px}.stat strong{font-size:27px}}
+  body{background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:64px 64px;background-attachment:fixed}
+  .wrap{background:var(--bg)}.eyebrow,.board-top,.chip,.stat strong{font-family:Consolas,"Microsoft YaHei",monospace}.eyebrow{letter-spacing:2px}.game-panel{position:relative;border-top:2px solid var(--green)}.board-wrap{border-radius:6px}.board-top>span:last-child{letter-spacing:1px;white-space:nowrap}.board-caption{font-size:11px;color:var(--muted);margin:12px 0 0}.overlay{align-items:flex-end;background:transparent;padding:22px}.overlay>div{width:100%;padding:17px 12px;border:1px solid var(--line);border-radius:8px;background:color-mix(in srgb,var(--panel) 94%,transparent);box-shadow:0 8px 24px var(--shadow)}.overlay strong{font-size:21px;margin-bottom:4px}.dot.food{transform:rotate(45deg);border-radius:0}.stat:first-child strong{color:var(--green)}.stat:last-child strong{color:var(--food)}.card,.stat{border-radius:8px}.card h2:before{content:"";display:block;width:3px;height:14px;background:var(--green);margin-top:5px}.card h2{justify-content:flex-start;align-items:center;gap:8px}.card h2 .chip{margin-left:auto}.track{height:4px}.dpad button{font-family:Consolas,monospace}
+  @media(max-width:760px){.overlay{padding:10px}.overlay>div{padding:10px 8px}.overlay strong{font-size:17px}.overlay p{font-size:11px}.board-top{font-size:10px}.board-caption{font-size:10px}h1 span{font-size:11px}}
   @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header class="top"><a class="back" href="index.html">← 刘锦桉的个人主页</a><button id="theme" type="button">切换到浅色</button></header>
-  <div class="heading"><div><p class="eyebrow">LJA / PLAYGROUND 01</p><h1>贪吃蛇<span>SNAKE</span></h1></div><p class="intro">自己挑战一次，或看 AI 走完下一步。</p></div>
+  <div class="heading"><div><p class="eyebrow">LJA / INTEGRATED CIRCUIT LAB</p><h1>芯片寻迹<span>3D SNAKE</span></h1></div><p class="intro">让每一次转向，接通下一个信号。</p></div>
   <main class="layout">
     <section class="game-panel" aria-label="游戏区域">
-      <div class="board-top"><span class="live-label" id="mode-label">准备开始</span><span>原生 WebGL · 3D 森林棋盘</span></div>
-      <div class="board-wrap"><canvas id="board" width="576" height="576" tabindex="0" aria-label="贪吃蛇棋盘，使用方向键或下方方向按钮控制">你的浏览器不支持 Canvas，请使用较新的浏览器。</canvas><div class="overlay" id="overlay"><div><strong id="overlay-title">一口一口，向前走。</strong><p id="overlay-text">选择手动新局，或开启 AI 自动演示。</p></div></div></div>
-      <div class="board-foot"><div class="legend"><span><i class="dot"></i>蛇</span><span><i class="dot food"></i>食物</span></div><span id="steps">0 步 · 长度 4</span></div>
+      <div class="board-top"><span class="live-label" id="mode-label">准备开始</span><span>IC-01 / 12 × 12</span></div>
+      <div class="board-wrap"><canvas id="board" width="576" height="576" tabindex="0" aria-label="芯片主题贪吃蛇棋盘，使用方向键或下方方向按钮控制">你的浏览器不支持 Canvas，请使用较新的浏览器。</canvas><div class="overlay" id="overlay"><div><strong id="overlay-title">芯片已就绪，等待接通。</strong><p id="overlay-text">选择手动新局，或开启 AI 自动演示。</p></div></div></div>
+      <div class="board-foot"><div class="legend"><span><i class="dot"></i>信号蛇</span><span><i class="dot food"></i>信号节点</span></div><span id="steps">0 步 · 长度 4</span></div>
+      <p class="board-caption">芯片表面是可行走区域，外围引脚与元件仅作装饰。</p>
       <div class="dpad" aria-label="触屏方向控制"><button data-direction="up" aria-label="向上">↑</button><button data-direction="left" aria-label="向左">←</button><button data-direction="down" aria-label="向下">↓</button><button data-direction="right" aria-label="向右">→</button></div>
     </section>
     <aside class="sidebar">
-      <div class="stats"><div class="stat"><span>本局得分</span><strong id="score">0</strong></div><div class="stat"><span>吃到食物</span><strong id="eaten">0</strong></div></div>
+      <div class="stats"><div class="stat"><span>本局得分</span><strong id="score">0</strong></div><div class="stat"><span>已收集节点</span><strong id="eaten">0</strong></div></div>
       <section class="card"><h2>开始一局<span class="chip" id="state-label">等待开始</span></h2><div class="modes"><button id="manual">手动新局</button><button class="primary" id="auto">AI 自动新局</button></div><button class="pause" id="pause" disabled>暂停游戏</button><div class="setting"><label for="manual-speed">手动速度</label><select id="manual-speed"><option value="2" selected>舒缓 · 2 步/秒</option><option value="4">标准 · 4 步/秒</option><option value="6">快速 · 6 步/秒</option></select></div><div class="setting"><label for="speed">AI 演示速度</label><select id="speed"><option value="8" selected>舒缓 · 8 步/秒</option><option value="20">标准 · 20 步/秒</option><option value="45">快速 · 45 步/秒</option></select></div><div class="setting"><label><input id="route" type="checkbox">显示 AI 巡航路线</label></div><p class="storage-note" id="storage-note"></p></section>
       <section class="card"><h2>AI 自动挑战<span class="chip">连续 15 个</span></h2><div class="progress-title"><strong id="challenge-label">等待 AI 开始</strong><span id="progress-text">0 / 15</span></div><div class="track" role="progressbar" aria-label="AI 吃到的食物数量" aria-valuemin="0" aria-valuemax="15" aria-valuenow="0" id="progress"><div id="progress-fill"></div></div><p class="hint" id="challenge-note" aria-live="polite">点击“AI 自动新局”后无需操作。达到 15 个后，AI 会继续挑战填满棋盘。</p></section>
       <section class="card"><h2>最近战绩<span class="chip" id="history-count">0 / 10</span></h2><p class="empty-history" id="history-empty">完成一局或重新开局后，这里会自动记录。</p><ol class="history" id="history-list" aria-label="最近游戏战绩"></ol><div class="history-actions"><button id="history-toggle" type="button" disabled aria-expanded="false">查看完整列表</button><button id="history-clear" type="button" disabled>清空战绩</button></div></section>
-      <section class="card"><h2>怎么玩</h2><ul class="rule-list"><li><b>转向</b>　<span class="keys">↑ ↓ ← →</span> / <span class="keys">W A S D</span><br>也支持下方按钮和棋盘滑动。</li><li><b>暂停 / 继续</b>　<span class="keys">Space</span> 或暂停按钮</li><li><b>规则</b>　每个食物 10 分。撞墙或撞到身体结束，填满棋盘即获胜。</li><li><b>自动模式</b>　AI 用 BFS 追踪食物，只走不会越过蛇尾的安全捷径；不安全时回到闭合巡航路线。</li></ul></section>
+      <section class="card"><h2>怎么玩</h2><ul class="rule-list"><li><b>转向</b>　<span class="keys">↑ ↓ ← →</span> / <span class="keys">W A S D</span><br>也支持下方按钮和棋盘滑动。</li><li><b>暂停 / 继续</b>　<span class="keys">Space</span> 或暂停按钮</li><li><b>规则</b>　收集信号节点（食物），每个 10 分。撞墙或撞到身体结束，填满棋盘即获胜。</li><li><b>自动模式</b>　AI 用 BFS 追踪食物，只走不会越过蛇尾的安全捷径；不安全时回到闭合巡航路线。</li></ul></section>
     </aside>
   </main>
   <footer><span>刘锦桉 · 2026级集成电路1班</span><a class="detail-link" href="https://github.com/ANDY-bit-sys/kaohe#贪吃蛇小游戏" target="_blank" rel="noopener noreferrer">查看项目说明 ↗</a></footer>
@@ -260,7 +264,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {SnakeGame
   };
   const compose = (...matrices) => matrices.reduce((a,b) => M.multiply(a,b));
   const projection = M.perspective(Math.PI/5.2, 1, .1, 80);
-  const view = M.lookAt([10.5,18,20],[0,.1,0],[0,1,0]);
+  const view = M.lookAt([7.5,28,27],[0,-2.2,0],[0,1,0]);
   const viewProjection = M.multiply(projection, view);
   function makeMesh(positions, normals, indices, mode=gl.TRIANGLES) {
     const mesh = {mode, count:indices.length, position:gl.createBuffer(), normal:gl.createBuffer(), index:gl.createBuffer()};
@@ -272,7 +276,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {SnakeGame
   function sphereMesh(rows=14, columns=20) {
     const positions=[], normals=[], indices=[];
     for(let y=0;y<=rows;y++) { const v=y/rows,phi=v*Math.PI; for(let x=0;x<=columns;x++) { const u=x/columns,theta=u*Math.PI*2,nx=Math.sin(phi)*Math.cos(theta),ny=Math.cos(phi),nz=Math.sin(phi)*Math.sin(theta); positions.push(nx,ny,nz); normals.push(nx,ny,nz); } }
-    for(let y=0;y<rows;y++) for(let x=0;x<columns;x++) { const a=y*(columns+1)+x,b=a+columns+1; indices.push(a,b,a+1,b,b+1,a+1); }
+    for(let y=0;y<rows;y++) for(let x=0;x<columns;x++) { const a=y*(columns+1)+x,b=a+columns+1; indices.push(a,a+1,b,b,a+1,b+1); }
     return makeMesh(positions,normals,indices);
   }
   function cylinderMesh(sides=18) {
@@ -282,8 +286,9 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {SnakeGame
     return makeMesh(positions,normals,indices);
   }
   function cubeMesh() {
+    // Outward counterclockwise faces are required with back-face culling enabled.
     const p=[],n=[],i=[]; const faces=[[[0,1,0],[-1,.5,-1],[1,.5,-1],[1,.5,1],[-1,.5,1]],[[0,-1,0],[-1,-.5,1],[1,-.5,1],[1,-.5,-1],[-1,-.5,-1]],[[1,0,0],[1,-.5,-1],[1,-.5,1],[1,.5,1],[1,.5,-1]],[[-1,0,0],[-1,-.5,1],[-1,-.5,-1],[-1,.5,-1],[-1,.5,1]],[[0,0,1],[-1,-.5,1],[-1,.5,1],[1,.5,1],[1,-.5,1]],[[0,0,-1],[1,-.5,-1],[1,.5,-1],[-1,.5,-1],[-1,-.5,-1]]];
-    faces.forEach((f,k)=>{ const base=k*4; for(let q=1;q<5;q++){p.push(...f[q]);n.push(...f[0]);} i.push(base,base+1,base+2,base,base+2,base+3); }); return makeMesh(p,n,i);
+    faces.forEach((f,k)=>{ const base=k*4; for(let q=1;q<5;q++){p.push(...f[q]);n.push(...f[0]);} i.push(base,base+2,base+1,base,base+3,base+2); }); return makeMesh(p,n,i);
   }
   const sphere=sphereMesh(), cylinder=cylinderMesh(), cube=cubeMesh();
   function cssColor(value, alpha=1) {
@@ -305,148 +310,129 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {SnakeGame
     const [ax,az]=world(a),[bx,bz]=world(b),dx=bx-ax,dz=bz-az,length=Math.hypot(dx,dz),yaw=Math.atan2(dz,dx);
     const model=compose(M.translate((ax+bx)/2,.56,(az+bz)/2),M.rotateY(-yaw),M.rotateZ(Math.PI/2),M.scale(r,length,r)); drawMesh(cylinder,model,color);
   }
-  function cylinderBetween(a,b,r,color) {
-    const dx=b[0]-a[0],dy=b[1]-a[1],dz=b[2]-a[2],length=Math.hypot(dx,dy,dz),horizontal=Math.hypot(dx,dz);
-    const yaw=Math.atan2(dz,dx),tilt=Math.atan2(horizontal,dy);
-    drawMesh(cylinder,compose(M.translate((a[0]+b[0])/2,(a[1]+b[1])/2,(a[2]+b[2])/2),M.rotateY(-yaw),M.rotateZ(tilt),M.scale(r,length,r)),color);
+  // All scenery stays outside the 12 x 12 play area, or below the moving snake.
+  // Cube dimensions are half-width, full-height, half-depth in this mesh.
+  function box(x,y,z,w,h,d,color,angle=0) {
+    drawMesh(cube,compose(M.translate(x,y,z),M.rotateY(angle),M.scale(w,h,d)),color);
   }
-  function drawTree(x,z,scale,p) {
-    drawMesh(cylinder,compose(M.translate(x,.52*scale,z),M.scale(.18*scale,1.25*scale,.18*scale)),p.trunk);
-    [[0,1.3,0,.62],[-.34,1.18,.06,.46],[.33,1.2,.08,.48],[.04,1.42,-.28,.43]].forEach((q,i)=>
-      drawMesh(sphere,compose(M.translate(x+q[0]*scale,q[1]*scale,z+q[2]*scale),M.scale(q[3]*scale,q[3]*scale*(i? .88:1),q[3]*scale)),i%2?p.leaf2:p.leaf));
-  }
-  function drawMushroom(x,z,scale,p) {
-    drawMesh(cylinder,compose(M.translate(x,.18*scale,z),M.scale(.11*scale,.42*scale,.11*scale)),p.mushroomStem);
-    drawMesh(sphere,compose(M.translate(x,.43*scale,z),M.scale(.31*scale,.16*scale,.31*scale)),p.mushroom);
-    for(const q of [[-.12,.04],[.11,-.03],[.02,.13]]) drawMesh(sphere,compose(M.translate(x+q[0]*scale,.54*scale,z+q[1]*scale),M.scale(.045*scale,.025*scale,.045*scale)),p.mushroomDot);
-  }
-  function drawFlower(x,z,scale,p,petalColor) {
-    drawMesh(cylinder,compose(M.translate(x,.2*scale,z),M.scale(.035*scale,.45*scale,.035*scale)),p.stem);
-    for(let i=0;i<6;i++){ const a=i*Math.PI/3; drawMesh(sphere,compose(M.translate(x+Math.cos(a)*.15*scale,.48*scale,z+Math.sin(a)*.15*scale),M.scale(.12*scale,.055*scale,.09*scale)),petalColor); }
-    drawMesh(sphere,compose(M.translate(x,.51*scale,z),M.scale(.105*scale,.07*scale,.105*scale)),p.flowerCenter);
-  }
-  function drawRock(x,z,scale,p) {
-    drawMesh(sphere,compose(M.translate(x,.14*scale,z),M.rotateY(.45),M.scale(.42*scale,.24*scale,.33*scale)),p.rock);
-    drawMesh(sphere,compose(M.translate(x+.28*scale,.1*scale,z+.08*scale),M.scale(.23*scale,.16*scale,.2*scale)),p.rock2);
-  }
-  function drawBush(x,z,scale,p) {
-    [[0,.3,0,.34],[-.25,.25,.03,.27],[.24,.26,.06,.29],[.03,.29,-.24,.28]].forEach((q,i)=>
-      drawMesh(sphere,compose(M.translate(x+q[0]*scale,q[1]*scale,z+q[2]*scale),M.scale(q[3]*scale,q[3]*scale*.8,q[3]*scale)),i%2?p.leaf2:p.leaf));
-    for(const q of [[-.16,.45,.12],[.18,.42,.1],[.03,.48,-.16]]) drawMesh(sphere,compose(M.translate(x+q[0]*scale,q[1]*scale,z+q[2]*scale),M.scale(.055*scale,.055*scale,.055*scale)),p.berry);
-  }
-  function drawBench(x,z,scale,p) {
-    for(const ox of [-.48,.48]) {
-      drawMesh(cylinder,compose(M.translate(x+ox*scale,.17*scale,z),M.scale(.055*scale,.42*scale,.055*scale)),p.benchLeg);
-      drawMesh(cylinder,compose(M.translate(x+ox*scale,.43*scale,z-.2*scale),M.scale(.05*scale,.75*scale,.05*scale)),p.benchLeg);
+  function trace(points,color,y=-.455,width=.023) {
+    for(let i=1;i<points.length;i++) {
+      const a=points[i-1],b=points[i],dx=b[0]-a[0],dz=b[1]-a[1];
+      box((a[0]+b[0])/2,y,(a[1]+b[1])/2,Math.hypot(dx,dz)/2,.018,width,color,-Math.atan2(dz,dx));
     }
-    for(const oz of [-.13,.08]) drawMesh(cube,compose(M.translate(x,.32*scale,z+oz*scale),M.scale(.68*scale,.07*scale,.12*scale)),p.bench);
-    for(const oy of [.51,.7]) drawMesh(cube,compose(M.translate(x,oy*scale,z-.22*scale),M.scale(.68*scale,.075*scale,.07*scale)),p.bench);
   }
-  function drawLamp(x,z,scale,p) {
-    drawMesh(cylinder,compose(M.translate(x,.58*scale,z),M.scale(.055*scale,1.25*scale,.055*scale)),p.lampPost);
-    drawMesh(cylinder,compose(M.translate(x,.03*scale,z),M.scale(.17*scale,.08*scale,.17*scale)),p.lampPost);
-    drawMesh(sphere,compose(M.translate(x,1.24*scale,z),M.scale(.21*scale,.25*scale,.21*scale)),p.lampGlow);
-    drawMesh(sphere,compose(M.translate(x,1.47*scale,z),M.scale(.25*scale,.055*scale,.25*scale)),p.lampPost);
+  function via(x,z,p) {
+    drawMesh(sphere,compose(M.translate(x,-.44,z),M.scale(.095,.022,.095)),p.gold);
+    drawMesh(sphere,compose(M.translate(x,-.412,z),M.scale(.043,.014,.043)),p.package);
   }
-  function drawBirdhouse(x,z,scale,p) {
-    drawMesh(cylinder,compose(M.translate(x,.48*scale,z),M.scale(.055*scale,1.05*scale,.055*scale)),p.trunk);
-    drawMesh(cube,compose(M.translate(x,1.02*scale,z),M.scale(.28*scale,.32*scale,.25*scale)),p.birdhouse);
-    drawMesh(sphere,compose(M.translate(x,1.35*scale,z),M.scale(.4*scale,.13*scale,.34*scale)),p.mushroom);
-    drawMesh(sphere,compose(M.translate(x,1.04*scale,z+.27*scale),M.scale(.09*scale,.11*scale,.035*scale)),p.birdhole);
-    drawMesh(cylinder,compose(M.translate(x, .83*scale,z+.36*scale),M.rotateX(Math.PI/2),M.scale(.025*scale,.2*scale,.025*scale)),p.trunk);
+  function component(x,z,angle,p) {
+    box(x,-.24,z,.42,.38,.25,p.component,angle);
+    const dx=Math.cos(angle)*.39,dz=-Math.sin(angle)*.39;
+    for(const side of [-1,1]) box(x+dx*side,-.22,z+dz*side,.095,.4,.26,p.silver,angle);
+    box(x,-.038,z,.16,.022,.16,p.gold,angle);
   }
-  function drawPond(x,z,scale,p) {
-    drawMesh(sphere,compose(M.translate(x,-.025,z),M.rotateY(.3),M.scale(.72*scale,.028,.46*scale)),p.waterEdge);
-    drawMesh(sphere,compose(M.translate(x,.005,z),M.rotateY(.3),M.scale(.62*scale,.018,.38*scale)),p.water);
-    for(const q of [[-.56,.12],[.48,-.16],[-.18,-.4]]) drawMesh(sphere,compose(M.translate(x+q[0]*scale,.04,z+q[1]*scale),M.scale(.13*scale,.07*scale,.11*scale)),p.rock2);
-  }
-  function drawCloud(x,y,z,scale,p) {
-    [[0,0,0,.38],[-.38,-.03,.02,.28],[.38,-.04,.03,.3],[-.06,.18,0,.31]].forEach(q=>
-      drawMesh(sphere,compose(M.translate(x+q[0]*scale,y+q[1]*scale,z+q[2]*scale),M.scale(q[3]*scale,q[3]*scale*.72,q[3]*scale)),p.cloud));
-  }
-  function drawButterfly(x,y,z,scale,p,color) {
-    drawMesh(cylinder,compose(M.translate(x,y,z),M.rotateZ(Math.PI/2),M.scale(.025*scale,.22*scale,.025*scale)),p.birdhole);
-    drawMesh(sphere,compose(M.translate(x,y+.06*scale,z-.1*scale),M.rotateX(.45),M.scale(.15*scale,.035*scale,.12*scale)),color);
-    drawMesh(sphere,compose(M.translate(x,y+.06*scale,z+.1*scale),M.rotateX(-.45),M.scale(.15*scale,.035*scale,.12*scale)),color);
-  }
-  function drawFence(z,p) {
-    for(const x of [-4.8,-2.4,0,2.4,4.8]) drawMesh(cylinder,compose(M.translate(x,.24,z),M.scale(.075,.7,.075)),p.fence);
-    cylinderBetween([-5,.2,z],[-.25,.2,z],.055,p.fence); cylinderBetween([.25,.2,z],[5,.2,z],.055,p.fence);
-    cylinderBetween([-5,.46,z],[-.25,.46,z],.05,p.fence); cylinderBetween([.25,.46,z],[5,.46,z],.05,p.fence);
+  function auxiliaryChip(x,z,p) {
+    box(x,-.2,z,.58,.5,.42,p.package);
+    box(x,.061,z,.39,.024,.25,p.die);
+    for(let i=-1;i<=1;i++) for(const side of [-1,1]) box(x+i*.32,-.32,z+side*.54,.07,.09,.18,p.silver);
+    box(x-.33,.09,z-.22,.045,.015,.045,p.signal);
   }
   function drawScenery() {
     const p=theme==='dark'?{
-      grass:[.15,.29,.19,1],grassEdge:[.09,.20,.13,1],tileA:[.12,.24,.16,1],tileB:[.145,.27,.175,1],trunk:[.38,.25,.14,1],leaf:[.31,.61,.27,1],leaf2:[.42,.72,.32,1],mushroom:[.92,.38,.38,1],mushroomStem:[.92,.82,.66,1],mushroomDot:[1,.91,.72,1],stem:[.31,.59,.25,1],flowerCenter:[1,.72,.23,1],rock:[.35,.43,.39,1],rock2:[.43,.5,.45,1],fence:[.65,.45,.25,1],berry:[.92,.23,.34,1],bench:[.72,.46,.22,1],benchLeg:[.26,.31,.26,1],lampPost:[.24,.3,.28,1],lampGlow:[1,.79,.3,1],birdhouse:[.35,.65,.82,1],birdhole:[.11,.12,.11,1],water:[.24,.67,.82,.92],waterEdge:[.4,.76,.82,1],cloud:[.72,.81,.76,1]
+      pcb:[.035,.14,.18,1],edge:[.025,.075,.11,1],package:[.075,.095,.13,1],die:[.12,.19,.25,1],
+      tileA:[.10,.16,.21,1],tileB:[.112,.18,.225,1],circuit:[.15,.31,.35,1],trace:[.19,.48,.47,1],
+      gold:[.69,.53,.27,1],silver:[.56,.68,.72,1],component:[.23,.31,.37,1],signal:[.32,.84,.78,1]
     }:{
-      grass:[.64,.81,.5,1],grassEdge:[.44,.66,.34,1],tileA:[.72,.86,.59,1],tileB:[.66,.82,.53,1],trunk:[.51,.33,.18,1],leaf:[.35,.68,.29,1],leaf2:[.48,.77,.34,1],mushroom:[.96,.42,.43,1],mushroomStem:[.98,.88,.72,1],mushroomDot:[1,.96,.82,1],stem:[.29,.62,.24,1],flowerCenter:[1,.69,.16,1],rock:[.52,.59,.54,1],rock2:[.61,.67,.62,1],fence:[.72,.49,.27,1],berry:[.93,.2,.34,1],bench:[.76,.49,.23,1],benchLeg:[.31,.36,.3,1],lampPost:[.25,.31,.29,1],lampGlow:[1,.76,.22,1],birdhouse:[.34,.67,.85,1],birdhole:[.12,.13,.12,1],water:[.25,.72,.9,.94],waterEdge:[.44,.8,.86,1],cloud:[1,.99,.94,1]
+      pcb:[.16,.33,.37,1],edge:[.09,.2,.25,1],package:[.105,.13,.17,1],die:[.17,.25,.31,1],
+      tileA:[.14,.21,.265,1],tileB:[.16,.24,.29,1],circuit:[.23,.39,.42,1],trace:[.31,.66,.59,1],
+      gold:[.85,.67,.37,1],silver:[.75,.83,.86,1],component:[.28,.36,.42,1],signal:[.48,1,.86,1]
     };
-    drawMesh(cube,compose(M.translate(0,-.52,0),M.scale(6.86,.72,6.86)),p.grassEdge);
-    drawMesh(cube,compose(M.translate(0,-.17,0),M.scale(6.66,.16,6.66)),p.grass);
-    for(let y=0;y<game.size;y++) for(let x=0;x<game.size;x++) {
-      const px=x-(game.size-1)/2,pz=y-(game.size-1)/2;
-      drawMesh(cube,compose(M.translate(px,-.035,pz),M.scale(.49,.045,.49)),(x+y)%2?p.tileA:p.tileB);
+    // PCB carrier, raised IC package and a gold frame around the playable die.
+    box(0,-.78,0,8.35,.58,8.35,p.edge);
+    box(0,-.5,0,8.28,.08,8.28,p.pcb);
+    box(0,-.25,0,6.38,.48,6.38,p.package);
+    box(0,-.052,0,6.10,.12,6.10,p.gold);
+    box(0,-.017,0,6.02,.09,6.02,p.die);
+    for(let z=0;z<game.size;z++) for(let x=0;x<game.size;x++) {
+      const px=x-(game.size-1)/2,pz=z-(game.size-1)/2;
+      box(px,.027,pz,.487,.012,.487,(x+z)%2?p.tileA:p.tileB);
+      // Repeated interconnect motifs stay dim so food and body remain distinct.
+      if((x+2*z)%3===0) trace([[px-.3,pz-.3],[px+.12,pz-.3],[px+.3,pz-.12],[px+.3,pz+.3]],p.circuit,.038,.012);
     }
-    drawFence(-6.28,p);
-    drawTree(-6.28,-4.55,.78,p); drawTree(6.22,4.35,.72,p); drawTree(6.3,-4.9,.55,p);
-    drawMushroom(-6.3,1.3,1.05,p); drawMushroom(-6.12,1.72,.62,p); drawMushroom(6.25,-1.65,.9,p); drawMushroom(5.95,-1.28,.55,p);
-    drawRock(-6.22,4.15,.95,p); drawRock(6.2,-4.25,.82,p); drawRock(1.9,6.28,.56,p);
-    drawBush(-6.2,-2.55,.9,p); drawBush(6.15,2.65,.82,p); drawBush(-2.7,6.22,.72,p);
-    drawFlower(-6.28,-.15,.95,p,[1,.55,.72,1]); drawFlower(-6.15,.28,.6,p,[1,.78,.36,1]);
-    drawFlower(6.28,.15,.92,p,[.72,.56,1,1]); drawFlower(6.12,.55,.58,p,[1,.6,.78,1]);
-    drawFlower(-4.15,6.25,.78,p,[1,.77,.34,1]); drawFlower(4.1,6.25,.78,p,[.47,.74,1,1]);
-    drawPond(5.92,5.75,.78,p); drawBench(-.35,6.27,.82,p); drawLamp(6.26,-.05,.72,p); drawBirdhouse(-6.22,-3.25,.7,p);
-    drawCloud(-4.9,2.2,-6.55,.9,p); drawCloud(4.7,2.65,-6.7,.72,p);
-    drawButterfly(-5.75,1.05,.15,.9,p,[1,.62,.18,1]); drawButterfly(5.7,.92,1.1,.8,p,[.75,.5,1,1]);
+    // Four banks of twelve gull-wing leads, plus routed copper traces on the PCB.
+    for(let side=0;side<4;side++) for(let i=0;i<12;i++) {
+      const q=i-5.5,angle=side*Math.PI/2;
+      const turn=(u,v)=>[u*Math.cos(angle)+v*Math.sin(angle),-u*Math.sin(angle)+v*Math.cos(angle)];
+      let a=turn(q,6.56),b=turn(q,6.94),c=turn(q,7.28);
+      box(a[0],-.14,a[1],.15,.10,.24,p.silver,angle);
+      box(b[0],-.265,b[1],.15,.29,.16,p.silver,angle);
+      box(c[0],-.405,c[1],.17,.08,.23,p.gold,angle);
+      const offset=i%2===0?.2:-.2;
+      const points=[[q,7.46],[q,7.6],[q+offset,7.8],[q+offset,8.03]].map(v=>turn(...v));
+      trace(points,p.trace); via(...points[points.length-1],p);
+    }
+    // Pin-one index and small carrier components, all outside the movement boundary.
+    drawMesh(sphere,compose(M.translate(-6.22,.011,-6.22),M.scale(.085,.015,.085)),p.signal);
+    auxiliaryChip(-7.25,-7.25,p); auxiliaryChip(7.25,7.25,p);
+    component(7.25,-7.65,0,p); component(7.25,-6.77,0,p);
+    component(-7.25,7.55,0,p); component(-7.25,6.68,0,p);
+    for(const [x,z] of [[-7.94,-7.94],[7.94,-7.94],[-7.94,7.94],[7.94,7.94]]) via(x,z,p);
+    // Silkscreen-like corner markers and the package's exposed metallic side stripes.
+    for(const side of [-1,1]) {
+      trace([[-5.8,side*8.15],[-6.3,side*8.15],[-6.3,side*7.8]],p.silver);
+      trace([[5.8,side*8.15],[6.3,side*8.15],[6.3,side*7.8]],p.silver);
+    }
   }
   function applyTheme() {
     document.documentElement.dataset.theme = theme;
     $('theme').textContent = theme === 'dark' ? '切换到浅色' : '切换到深色';
     const css = getComputedStyle(document.documentElement);
-    for (const name of ['board','grid','green','head','body','spot','eye','blush','tongue','food']) colors[name] = css.getPropertyValue('--' + name).trim();
+    for (const name of ['board','grid','green','head','body','spot','eye','food']) colors[name] = css.getPropertyValue('--' + name).trim();
     draw();
   }
   function draw() {
+    const pixels=Math.max(1,Math.round(canvas.clientWidth*Math.min(devicePixelRatio || 1,2)));
+    if(canvas.width!==pixels || canvas.height!==pixels) { canvas.width=pixels; canvas.height=pixels; }
     gl.viewport(0,0,canvas.width,canvas.height); gl.useProgram(program); gl.enable(gl.DEPTH_TEST); gl.enable(gl.CULL_FACE); gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
     const bg=cssColor(colors.board); gl.clearColor(bg[0],bg[1],bg[2],1); gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
     drawScenery();
     const edge=game.size/2, grid=[];
-    for(let i=0;i<=game.size;i++){ const q=-edge+i; grid.push([q,.015,-edge],[q,.015,edge],[-edge,.015,q],[edge,.015,q]); }
+    for(let i=0;i<=game.size;i++){ const q=-edge+i; grid.push([q,.049,-edge],[q,.049,edge],[-edge,.049,q],[edge,.049,q]); }
     for(let i=0;i<grid.length;i+=2) lineMesh([grid[i],grid[i+1]],cssColor(colors.grid,.46));
     if ($('route').checked) {
-      lineMesh(game.cycle.map(p=>{const [x,z]=world(p);return [x,.055,z];}),cssColor(colors.green,.48),true);
+      lineMesh(game.cycle.map(p=>{const [x,z]=world(p);return [x,.075,z];}),cssColor(colors.green,.48),true);
     }
     gl.depthMask(false);
-    for(const p of game.snake){ const [x,z]=world(p); drawMesh(sphere,compose(M.translate(x,.035,z),M.scale(.46,.025,.46)),[0,0,0,.22]); }
-    if(game.food){ const [x,z]=world(game.food); drawMesh(sphere,compose(M.translate(x,.03,z),M.scale(.38,.02,.38)),[0,0,0,.2]); }
+    for(const p of game.snake){ const [x,z]=world(p); drawMesh(sphere,compose(M.translate(x,.06,z),M.scale(.46,.025,.46)),[0,0,0,.22]); }
+    if(game.food){ const [x,z]=world(game.food); drawMesh(sphere,compose(M.translate(x,.06,z),M.scale(.38,.02,.38)),[0,0,0,.2]); }
     gl.depthMask(true);
     if (game.food) {
-      const [x,z]=world(game.food), food=cssColor(colors.food);
-      drawMesh(sphere,compose(M.translate(x,.42,z),M.scale(.34,.34,.34)),food);
-      drawMesh(cylinder,compose(M.translate(x,.78,z),M.scale(.055,.25,.055)),[.26,.42,.15,1]);
-      drawMesh(sphere,compose(M.translate(x+.13,.86,z),M.rotateZ(-.55),M.scale(.18,.055,.1)),[.38,.68,.24,1]);
-    }
-    const bodyColor=cssColor(colors.body),spotColor=cssColor(colors.spot);
-    for(let i=1;i<game.snake.length;i++) connector(game.snake[i-1],game.snake[i],i===game.snake.length-1?.24:.34,bodyColor);
-    for (let i = game.snake.length - 1; i >= 1; i--) {
-      const p=game.snake[i],[x,z]=world(p),tail=i===game.snake.length-1,radius=tail?.27:.39;
-      drawMesh(sphere,compose(M.translate(x,.56,z),M.scale(radius,radius*.92,radius)),bodyColor);
-      if (!tail && i % 3 === 0) {
-        drawMesh(sphere,compose(M.translate(x,.88,z),M.scale(.11,.045,.11)),spotColor);
+      const [x,z]=world(game.food), amber=[1,.66,.19,1];
+      box(x,.13,z,.32,.14,.32,[.35,.24,.10,1]);
+      for(const side of [-1,1]) {
+        box(x+side*.37,.13,z,.07,.08,.15,[.8,.67,.4,1]);
+        box(x,.13,z+side*.37,.15,.08,.07,[.8,.67,.4,1]);
       }
+      drawMesh(cube,compose(M.translate(x,.49,z),M.rotateY(Math.PI/4),M.rotateZ(Math.PI/4),M.scale(.22,.44,.22)),amber);
+      box(x,.49,z,.09,.62,.09,[1,.91,.59,1]);
+      lineMesh([[x-.46,.075,z-.46],[x+.46,.075,z-.46],[x+.46,.075,z+.46],[x-.46,.075,z+.46]],amber,true);
     }
-    const head=game.snake[0],d=game.direction,[hx,hz]=world(head),forward=[d.x,d.y],side=[-d.y,d.x],yaw=-Math.atan2(d.y,d.x);
-    drawMesh(sphere,compose(M.translate(hx,.61,hz),M.rotateY(yaw),M.scale(.53,.48,.45)),cssColor(colors.head));
-    for(const s of [-1,1]){
-      const ex=hx+forward[0]*.25+side[0]*s*.29,ez=hz+forward[1]*.25+side[1]*s*.29;
-      drawMesh(sphere,compose(M.translate(ex,.89,ez),M.scale(.13,.16,.13)),[1,1,1,1]);
-      drawMesh(sphere,compose(M.translate(ex+forward[0]*.09,.91,ez+forward[1]*.09),M.scale(.07,.085,.07)),cssColor(colors.eye));
-      drawMesh(sphere,compose(M.translate(hx+forward[0]*.27+side[0]*s*.4,.65,hz+forward[1]*.27+side[1]*s*.4),M.scale(.09,.045,.09)),cssColor(colors.blush,.82));
+    const bodyColor=cssColor(colors.body),spotColor=cssColor(colors.spot),metal=[.13,.27,.32,1];
+    for(let i=1;i<game.snake.length;i++) connector(game.snake[i-1],game.snake[i],.17,metal);
+    for(let i=game.snake.length-1;i>=1;i--) {
+      const [x,z]=world(game.snake[i]),prev=game.snake[i-1];
+      const yaw=-Math.atan2(prev.y-game.snake[i].y,prev.x-game.snake[i].x),tail=i===game.snake.length-1;
+      box(x,.48,z,tail?.27:.36,.38,tail?.25:.34,bodyColor,yaw);
+      box(x,.68,z,tail?.2:.29,.04,tail?.18:.27,metal,yaw);
+      box(x,.708,z,.06,.018,tail?.17:.26,spotColor,yaw);
     }
-    if (game.status === 'running' && game.steps % 4 < 2) {
-      const tip=[hx+forward[0]*.83,.58,hz+forward[1]*.83],root=[hx+forward[0]*.48,.58,hz+forward[1]*.48];
-      lineMesh([root,tip,[tip[0]+forward[0]*.12+side[0]*.08,.58,tip[2]+forward[1]*.12+side[1]*.08]],cssColor(colors.tongue));
-      lineMesh([tip,[tip[0]+forward[0]*.12-side[0]*.08,.58,tip[2]+forward[1]*.12-side[1]*.08]],cssColor(colors.tongue));
-    }
+    // The front visor and chevron identify the head and its direction on both themes.
+    const head=game.snake[0],d=game.direction,[hx,hz]=world(head),yaw=-Math.atan2(d.y,d.x);
+    box(hx,.51,hz,.45,.5,.38,cssColor(colors.head),yaw);
+    box(hx,.777,hz,.34,.045,.30,metal,yaw);
+    box(hx+d.x*.455,.55,hz+d.y*.455,.02,.18,.27,spotColor,yaw);
+    const forward=[d.x,d.y],side=[-d.y,d.x];
+    lineMesh([-1,0,1].map((s,i)=>[hx+forward[0]*(i===1?.21:-.12)+side[0]*s*.17,.81,hz+forward[1]*(i===1?.21:-.12)+side[1]*s*.17]),spotColor);
   }
   function sync() {
     const ai = game.mode === 'ai';
@@ -565,6 +551,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {SnakeGame
     }
     last = now; requestAnimationFrame(frame);
   }
+  new ResizeObserver(() => draw()).observe(canvas);
   applyTheme(); renderHistory(); sync(); requestAnimationFrame(frame);
 })();
 </script>
