@@ -6,8 +6,8 @@
 <meta name="description" content="芯片寻迹：在立体芯片上收集信号节点，支持手动贪吃蛇、AI 自动演示与深浅主题。">
 <title>芯片寻迹 · 贪吃蛇 · 刘锦桉</title>
 <style>
-  :root{color-scheme:dark;--bg:#080f19;--panel:#101c2b;--board:#0b1421;--grid:#326075;--ink:#e8f3fa;--muted:#8ba6b9;--line:#26394a;--green:#63e7dc;--green-ink:#072322;--head:#91fff0;--body:#1e568c;--spot:#a5f8ef;--eye:#09222d;--food:#ffbd59;--shadow:#0004}
-  :root[data-theme="light"]{color-scheme:light;--bg:#eef3f7;--panel:#ffffff;--board:#dce7ee;--grid:#456878;--ink:#183246;--muted:#526b7d;--line:#c8d7e0;--green:#007e7b;--green-ink:#fff;--head:#71e8df;--body:#276fa0;--spot:#b4fff6;--eye:#09222d;--food:#b45d00;--shadow:#16354b12}
+  :root{color-scheme:dark;--bg:#080f19;--panel:#101c2b;--board:#0b1421;--grid:#326075;--ink:#e8f3fa;--muted:#8ba6b9;--line:#26394a;--green:#63e7dc;--green-ink:#072322;--head:#91fff0;--body:#103b78;--spot:#a5f8ef;--eye:#09222d;--food:#ffbd59;--shadow:#0004}
+  :root[data-theme="light"]{color-scheme:light;--bg:#eef3f7;--panel:#ffffff;--board:#dce7ee;--grid:#456878;--ink:#183246;--muted:#526b7d;--line:#c8d7e0;--green:#007e7b;--green-ink:#fff;--head:#71e8df;--body:#19528d;--spot:#b4fff6;--eye:#09222d;--food:#b45d00;--shadow:#16354b12}
   *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC",sans-serif;line-height:1.7}a{color:inherit;text-decoration:none}button,select,input{font:inherit}button,a,select,input{touch-action:manipulation}button{cursor:pointer}button:disabled{opacity:.4;cursor:default}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--food);outline-offset:4px}button,select{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:9px}button:hover:not(:disabled){border-color:var(--green)}.wrap{max-width:1280px;margin:auto;padding:0 32px}.top{height:83px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.back{font-size:13px;color:var(--muted)}.top button{padding:8px 14px;font-size:12px}.heading{display:flex;justify-content:space-between;align-items:end;gap:24px;margin:40px 0 26px}.eyebrow{color:var(--green);font-size:10px;letter-spacing:3px;margin:0 0 8px}h1{font-size:40px;letter-spacing:1px;margin:0;line-height:1.3}h1 span{font-size:12px;font-weight:400;color:var(--muted);letter-spacing:2px;margin-left:16px}.intro{font-size:13px;color:var(--muted);margin:0 0 4px}.layout{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(285px,1fr);gap:24px;align-items:start}.game-panel{background:var(--panel);padding:22px;border:1px solid var(--line);border-radius:16px;box-shadow:0 16px 40px var(--shadow)}.board-top{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:15px;gap:10px}.live-label{color:var(--green)}.live-label:before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:currentColor;margin-right:8px}.board-wrap{position:relative;aspect-ratio:1;overflow:hidden;border:1px solid var(--line);border-radius:9px;background:var(--board)}canvas{display:block;width:100%;height:100%;touch-action:none}.overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:color-mix(in srgb,var(--board) 83%,transparent);text-align:center;padding:25px;pointer-events:none}.overlay[hidden]{display:none}.overlay strong{font-size:27px;display:block;margin-bottom:8px}.overlay p{font-size:13px;color:var(--muted);margin:0}.board-foot{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:15px;gap:15px}.legend{display:flex;gap:14px}.dot{display:inline-block;height:7px;width:7px;border-radius:2px;background:var(--green);margin-right:5px}.dot.food{background:var(--food)}.sidebar{display:flex;flex-direction:column;gap:18px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}.stat{border:1px solid var(--line);border-radius:12px;padding:17px 20px;background:var(--panel)}.stat span{font-size:11px;color:var(--muted);display:block}.stat strong{font-size:31px;font-weight:500;line-height:1.5;font-variant-numeric:tabular-nums}.card{padding:23px;background:var(--panel);border:1px solid var(--line);border-radius:12px}.card h2{font-size:14px;margin:0 0 16px;display:flex;justify-content:space-between;gap:12px}.chip{font-size:10px;font-weight:400;border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:var(--muted)}.modes{display:grid;grid-template-columns:1fr 1fr;gap:10px}.modes button{padding:11px 6px;font-size:12px;font-weight:700}.modes .primary{background:var(--green);border-color:var(--green);color:var(--green-ink)}.pause{width:100%;padding:9px;font-size:12px;margin-top:10px}.setting{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:18px;font-size:12px;color:var(--muted)}select{padding:5px 8px;max-width:155px}.setting label{display:flex;align-items:center;gap:7px}input{accent-color:var(--green)}.progress-title{display:flex;justify-content:space-between;align-items:center;font-size:12px}.progress-title span{color:var(--green);font-variant-numeric:tabular-nums}.track{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:13px 0}.track div{height:100%;background:var(--green);width:0;transition:width .15s}.hint{font-size:12px;color:var(--muted);margin:0;line-height:1.9}.rule-list{padding:0;list-style:none;margin:0;display:grid;gap:10px;font-size:12px;color:var(--muted)}.rule-list b{color:var(--ink);font-weight:400}.keys{font:11px monospace;border:1px solid var(--line);border-radius:4px;padding:2px 5px;color:var(--ink)}.dpad{display:grid;grid-template-columns:repeat(3,44px);gap:6px;justify-content:center;margin-top:18px}.dpad button{height:37px}.dpad button:first-child{grid-column:2}.dpad button:nth-child(2){grid-column:1}.history{list-style:none;margin:0;padding:0;display:grid}.history li{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border-top:1px solid var(--line);font-size:11px}.history li:first-child{border-top:0;padding-top:0}.history:not(.expanded) li:nth-child(n+4){display:none}.history b{display:block;font-size:12px;font-weight:500}.history span{color:var(--muted)}.history strong{white-space:nowrap;color:var(--green);font-weight:500}.empty-history{font-size:12px;color:var(--muted);margin:0 0 13px}.empty-history[hidden]{display:none}.history-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.history-actions button{padding:8px 5px;font-size:10px}.storage-note{font-size:11px;color:var(--food);margin:12px 0 0}.storage-note:empty{display:none}footer{padding:28px 0 35px;color:var(--muted);font-size:10px;display:flex;justify-content:space-between;gap:20px}.detail-link{color:var(--green)}
   @media(max-width:760px){.wrap{padding:0 18px}.top{height:67px}.heading{display:block;margin:27px 0 22px}h1{font-size:33px}.intro{margin-top:13px}.layout{grid-template-columns:1fr;gap:18px}.game-panel{padding:14px}.sidebar{gap:14px}.card{padding:20px}.dpad{grid-template-columns:repeat(3,58px)}.dpad button{height:42px}.board-foot{font-size:10px}.overlay strong{font-size:23px}footer{flex-direction:column;gap:5px}.stats .stat{padding:12px 20px}.stat strong{font-size:27px}}
   body{background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:64px 64px;background-attachment:fixed}
@@ -229,6 +229,8 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {SnakeGame
     uniform vec4 uColor;
     uniform sampler2D uTexture;
     uniform bool uUseTexture;
+    uniform float uGloss;
+    uniform float uEmission;
     varying vec3 vNormal;
     varying vec3 vWorld;
     varying vec2 vUV;
@@ -238,12 +240,10 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {SnakeGame
       float diffuse = max(dot(normal, light), 0.0);
       float rim = pow(1.0 - max(normal.y, 0.0), 2.0) * 0.13;
       vec4 albedo = uUseTexture ? texture2D(uTexture, vUV) : uColor;
-      vec3 color = albedo.rgb * (0.48 + diffuse * 0.52) + rim;
-      if(uUseTexture) {
-        vec3 viewDir = normalize(vec3(7.5, 28.0, 27.0) - vWorld);
-        vec3 halfDir = normalize(light + viewDir);
-        color += vec3(0.13) * pow(max(dot(normal, halfDir), 0.0), 28.0);
-      }
+      vec3 color = albedo.rgb * (0.48 + diffuse * 0.52 + uEmission) + rim;
+      vec3 viewDir = normalize(vec3(7.5, 28.0, 27.0) - vWorld);
+      vec3 halfDir = normalize(light + viewDir);
+      color += vec3(uGloss) * pow(max(dot(normal, halfDir), 0.0), 28.0);
       gl_FragColor = vec4(color, albedo.a);
     }`;
   function compile(type, source) {
@@ -259,7 +259,8 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {SnakeGame
   const locations = {
     position: gl.getAttribLocation(program, 'aPosition'), normal: gl.getAttribLocation(program, 'aNormal'), uv: gl.getAttribLocation(program, 'aUV'),
     mvp: gl.getUniformLocation(program, 'uMVP'), model: gl.getUniformLocation(program, 'uModel'), color: gl.getUniformLocation(program, 'uColor'),
-    texture: gl.getUniformLocation(program, 'uTexture'), useTexture: gl.getUniformLocation(program, 'uUseTexture')
+    texture: gl.getUniformLocation(program, 'uTexture'), useTexture: gl.getUniformLocation(program, 'uUseTexture'),
+    gloss: gl.getUniformLocation(program, 'uGloss'), emission: gl.getUniformLocation(program, 'uEmission')
   };
   const M = {
     identity: () => [1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1],
@@ -295,18 +296,12 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {SnakeGame
     for(let y=0;y<rows;y++) for(let x=0;x<columns;x++) { const a=y*(columns+1)+x,b=a+columns+1; indices.push(a,a+1,b,b,a+1,b+1); }
     return makeMesh(positions,normals,indices);
   }
-  function cylinderMesh(sides=18, endRadius=1) {
-    const positions=[],normals=[],indices=[];
-    for(let y=0;y<2;y++) for(let i=0;i<=sides;i++) { const a=i/sides*Math.PI*2,x=Math.cos(a),z=Math.sin(a),r=y?endRadius:1; positions.push(x*r,y-.5,z*r); normals.push(x,1-endRadius,z); }
-    for(let i=0;i<sides;i++) { const a=i,b=i+sides+1; indices.push(a,b,a+1,b,b+1,a+1); }
-    return makeMesh(positions,normals,indices);
-  }
   function cubeMesh() {
     // Outward counterclockwise faces are required with back-face culling enabled.
     const p=[],n=[],i=[]; const faces=[[[0,1,0],[-1,.5,-1],[1,.5,-1],[1,.5,1],[-1,.5,1]],[[0,-1,0],[-1,-.5,1],[1,-.5,1],[1,-.5,-1],[-1,-.5,-1]],[[1,0,0],[1,-.5,-1],[1,-.5,1],[1,.5,1],[1,.5,-1]],[[-1,0,0],[-1,-.5,1],[-1,-.5,-1],[-1,.5,-1],[-1,.5,1]],[[0,0,1],[-1,-.5,1],[-1,.5,1],[1,.5,1],[1,-.5,1]],[[0,0,-1],[1,-.5,-1],[1,.5,-1],[-1,.5,-1],[-1,-.5,-1]]];
     faces.forEach((f,k)=>{ const base=k*4; for(let q=1;q<5;q++){p.push(...f[q]);n.push(...f[0]);} i.push(base,base+2,base+1,base,base+3,base+2); }); return makeMesh(p,n,i);
   }
-  const sphere=sphereMesh(), cylinder=cylinderMesh(), taper=cylinderMesh(24,.12), cube=cubeMesh();
+  const sphere=sphereMesh(), cube=cubeMesh();
   let signalHead=null, signalHeadTexture=null;
   function loadSignalHead() {
     const encoded=$('signal-dragon-model').textContent.trim();
@@ -350,12 +345,14 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {SnakeGame
     let hex=value.trim(); if(hex[0]==='#'){ if(hex.length===4) hex='#'+[1,2,3].map(i=>hex[i]+hex[i]).join(''); return [parseInt(hex.slice(1,3),16)/255,parseInt(hex.slice(3,5),16)/255,parseInt(hex.slice(5,7),16)/255,alpha]; }
     const nums=(hex.match(/[\d.]+/g)||[0,0,0]).map(Number); return [nums[0]/255,nums[1]/255,nums[2]/255,alpha];
   }
-  function drawMesh(mesh, model, color) {
+  function drawMesh(mesh, model, color, gloss=0, emission=0) {
     gl.bindBuffer(gl.ARRAY_BUFFER,mesh.position); gl.vertexAttribPointer(locations.position,3,gl.FLOAT,false,0,0); gl.enableVertexAttribArray(locations.position);
     gl.bindBuffer(gl.ARRAY_BUFFER,mesh.normal); gl.vertexAttribPointer(locations.normal,3,gl.FLOAT,false,0,0); gl.enableVertexAttribArray(locations.normal);
     if(mesh.uv) { gl.bindBuffer(gl.ARRAY_BUFFER,mesh.uv); gl.vertexAttribPointer(locations.uv,2,gl.FLOAT,false,0,0); gl.enableVertexAttribArray(locations.uv); }
     else { gl.disableVertexAttribArray(locations.uv); gl.vertexAttrib2f(locations.uv,0,0); }
     gl.uniform1i(locations.useTexture,!!(mesh.uv && signalHeadTexture));
+    gl.uniform1f(locations.gloss,mesh.uv?.13:gloss);
+    gl.uniform1f(locations.emission,emission);
     if(mesh.uv && signalHeadTexture) { gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D,signalHeadTexture); gl.uniform1i(locations.texture,0); }
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,mesh.index); gl.uniformMatrix4fv(locations.model,false,new Float32Array(model)); gl.uniformMatrix4fv(locations.mvp,false,new Float32Array(M.multiply(viewProjection,model))); gl.uniform4fv(locations.color,color); gl.drawElements(mesh.mode,mesh.count,gl.UNSIGNED_SHORT,0);
   }
@@ -365,10 +362,73 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {SnakeGame
     gl.deleteBuffer(mesh.position); gl.deleteBuffer(mesh.normal); gl.deleteBuffer(mesh.index);
   }
   function world(p) { return [p.x-(game.size-1)/2, p.y-(game.size-1)/2]; }
-  function connector(a,b,r,color,mesh=cylinder,height=.56) {
-    const [ax,az]=world(a),[bx,bz]=world(b),dx=bx-ax,dz=bz-az,length=Math.hypot(dx,dz),yaw=Math.atan2(dz,dx);
-    // Local +Y points toward a; a tapered segment therefore narrows toward a.
-    const model=compose(M.translate((ax+bx)/2,height,(az+bz)/2),M.rotateY(-yaw),M.rotateZ(Math.PI/2),M.scale(r,length,r)); drawMesh(mesh,model,color);
+  const bodyParts={shell:makeMesh([],[],[]),halo:makeMesh([],[],[]),light:makeMesh([],[],[]),gold:makeMesh([],[],[])};
+  function updateBodyMesh(mesh, geometry) {
+    mesh.count=geometry.indices.length;
+    gl.bindBuffer(gl.ARRAY_BUFFER,mesh.position); gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(geometry.positions),gl.DYNAMIC_DRAW);
+    gl.bindBuffer(gl.ARRAY_BUFFER,mesh.normal); gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(geometry.normals),gl.DYNAMIC_DRAW);
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,mesh.index); gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,new Uint16Array(geometry.indices),gl.DYNAMIC_DRAW);
+  }
+  function drawBody() {
+    const points=game.snake.map(world);
+    if(points.length<2) return;
+    const smooth=(a,b,c,d,t)=>.5*((2*b)+(-a+c)*t+(2*a-5*b+4*c-d)*t*t+(-a+3*b-3*c+d)*t*t*t);
+    const at=i=>points[i]|| (i<0 ? [2*points[0][0]-points[1][0],2*points[0][1]-points[1][1]] : [2*points.at(-1)[0]-points.at(-2)[0],2*points.at(-1)[1]-points.at(-2)[1]]);
+    const samples=[],steps=6;
+    for(let segment=0;segment<points.length-1;segment++) for(let step=0;step<steps;step++) {
+      const t=step/steps,p0=at(segment-1),p1=at(segment),p2=at(segment+1),p3=at(segment+2);
+      samples.push({x:smooth(p0[0],p1[0],p2[0],p3[0],t),z:smooth(p0[1],p1[1],p2[1],p3[1],t),progress:segment+t});
+    }
+    samples.push({x:points.at(-1)[0],z:points.at(-1)[1],progress:points.length-1});
+    for(let i=0;i<samples.length;i++) {
+      const s=samples[i],before=samples[Math.max(0,i-1)],after=samples[Math.min(samples.length-1,i+1)];
+      const dx=after.x-before.x,dz=after.z-before.z,length=Math.hypot(dx,dz)||1;
+      s.sideX=-dz/length;s.sideZ=dx/length;
+      const taper=Math.min(1,(points.length-1-s.progress)/1.75);
+      s.r=.39*(.06+.94*taper*taper*(3-2*taper));
+    }
+    const blank=()=>({positions:[],normals:[],indices:[]});
+    const shell=blank(),halo=blank(),light=blank(),gold=blank(),pads=[];
+    function surface(s,angle,offset=0) {
+      const c=Math.cos(angle),v=Math.sin(angle),radius=s.r+offset;
+      return {position:[s.x+s.sideX*c*radius,.57+v*radius,s.z+s.sideZ*c*radius],normal:[s.sideX*c,v,s.sideZ*c]};
+    }
+    function vertex(out,s,angle,offset=0) {
+      const v=surface(s,angle,offset);out.positions.push(...v.position);out.normals.push(...v.normal);
+    }
+    const sides=20;
+    samples.forEach((s,i)=>{
+      for(let j=0;j<=sides;j++) vertex(shell,s,j/sides*Math.PI*2);
+      if(i) for(let j=0;j<sides;j++) {
+        const a=(i-1)*(sides+1)+j,b=i*(sides+1)+j;
+        shell.indices.push(a,b,a+1,b,b+1,a+1);
+      }
+    });
+    function ribbon(out,first,last,angleAt,width,offset) {
+      const base=out.positions.length/3;
+      for(let i=first;i<=last;i++) {
+        const s=samples[i],angle=angleAt(s,i);
+        vertex(out,s,angle-width/2,offset);vertex(out,s,angle+width/2,offset);
+        if(i>first) { const a=base+(i-first-1)*2,b=a+2;out.indices.push(a,b,a+1,b,b+1,a+1); }
+      }
+    }
+    for(const sign of [-1,1]) {
+      const angle=Math.PI/2+sign*.98;
+      ribbon(halo,0,samples.length-1,()=>angle,.36,.012);
+      ribbon(light,0,samples.length-1,()=>angle,.15,.025);
+      ribbon(gold,0,samples.length-4,s=>Math.PI/2+sign*(.27+.09*Math.sin(s.progress*2.5)),.055,.018);
+    }
+    for(let start=8;start<samples.length-8;start+=15) {
+      const sign=(Math.floor(start/15)%2)*2-1,end=Math.min(start+4,samples.length-5);
+      ribbon(gold,start,end,(_,i)=>Math.PI/2+sign*(.27+.38*(i-start)/(end-start)),.055,.024);
+      pads.push(surface(samples[end],Math.PI/2+sign*.65,.035).position);
+    }
+    for(const [key,geometry] of Object.entries({shell,halo,light,gold})) updateBodyMesh(bodyParts[key],geometry);
+    drawMesh(bodyParts.shell,M.identity(),cssColor(colors.body),.28);
+    drawMesh(bodyParts.halo,M.identity(),[.05,.70,.96,.37],0,.5);
+    drawMesh(bodyParts.light,M.identity(),[.30,.97,1,1],0,.85);
+    drawMesh(bodyParts.gold,M.identity(),[.95,.68,.30,1],.13,.12);
+    for(const pad of pads) drawMesh(sphere,compose(M.translate(...pad),M.scale(.047,.047,.047)),[1,.76,.38,1],.15);
   }
   // All scenery stays outside the 12 x 12 play area, or below the moving snake.
   // Cube dimensions are half-width, full-height, half-depth in this mesh.
@@ -477,22 +537,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = {SnakeGame
       box(x,.49,z,.09,.62,.09,[1,.91,.59,1]);
       lineMesh([[x-.46,.075,z-.46],[x+.46,.075,z-.46],[x+.46,.075,z+.46],[x-.46,.075,z+.46]],amber,true);
     }
-    const bodyColor=cssColor(colors.body),tailIndex=game.snake.length-1;
-    // Equal-radius tubes and rounded joints make one continuous body, not separate blocks.
-    for(let i=1;i<game.snake.length;i++) {
-      if(i===tailIndex) connector(game.snake[i],game.snake[i-1],.33,bodyColor,taper);
-      else connector(game.snake[i-1],game.snake[i],.33,bodyColor);
-    }
-    for(let i=tailIndex;i>=1;i--) {
-      const [x,z]=world(game.snake[i]),r=i===tailIndex?.04:.33;
-      drawMesh(sphere,compose(M.translate(x,.56,z),M.scale(r,r,r)),bodyColor);
-    }
-    const signalColor=[.20,.86,.99,1];
-    for(let i=1;i<tailIndex;i++) {
-      const [x,z]=world(game.snake[i]);
-      drawMesh(sphere,compose(M.translate(x,.895,z),M.scale(.045,.045,.045)),signalColor);
-      if(i>1) connector(game.snake[i-1],game.snake[i],.026,signalColor,cylinder,.895);
-    }
+    drawBody();
     const head=game.snake[0],d=game.direction,[hx,hz]=world(head),yaw=-Math.atan2(d.y,d.x);
     if(signalHead && signalHeadTexture) {
       // The generated character is the head; the procedural tube remains flexible.
