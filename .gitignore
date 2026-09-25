@@ -1,5 +1,6 @@
 # 临时渲染文件和本地工具
 tmp/
+output/hunyuan/
 .tools/
 .venv-circuits/
 __pycache__/
