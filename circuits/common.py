@@ -26,6 +26,8 @@ import schemdraw
 import schemdraw.elements as elm
 
 plt.rcParams.update({'figure.dpi': 130, 'savefig.dpi': 170, 'font.size': 11,
+                     'font.family': 'sans-serif',
+                     'font.sans-serif': ['Microsoft YaHei', 'DejaVu Sans'],
                      'axes.spines.top': False, 'axes.spines.right': False,
                      'axes.grid': True, 'grid.alpha': .22, 'axes.titleweight': 'bold'})
 BLUE, ORANGE = '#2375b8', '#d66625'

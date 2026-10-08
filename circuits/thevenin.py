@@ -69,12 +69,12 @@ def main():
     values = np.asarray(data)
     save_csv('thevenin_loads',['RL_ohm','theory_V','original_V','equivalent_V','theory_mA','original_mA','equivalent_mA'],values.T)
     fig, axes = plt.subplots(1,2,figsize=(11,4.5),layout='constrained')
-    for ax,theory_col,orig_col,eq_col,unit in [(axes[0],1,2,3,'Voltage (V)'),(axes[1],4,5,6,'Current (mA)')]:
-        ax.semilogx(values[:,0],values[:,theory_col],color='#96a3b2',label='Theory')
-        ax.semilogx(values[:,0],values[:,orig_col],'o',color=BLUE,label='Original (OP)')
-        ax.semilogx(values[:,0],values[:,eq_col],'x',color=ORANGE,ms=8,label='Equivalent (OP)')
-        ax.set(xlabel='Load resistance (ohm)',ylabel=unit); ax.legend()
-    fig.suptitle('Thevenin validation | same terminal behavior under five loads')
+    for ax,theory_col,orig_col,eq_col,unit in [(axes[0],1,2,3,'负载电压（V）'),(axes[1],4,5,6,'负载电流（mA）')]:
+        ax.semilogx(values[:,0],values[:,theory_col],color='#96a3b2',label='理论值')
+        ax.semilogx(values[:,0],values[:,orig_col],'o',color=BLUE,label='原电路直流仿真值')
+        ax.semilogx(values[:,0],values[:,eq_col],'x',color=ORANGE,ms=8,label='等效电路直流仿真值')
+        ax.set(xlabel='负载电阻（Ω）',ylabel=unit); ax.legend()
+    fig.suptitle('戴维南定理验证：五种负载下的端口电压与电流对比')
     save_figure(fig,'thevenin_loads')
     schematic()
     finish('thevenin',sim,rows,load_checks=checks,load_table=data,
