@@ -14,13 +14,14 @@ def make_circuit():
 
 def schematic():
     d = drawing()
-    d += elm.SourceSquare().at((0,0)).up().length(3).label('Vin: 0-1 V\n50 Hz')
-    d += elm.Resistor().right().length(4).label('R = 10 kΩ')
-    d += elm.Dot().label('Vout', loc='top')
+    d += elm.SourceSquare().at((0,0)).up().length(3).label('输入 Vin\n0-1 V / 50 Hz')
+    d += elm.ResistorIEC().right().length(4).label('R = 10 kΩ')
+    d += elm.Dot().label('输出 Vout', loc='top', color=SCHEMATIC_INK)
     d += elm.Capacitor().down().length(3).label('C = 100 nF', loc='bottom')
     d += elm.Line().to((0,0))
     d += elm.Ground().at((2,0))
-    save_drawing(d, 'rc_schematic')
+    save_drawing(d, 'rc_schematic', '① RC 低通滤波电路',
+                 '输出取电容两端；τ = RC = 1 ms，截止频率 fc ≈ 159.15 Hz')
 
 def main():
     sim = simulator(make_circuit())

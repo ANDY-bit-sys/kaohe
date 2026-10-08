@@ -111,7 +111,7 @@ AI 协作：游戏代码、测试和本节初稿由 Codex 生成并调试；本�
 
 **实现状态：三个电路已用 PySpice 1.5 调用 Ngspice 34 实际运行通过。** 本节记录 2026-09-06 在 Windows、Python 3.12.14 环境中的结果。理论曲线与仿真数据分别计算；仿真数据来自 Ngspice 求解。这里的“实测增益”指从仿真波形测量，没有进行硬件搭建或示波器测量。
 
-三个实验脚本：[rc_filter.py](circuits/rc_filter.py)、[thevenin.py](circuits/thevenin.py)、[mos_amplifier.py](circuits/mos_amplifier.py)。另有公共辅助文件 [common.py](circuits/common.py)，负责输出图表、版本记录和数值核验，运行时请一起保留。电路图由 Schemdraw 根据脚本绘制，保存 PNG 和可编辑的 SVG；[results 目录](circuits/results) 同时包含 CSV 原始数值、JSON 对比结果和可复用的 SPICE 网表。
+三个实验脚本：[rc_filter.py](circuits/rc_filter.py)、[thevenin.py](circuits/thevenin.py)、[mos_amplifier.py](circuits/mos_amplifier.py)。另有公共辅助文件 [common.py](circuits/common.py)，负责输出图表、版本记录和数值核验，运行时请一起保留。电路图由 Schemdraw 根据脚本绘制，保存 PNG 和可编辑的 SVG；六张原理图统一采用白底、蓝色元件、深色导线和矩形电阻的教材风格，并附中文标题与简要说明。[results 目录](circuits/results) 同时包含 CSV 原始数值、JSON 对比结果和可复用的 SPICE 网表。
 
 **AI 协作说明：** 用户选择挑战 1 并明确要求使用 PySpice。实验代码、电路图绘制代码、理论推导及本节初稿由 Codex 编写、运行和核对；尚未把它们记作本人独立手绘、手算或已掌握的内容。本人需依据考核要求复核图与计算，并能用自己的话讲清楚原理。
 

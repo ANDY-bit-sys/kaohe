@@ -29,6 +29,8 @@ plt.rcParams.update({'figure.dpi': 130, 'savefig.dpi': 170, 'font.size': 11,
                      'axes.spines.top': False, 'axes.spines.right': False,
                      'axes.grid': True, 'grid.alpha': .22, 'axes.titleweight': 'bold'})
 BLUE, ORANGE = '#2375b8', '#d66625'
+SCHEMATIC_BLUE, SCHEMATIC_INK = '#2475D8', '#193650'
+SCHEMATIC_FONT = 'Microsoft YaHei'
 
 def simulator(circuit):
     sim = circuit.simulator(temperature=27, nominal_temperature=27)
@@ -46,13 +48,34 @@ def save_figure(fig, name):
 
 def drawing():
     d = schemdraw.Drawing(show=False)
-    d.config(unit=2.4, fontsize=12, color='#17334a', lw=1.8)
+    d.config(unit=2.4, inches_per_unit=.65, fontsize=13,
+             font=SCHEMATIC_FONT, color=SCHEMATIC_BLUE, lw=1.8,
+             bgcolor='white', margin=.32)
     return d
 
-def save_drawing(d, name):
-    d.save(str(OUT / (name + '.svg')))
-    d.save(str(OUT / (name + '.png')), dpi=170)
-    plt.close('all')
+def save_drawing(d, name, title, note=''):
+    # Keep textbook symbols blue and conductors/connection points dark.
+    for element in d.elements:
+        if isinstance(element, (elm.Line, elm.Dot, elm.Ground)):
+            element.color(SCHEMATIC_INK)
+    figure = d.draw(show=False)
+    figure.ax.set_title(title, loc='left', fontname=SCHEMATIC_FONT,
+                        fontsize=16, fontweight='normal', color=SCHEMATIC_INK, pad=24)
+    if note:
+        figure.ax.text(0, -.09, note, transform=figure.ax.transAxes,
+                       ha='left', va='top', fontname=SCHEMATIC_FONT,
+                       fontsize=12, color=SCHEMATIC_BLUE, linespacing=1.6)
+    canvas = figure.getfig()
+    for extension in ['svg', 'png']:
+        path = OUT / (name + '.' + extension)
+        canvas.savefig(path, bbox_inches='tight',
+                       facecolor='white', transparent=False, pad_inches=.25, dpi=180)
+        if extension == 'svg':
+            # Matplotlib emits spaces at the ends of SVG path-data lines.
+            content = path.read_text(encoding='utf-8')
+            path.write_text('\n'.join(line.rstrip() for line in content.splitlines()) + '\n',
+                            encoding='utf-8')
+    plt.close(canvas)
 
 def save_csv(name, columns, data):
     np.savetxt(OUT / (name + '.csv'), np.column_stack(data), delimiter=',',

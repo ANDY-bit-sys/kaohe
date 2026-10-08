@@ -31,7 +31,7 @@ def schematic(dc=False):
     d = drawing()
     # Reverse the MOS symbol so the gate faces the bias network at the left.
     m = d.add(elm.NFet(bulk=True).reverse().at((6,3)))
-    d += elm.Label().at((8.4,2.1)).label('M1 (NMOS)\nB tied to S')
+    d += elm.Label().at((8.6,2.0)).label('M1（NMOS）\n衬底 B 接源极 S',color=SCHEMATIC_INK)
     gx,gy = m.gate
     sx,sy = m.source
     dx,dy = m.drain
@@ -41,42 +41,48 @@ def schematic(dc=False):
     d += elm.Line().at(m.bulk).right().length(.6)
     d += elm.Line().to((bx+.6,0))
     d += elm.Line().to((sx,0))
-    d += elm.Resistor().at(m.drain).up().to((dx,5.6)).label('Rd = 2 kΩ',loc='bottom')
+    d += elm.ResistorIEC().at(m.drain).up().to((dx,5.6)).label('Rd = 2 kΩ',loc='bottom')
     d += elm.Line().left().to((2.5,5.6))
-    d += elm.Dot().at((dx,5.6)).label('VDD = 5 V',loc='top')
-    d += elm.Resistor().at((2.5,5.6)).down().to((2.5,gy)).label('Rg1 = 60 kΩ',loc='top')
+    d += elm.Dot().at((dx,5.6)).label('VDD = 5 V',loc='top',color=SCHEMATIC_INK)
+    d += elm.ResistorIEC().at((2.5,5.6)).down().to((2.5,gy)).label('Rg1 = 60 kΩ',loc='top')
     d += elm.Dot()
     d += elm.Line().to(m.gate)
-    d += elm.Resistor().at((2.5,gy)).down().to((2.5,0)).label('Rg2 = 40 kΩ',loc='bottom')
+    d += elm.ResistorIEC().at((2.5,gy)).down().to((2.5,0)).label('Rg2 = 40 kΩ',loc='bottom')
     d += elm.Line().to((sx,0))
     d += elm.Line().at(m.drain).right().length(1.6)
-    d += elm.Dot(open=True).label('Vo = Vd',loc='right')
+    d += elm.Dot(open=True).label('输出 Vo = Vd',loc='right',color=SCHEMATIC_INK)
     if dc:
         d += elm.Line().at((2.5,gy)).left().length(.7)
-        d += elm.Dot(open=True).label('Cb1 open (DC)',loc='left')
+        d += elm.Dot(open=True).label('Cb1 开路（直流）',loc='left',color=SCHEMATIC_INK)
     else:
         d += elm.Capacitor().at((-.5,gy)).right().to((2.5,gy)).label('Cb1 = 10 µF')
-        d += elm.SourceSin().at((-.5,0)).up().to((-.5,gy)).label('Vi\n10 mV peak\n1 kHz')
+        d += elm.SourceSin().at((-.5,0)).up().to((-.5,gy)).label('输入 Vi\n峰值 10 mV\n1 kHz')
         d += elm.Line().at((-.5,0)).to((2.5,0))
-    save_drawing(d,'mos_dc_path' if dc else 'mos_schematic')
+    if dc:
+        save_drawing(d, 'mos_dc_path', '③ NMOS 共源级：直流通路',
+                     '直流分析时 Cb1 开路；先由分压求栅极电压，再求静态工作点')
+    else:
+        save_drawing(d, 'mos_schematic', '③ NMOS 共源级放大电路',
+                     'Cb1 耦合交流输入；输出取漏极，源极与衬底接地')
 
 def small_signal():
     d = drawing()
     d += elm.SourceSin().at((0,0)).up().length(3).label('vi = vgs')
     d += elm.Line().right().length(2.4)
-    d += elm.Dot().label('g',loc='top')
-    d += elm.Resistor().down().length(3).label('Rg1 || Rg2\n24 kΩ',loc='bottom')
+    d += elm.Dot().label('栅极 g',loc='top',color=SCHEMATIC_INK)
+    d += elm.ResistorIEC().down().length(3).label('Rg1 ∥ Rg2\n24 kΩ',loc='bottom')
     d += elm.Line().to((0,0))
     d += elm.Ground().at((1,0))
     d += elm.SourceControlledI().at((7,3)).down().length(3).label('gm·vgs',loc='top')
     d += elm.Line().right().length(7)
     d += elm.Ground().at((10.5,0))
-    d += elm.Resistor().at((10.5,3)).down().length(3).label('ro\n62.5 kΩ',loc='bottom')
-    d += elm.Resistor().at((14,3)).down().length(3).label('Rd\n2 kΩ',loc='bottom')
+    d += elm.ResistorIEC().at((10.5,3)).down().length(3).label('ro\n62.5 kΩ',loc='bottom')
+    d += elm.ResistorIEC().at((14,3)).down().length(3).label('Rd\n2 kΩ',loc='bottom')
     d += elm.Line().at((7,3)).to((14,3))
-    d += elm.Dot().at((10.5,3)).label('d / vo',loc='top')
-    d += elm.Label().at((7,-1)).label('Midband: Cb1 short; VDD is AC ground; source and bulk grounded')
-    save_drawing(d,'mos_small_signal')
+    d += elm.Dot().at((10.5,3)).label('漏极 d / 输出 vo',loc='top',color=SCHEMATIC_INK)
+    save_drawing(d, 'mos_small_signal', '③ NMOS 共源级：中频小信号等效电路',
+                 '中频近似：Cb1 视为短路，VDD 为交流地，源极与衬底接地\n'
+                 '受控电流源 gm·vgs 的方向由漏极指向源极；Av = −gm × (Rd ∥ ro)')
 
 def main():
     sim = simulator(make_circuit())
