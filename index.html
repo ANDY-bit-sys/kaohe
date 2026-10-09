@@ -3,43 +3,277 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="刘锦桉的个人主页。来自广州，2026级集成电路1班新生，喜欢探索有趣的项目，也喜欢踢足球。">
-  <meta name="theme-color" content="#142f4b">
-  <title>刘锦桉 · 个人主页</title>
+  <meta name="description" content="刘锦桉的个人芯片实验室。2026级集成电路1班新生，记录 C 语言与电路自学，以及贪吃蛇和三个电路项目。">
+  <meta name="theme-color" content="#081b24">
+  <title>刘锦桉 · 个人芯片实验室</title>
   <style>
-    :root{--ink:#142f4b;--muted:#64778b;--blue:#246bce;--paper:#f7f9fc;--line:#dce5ee}
-    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}body{margin:0;background:var(--paper);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC",sans-serif;line-height:1.8}a{color:inherit;text-decoration:none}button,a{-webkit-tap-highlight-color:transparent}a:focus-visible{outline:3px solid #4a98ff;outline-offset:5px;border-radius:4px}::selection{background:#b9d7fa}.wrap{max-width:1120px;margin:auto;padding:0 40px}.skip{position:absolute;left:20px;top:-100px;background:white;padding:12px;z-index:100}.skip:focus{top:10px}
-    header{height:84px;background:rgba(247,249,252,.96);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}header .wrap{height:100%;display:flex;align-items:center;justify-content:space-between}.brand{font-weight:700;font-size:19px;letter-spacing:2px}.brand span{display:inline-block;width:9px;height:9px;background:var(--blue);margin-right:12px}nav{display:flex;gap:30px;font-size:13px}nav a{color:var(--muted);transition:color .2s}nav a:hover{color:var(--blue)}
-    .hero{padding:88px 0 84px;overflow:hidden}.hero-grid{display:grid;grid-template-columns:1.18fr 1fr;gap:70px;align-items:center}.eyebrow{font-size:11px;letter-spacing:2.5px;font-weight:700;color:var(--blue);margin:0 0 20px;display:flex;align-items:center;gap:10px}.eyebrow:before{content:"";height:1px;width:28px;background:currentColor}h1{font-size:clamp(42px,5.5vw,66px);line-height:1.3;letter-spacing:-2px;margin:0 0 22px;font-weight:700}h1 em{font-style:normal;color:var(--blue)}.lead{font-size:16px;color:var(--muted);max-width:450px;line-height:2;margin:0}.actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:32px}.button{padding:12px 20px;border-radius:6px;border:1px solid var(--line);font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:18px;transition:transform .2s,background .2s}.button:hover{transform:translateY(-2px);background:#eaf1f9}.button.primary{background:var(--ink);color:white;border-color:var(--ink)}.button.primary:hover{background:#24517b}.location{font-size:12px;color:var(--muted);margin:28px 0 0;display:flex;align-items:center;gap:9px}.location:before{content:"";width:6px;height:6px;background:#629083;border-radius:50%}
-    .identity{position:relative;background:var(--ink);color:white;min-height:395px;border-radius:12px;padding:32px;overflow:hidden;box-shadow:0 24px 45px -26px #17365470}.identity-top{display:flex;justify-content:space-between;font-size:10px;letter-spacing:2px;color:#abc6df;position:relative;z-index:1}.circuit{position:absolute;inset:0;width:100%;height:100%;color:#46749c}.chip{position:relative;margin:52px auto 42px;width:146px;height:128px;border:1px solid #7197b8;border-radius:8px;background:#183957;display:flex;align-items:center;justify-content:center;flex-direction:column;box-shadow:0 0 0 8px #173654,0 0 0 9px #436788}.chip strong{font-size:39px;letter-spacing:6px;line-height:1.3}.chip small{color:#a7c9e7;letter-spacing:4px;font-size:9px;margin-top:7px}.identity-bottom{position:relative;display:flex;justify-content:space-between;align-items:end;border-top:1px solid #3a5570;padding-top:20px}.identity-bottom strong{font-size:16px;font-weight:500}.identity-bottom p{margin:3px 0 0;font-size:11px;color:#a9c2d8}.identity-bottom>span{font-size:30px;color:#b1d5f5;line-height:1}
-    .section{padding:65px 0;border-top:1px solid var(--line)}.section-heading{display:flex;align-items:baseline;gap:15px;margin-bottom:30px}.number{color:var(--blue);font-size:11px;letter-spacing:2px}h2{font-size:27px;line-height:1.4;margin:0;letter-spacing:.5px}.about-grid{display:grid;grid-template-columns:1fr 1.8fr;gap:80px}.section-note{color:var(--muted);font-size:13px;margin:15px 0 0}.about-copy p{margin:0 0 18px;font-size:15px;color:#475e74;line-height:2.1}.facts{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.tag{border:1px solid var(--line);padding:5px 12px;border-radius:4px;font-size:11px;color:var(--muted);background:white}
-    .interests{display:grid;grid-template-columns:1fr 1fr;gap:24px}.interest{padding:32px;border:1px solid var(--line);border-radius:9px;background:white;position:relative}.icon{height:44px;width:44px;border:1px solid var(--line);display:grid;place-items:center;border-radius:10px;color:var(--blue);margin-bottom:24px}.icon svg{width:24px;height:24px}.interest-label{position:absolute;right:30px;top:32px;color:#91a3b5;font-size:10px;letter-spacing:2px}h3{font-size:21px;margin:0 0 12px}.interest p{font-size:14px;line-height:2;color:var(--muted);margin:0}.interest-footer{margin-top:24px;border-top:1px solid #edf1f5;padding-top:16px;color:var(--blue);font-size:11px;letter-spacing:1px}
-    .journey{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}.step{border-top:2px solid #c9d9ea;padding-top:20px}.step>span{font-size:11px;color:var(--blue)}.step h3{font-size:18px;margin-top:12px}.step p{font-size:13px;color:var(--muted);margin:0;line-height:2}.contact{margin:10px 0 70px;padding:38px 42px;background:#eaf1f9;border-radius:10px;display:flex;justify-content:space-between;gap:30px;align-items:center}.contact h2{font-size:23px}.contact p{font-size:13px;color:var(--muted);margin:10px 0 0}.contact .button{white-space:nowrap;background:white}footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-size:11px}footer .wrap{display:flex;justify-content:space-between;gap:20px}footer a:hover{color:var(--blue)}
-    @media(min-width:761px){.hero-copy{animation:enter .6s ease-out}.identity{animation:enter .8s ease-out}@keyframes enter{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}}
-    @media(max-width:900px){.hero-grid{gap:34px}.hero{padding:58px 0}.wrap{padding:0 28px}.about-grid{gap:35px}.identity{padding:26px}.contact{padding:30px}}
-    @media(max-width:760px){header{height:70px}.wrap{padding:0 22px}nav{gap:18px;font-size:12px}.brand{font-size:17px}.brand span{margin-right:8px}nav a:last-child{display:none}.hero-grid,.about-grid,.interests{grid-template-columns:1fr}.hero-grid{gap:42px}.hero{padding:48px 0}.identity{min-height:350px;max-width:460px;width:100%;margin:auto}.chip{margin-top:38px;margin-bottom:34px}.section{padding:42px 0}.about-grid{gap:20px}.about-grid .section-heading{margin-bottom:0}.section-note{margin-bottom:10px}.journey{grid-template-columns:1fr;gap:26px}.step{padding-top:14px}.step h3{margin-top:7px;margin-bottom:7px}.interest{padding:26px}.contact{margin:8px 0 42px;padding:26px;flex-direction:column;align-items:flex-start}.contact h2{font-size:21px}footer .wrap{flex-direction:column;gap:5px}.section-heading{margin-bottom:24px}h2{font-size:24px}}
-    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+    :root{--night:#081b24;--night-soft:#0e2831;--cyan:#81e8d2;--gold:#d4b37b;--ink:#19352e;--muted:#677770;--paper:#f7f8f4;--line:#dce3dc;--mono:"Cascadia Code","Consolas",monospace}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:94px}body{margin:0;color:var(--ink);background:var(--paper);font-family:"Microsoft YaHei","PingFang SC",sans-serif;line-height:1.8}a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer}button,a{-webkit-tap-highlight-color:transparent;touch-action:manipulation}img{display:block;max-width:100%}svg{display:block}::selection{background:#c6efe1;color:var(--ink)}a:focus-visible,button:focus-visible{outline:3px solid #3b9e83;outline-offset:5px;border-radius:4px}.wrap{width:min(1240px,100%);padding:0 44px;margin:auto}.skip{position:fixed;top:-90px;left:20px;padding:12px 20px;background:white;z-index:100}.skip:focus{top:14px}h1,h2,h3,p{margin-top:0}h2{font-size:clamp(26px,3vw,38px);line-height:1.5;letter-spacing:-.5px}h3{font-size:22px;line-height:1.5}.mono{font-family:var(--mono)}.arrow{font-family:Arial,sans-serif;font-size:20px;line-height:1}
+    .site-header{height:82px;position:sticky;top:0;z-index:20;color:#e5ede9;background:rgba(8,27,36,.96);border-bottom:1px solid #ffffff12;backdrop-filter:blur(16px)}.header-inner{height:100%;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:14px;flex-shrink:0}.brand-symbol{display:grid;place-items:center;width:36px;height:36px;border:1px solid #71968b;border-radius:6px;color:var(--cyan);font:13px var(--mono);letter-spacing:1px;box-shadow:inset 0 0 12px #81e8d212}.brand-name{font-size:15px;font-weight:700;letter-spacing:2px}.brand-note{font:10px var(--mono);letter-spacing:2px;color:#87a69d;margin-left:8px}nav{display:flex;align-items:center;gap:32px;font-size:12px;color:#b2c5bd}nav a:hover{color:var(--cyan)}.nav-github{margin-left:10px;padding:8px 15px;border:1px solid #3f5a58;border-radius:5px;color:#e0eae5}.nav-github .arrow{font-size:14px;margin-left:10px}
+    .hero{position:relative;overflow:hidden;color:#eef4ed;background:var(--night);padding:62px 0 48px;isolation:isolate}.hero:before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse at 72% 46%,#2353446b,transparent 47%),linear-gradient(#ffffff03 1px,transparent 1px),linear-gradient(90deg,#ffffff03 1px,transparent 1px);background-size:auto,60px 60px,60px 60px;mask-image:linear-gradient(to bottom,#000,transparent)}.hero-grid{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:30px;min-height:540px}.hero-copy{position:relative;z-index:2;padding-bottom:20px}.eyebrow{display:flex;align-items:center;gap:12px;font:11px var(--mono);letter-spacing:2px;color:var(--cyan);margin-bottom:30px}.status-dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 16px #81e8d2a0}.hero h1{font-size:clamp(43px,4.65vw,67px);line-height:1.4;letter-spacing:-2px;margin-bottom:26px;font-weight:700}.hero h1 span{color:var(--cyan)}.hero-name{font-size:17px;font-weight:500;color:#e6eee8;letter-spacing:2px;margin-bottom:13px}.hero-lead{font-size:14px;line-height:2;color:#a6bdb2;max-width:430px;margin-bottom:30px}.hero-actions{display:flex;gap:12px;flex-wrap:wrap}.button{display:inline-flex;align-items:center;justify-content:space-between;gap:27px;padding:12px 20px;font-size:12px;border-radius:5px;border:1px solid #557065;transition:transform .2s,background .2s}.button:hover{transform:translateY(-3px)}.button.primary{color:#09261e;background:var(--cyan);border-color:var(--cyan);font-weight:700}.button.secondary{color:#dae5dc;background:#ffffff04}.hero-footnote{display:flex;gap:12px;align-items:center;font-size:11px;color:#829d90;margin:28px 0 0}.hero-footnote svg{width:13px;height:13px}.hero-bottom{display:flex;justify-content:space-between;align-items:center;gap:20px;border-top:1px solid #b4cdbc20;padding-top:26px;margin-top:26px;color:#94aca0;font-size:11px}.hero-bottom strong{font-weight:400;color:#dce6da}.hero-bottom .mono{font-size:10px;letter-spacing:1.5px}.hero-bottom a{display:flex;align-items:center;gap:14px}
+    .chip-stage{position:relative;aspect-ratio:1;min-width:0;max-width:570px;width:100%;justify-self:center;perspective:1200px}.stage-halo{position:absolute;inset:12%;border:1px solid #82c5a622;border-radius:50%;transform:rotateX(60deg);box-shadow:0 0 60px #5bccb010}.chip-board{position:absolute;inset:3%;transform:rotateX(20deg) rotateY(-15deg) rotateZ(-7deg);transform-style:preserve-3d;transition:transform .35s ease-out;will-change:transform}.chip-board svg{width:100%;height:100%;filter:drop-shadow(16px 28px 20px #020d1380)}.signal-path{stroke-dasharray:16 120;animation:signal 9s linear infinite;stroke-linecap:round}.signal-path:nth-child(2){animation-delay:-3s}.signal-path:nth-child(3){animation-delay:-6s}@keyframes signal{to{stroke-dashoffset:-816}}.chip-stage[data-signal="about"] .signal-about,.chip-stage[data-signal="learning"] .signal-learning,.chip-stage[data-signal="projects"] .signal-projects{stroke:#b8ffe7;stroke-width:3;filter:url(#glow)}.chip-link{position:absolute;z-index:3;background:#122b2ce6;backdrop-filter:blur(8px);border:1px solid #54807160;border-radius:5px;padding:9px 13px;color:#c8d9c8;font-size:11px;display:flex;align-items:center;gap:12px;transition:border-color .2s,background .2s}.chip-link:hover,.chip-link:focus-visible{border-color:var(--cyan);background:#183e34}.chip-link .mono{color:var(--gold);font-size:10px}.chip-link.about{left:0;top:25%}.chip-link.learning{right:0;top:16%}.chip-link.projects{right:2%;bottom:21%}.stage-label{position:absolute;left:11%;bottom:8%;font:9px var(--mono);letter-spacing:2px;color:#799b87}.stage-coordinate{position:absolute;right:2%;bottom:5%;font:9px var(--mono);color:#61876e;letter-spacing:1px}
+    .section{padding:84px 0}.section-kicker{display:flex;align-items:center;gap:14px;color:#5c8072;font:10px var(--mono);letter-spacing:2px;margin-bottom:15px}.section-kicker:before{content:"";width:22px;height:1px;background:currentColor}.section-heading{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:34px}.section-heading h2{margin-bottom:0}.section-heading p{font-size:12px;color:var(--muted);max-width:330px;line-height:2;margin-bottom:5px}.projects-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:24px}.project{min-width:0;overflow:hidden;border:1px solid var(--line);border-radius:10px;background:#fff;transition:transform .25s,box-shadow .25s}.project:hover{transform:translateY(-5px);box-shadow:0 16px 40px #18362b0b}.project-visual{position:relative;height:240px;overflow:hidden;background:#eff3ee;border-bottom:1px solid var(--line);display:grid;place-items:center}.project-visual img{position:absolute;inset:0;width:100%;height:100%;min-height:0;object-fit:contain;padding:22px;transition:transform .45s}.project:hover .project-visual img{transform:scale(1.025)}.project.game .project-visual{background:#0c1b24}.project.game .project-visual img{object-fit:cover;object-position:center 45%;padding:0;filter:brightness(.95)}.project.game .project-visual:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 60%,#081b2460)}.visual-badge{position:absolute;z-index:1;top:17px;left:19px;background:#143129e8;color:#def0df;font:9px var(--mono);padding:6px 10px;border:1px solid #82aa8f60;border-radius:3px;letter-spacing:1px}.project-body{padding:25px 28px 23px}.project-meta{display:flex;justify-content:space-between;gap:20px;font:10px var(--mono);letter-spacing:1px;color:#638072;margin-bottom:12px}.project h3{margin-bottom:10px;font-size:22px}.project p{color:var(--muted);font-size:12px;line-height:2;margin-bottom:22px}.project-bottom{display:flex;align-items:center;justify-content:space-between;gap:18px;border-top:1px solid #e8ede6;padding-top:17px}.project-tags{display:flex;flex-wrap:wrap;gap:7px}.project-tags span{font-size:10px;color:#628170;background:#eff5ed;border-radius:3px;padding:3px 8px}.project-open{display:flex;align-items:center;gap:12px;white-space:nowrap;font-size:12px;color:#234e3d;font-weight:700}.project-open:hover{color:#137763}.projects-source{display:flex;justify-content:flex-end;margin-top:22px}.projects-source a{display:flex;gap:16px;align-items:center;font-size:11px;color:var(--muted)}
+    section.learning{background:#eef2eb;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.learning-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}.learning-card{position:relative;padding:32px 34px;border:1px solid #d5dfd3;border-radius:8px;background:#f9fbf7;overflow:hidden}.learning-card:after{content:"";position:absolute;right:-20px;top:-25px;width:150px;height:150px;border:1px solid #e4eae0;border-radius:50%;box-shadow:0 0 0 20px #e4eae040}.learning-head{position:relative;z-index:1;display:flex;gap:18px;align-items:center;margin-bottom:25px}.learning-icon{width:47px;height:47px;border:1px solid #cbdacb;border-radius:6px;display:grid;place-items:center;font:20px var(--mono);color:#42735b;background:#f1f6eb}.learning-head h3{font-size:19px;margin-bottom:2px}.learning-head p{font-size:10px;color:#738372;margin-bottom:0;letter-spacing:1px}.learning-status{font-size:12px;color:#6b7d6c;margin-bottom:9px}.learning-status strong{font-size:23px;display:block;color:#244936;margin-top:4px;font-weight:500}.learning-card>p:last-of-type{font-size:12px;line-height:2;color:#738372;max-width:370px;margin:16px 0 24px}.study-track{display:flex;align-items:center;gap:11px;padding-top:20px;border-top:1px solid #dfe7da;flex-wrap:wrap;color:#6a816d;font-size:10px}.study-track .track-dot{width:6px;height:6px;border-radius:50%;background:#52795b}.study-track .track-line{flex:1;min-width:10px;height:1px;background:#c5d4c4}.study-track .current{color:#245438;font-weight:700}.learning-note{font-size:11px;color:#7a8777;margin:22px 0 0;line-height:2}
+    .about-grid{display:grid;grid-template-columns:.8fr 1.45fr;gap:110px}.about-left .section-kicker{margin-bottom:18px}.about-left h2{margin-bottom:20px}.about-caption{font-size:12px;color:var(--muted);line-height:2}.personal-details{margin-top:31px;border-top:1px solid var(--line)}.personal-row{display:flex;justify-content:space-between;gap:14px;padding:12px 0;border-bottom:1px solid var(--line);font-size:11px}.personal-row span{color:#81907d}.personal-row strong{font-weight:400;color:#35543d}.about-copy>p{font-size:14px;color:#647562;line-height:2.15;margin-bottom:22px}.about-copy>p:first-child{font-size:18px;color:#244432}.about-copy em{font-style:normal;color:#2e6850}.interest-notes{display:grid;grid-template-columns:1fr 1fr;gap:26px;padding-top:13px}.interest-note{border-top:1px solid var(--line);padding-top:21px}.interest-note .mono{font-size:10px;color:#63836b}.interest-note h3{font-size:17px;margin:10px 0}.interest-note p{font-size:12px;color:var(--muted);line-height:2;margin-bottom:0}.future-note{margin-top:30px;padding:20px 24px;border-left:2px solid #8da47d;background:#edf1e8;font-size:12px;line-height:2;color:#65765e}.future-note strong{display:block;color:#355536;font-size:13px;margin-bottom:4px}.contact-section{padding:0 0 76px}.contact{display:flex;align-items:center;justify-content:space-between;gap:30px;padding:37px 40px;border:1px solid #cbd8c8;border-radius:8px;background:#e9efe2}.contact .section-kicker{margin-bottom:9px}.contact h2{font-size:25px;margin-bottom:8px}.contact p{color:#6c7d66;font-size:12px;margin-bottom:0}.contact .button{color:#264a2c;border-color:#aac29f;flex-shrink:0;background:#f7faf2}.footer{background:var(--night);color:#879f92;padding:28px 0;font-size:10px}.footer-inner{display:flex;justify-content:space-between;align-items:center;gap:20px}.footer-mark{font:11px var(--mono);letter-spacing:2px;color:#b4cbb6}.footer a{color:#bdcdbb}
+    .reveal{opacity:1;transform:none}.motion-enabled .reveal{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease}.motion-enabled .reveal.visible{opacity:1;transform:none}
+    .circuit-dialog{width:min(1000px,calc(100% - 32px));max-height:90dvh;padding:0;border:1px solid #ccd7cc;border-radius:12px;color:var(--ink);background:#f8faf5;box-shadow:0 24px 100px #051b3480}.circuit-dialog::backdrop{background:#06171ecc;backdrop-filter:blur(8px)}.dialog-header{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px 28px 15px}.dialog-header h2{font-size:22px;margin:0}.dialog-close{width:36px;height:36px;border:1px solid #ced9c9;border-radius:50%;background:white;color:#375c43;font-size:23px;line-height:1;flex-shrink:0}.dialog-tabs{display:flex;flex-wrap:wrap;gap:8px;padding:0 28px 20px}.dialog-tabs button{border:1px solid #d0dccb;border-radius:4px;padding:7px 12px;color:#547347;background:#fff;font-size:11px}.dialog-tabs button[aria-pressed="true"]{background:#294c39;color:#fff;border-color:#294c39}.dialog-figure{margin:0;padding:0 24px 24px}.dialog-figure img{width:100%;max-height:58dvh;object-fit:contain;background:white;border:1px solid #e2e8dd;border-radius:5px}.dialog-figure figcaption{font-size:12px;color:#6d8065;margin-top:14px;line-height:2}.dialog-source{display:flex;justify-content:flex-end;padding:0 28px 24px}.dialog-source a{font-size:11px;color:#3a7054;display:flex;gap:12px;align-items:center}body.dialog-open{overflow:hidden}
+    @media(max-width:1100px){.brand-note{display:none}.wrap{padding:0 30px}.hero h1{font-size:53px}.hero-grid{min-height:485px;gap:15px}.chip-link{font-size:10px;padding:7px 10px}.chip-stage{max-width:490px}.about-grid{gap:55px}.project-bottom{align-items:flex-start;flex-direction:column;gap:12px}.project-visual{height:220px}}
+    @media(max-width:760px){html{scroll-padding-top:80px}.wrap{padding:0 22px}.site-header{height:70px}.brand{gap:9px}.brand-symbol{width:30px;height:30px;font-size:11px}.brand-name{font-size:13px;letter-spacing:1px}nav{gap:18px;font-size:11px}.nav-github{display:none}.hero{padding:48px 0 27px}.hero-grid{grid-template-columns:1fr;gap:12px}.hero-copy{padding-bottom:0}.hero h1{font-size:49px;letter-spacing:-1px;margin-bottom:21px}.eyebrow{font-size:9px;letter-spacing:1.5px;margin-bottom:25px}.hero-name{font-size:15px}.hero-lead{font-size:13px;max-width:390px}.hero-footnote{margin-top:23px}.chip-stage{max-width:440px;margin-top:4px}.hero-bottom{margin-top:8px;align-items:flex-start;gap:14px}.hero-bottom .mono{font-size:8px;letter-spacing:1px}.hero-bottom strong{font-size:10px}.section{padding:54px 0}.section-heading{align-items:flex-start;flex-direction:column;gap:14px;margin-bottom:27px}.section-heading p{max-width:100%;margin-bottom:0}.section-heading h2{font-size:29px}.projects-grid,.learning-grid,.about-grid{grid-template-columns:1fr}.projects-grid{gap:20px}.project-visual{height:230px}.project-body{padding:22px}.project h3{font-size:21px}.project-bottom{flex-direction:row;align-items:center;gap:8px}.project-tags span{font-size:9px}.project-open{font-size:11px;gap:7px}.learning-card{padding:27px}.learning-head{margin-bottom:22px}.about-grid{gap:32px}.personal-details{margin-top:23px}.about-left h2{font-size:29px}.about-copy>p{font-size:13px}.about-copy>p:first-child{font-size:16px}.interest-notes{gap:18px}.interest-note h3{font-size:16px}.future-note{padding:18px 20px}.contact-section{padding-bottom:45px}.contact{flex-direction:column;align-items:flex-start;padding:26px;gap:22px}.contact h2{font-size:23px}.footer-inner{align-items:flex-start;flex-direction:column;gap:10px}.dialog-header{padding:20px}.dialog-header h2{font-size:18px}.dialog-tabs{padding:0 20px 15px}.dialog-figure{padding:0 14px 19px}.dialog-source{padding:0 20px 20px}}
+    @media(max-width:360px){.wrap{padding:0 17px}nav{gap:12px;font-size:10px}.brand-name{font-size:12px}.hero h1{font-size:42px}.hero-actions .button{padding:11px 14px;gap:14px}.chip-link{font-size:9px;padding:6px 8px;gap:6px}.project-bottom{flex-direction:column;align-items:flex-start;gap:13px}.study-track{gap:8px;font-size:9px}.learning-card{padding:23px}.stage-label{font-size:8px;letter-spacing:1px}}
+    .extra-project .project-visual{background:#f9fbff}.extra-project .project-visual img{padding:10px}.restaurant-preview img{object-fit:cover;object-position:center;padding:0!important}
+    .dialog-source{gap:24px}
+    @media(min-width:761px) and (hover:hover) and (pointer:fine){
+      .hero:after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(330px circle at var(--pointer-x,70%) var(--pointer-y,50%),#91e9c923,transparent 75%);opacity:0;transition:opacity .3s}
+      .hero[data-pointer="active"]:after{opacity:1}
+      .project{position:relative;transform-origin:center;transition:transform .22s ease-out,box-shadow .25s,border-color .25s}
+      .project:after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;border-radius:inherit;background:radial-gradient(300px circle at var(--pointer-x,50%) var(--pointer-y,50%),#72cc9a24,transparent 75%);opacity:0;transition:opacity .25s}
+      .project[data-pointer="active"]{border-color:#93bba3;box-shadow:0 18px 40px #18362b16}
+      .project[data-pointer="active"]:after{opacity:1}
+      .hero-actions .button,.contact .button{transition:transform .2s ease-out,background .2s,box-shadow .2s}
+      .hero-actions .button.primary:hover{box-shadow:0 0 28px #81e8d225}
+      .project-open .arrow,.nav-github .arrow{transition:transform .2s;display:inline-block}
+      .project-open:hover .arrow,.nav-github:hover .arrow{transform:translate(3px,-3px)}
+    }
+    @media(max-width:760px){
+      .hero{padding:36px 0 25px}.hero-grid{min-height:0;gap:0}.hero h1{font-size:44px}.hero-lead{margin-bottom:24px}.chip-stage{display:none}.hero-bottom{margin-top:24px;padding-top:20px}
+      .brand,nav a{min-height:44px;display:flex;align-items:center}.button{min-height:46px}.hero-actions{gap:10px}.hero-actions .button{padding:11px 16px;gap:18px}
+      .signal-path{animation:none}.chip-board{will-change:auto}.button:hover,.project:hover,.project:hover .project-visual img{transform:none;box-shadow:none}
+      .motion-enabled .reveal{opacity:1;transform:none;transition:none}.project-visual{height:195px}.project-bottom{flex-direction:column;align-items:flex-start;gap:13px}
+      .project-open{width:100%;min-height:44px;justify-content:space-between;padding:10px 14px;border:1px solid #d6e2d1;border-radius:5px;background:#f4f8ef}
+      .dialog-close{width:44px;height:44px}.dialog-tabs button{min-height:44px;padding:8px 12px}.dialog-source{gap:14px;justify-content:space-between}.dialog-source a{min-height:44px;gap:7px}
+    }
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}.motion-enabled .reveal{opacity:1;transform:none}.chip-board{will-change:auto}.hero:after,.project:after{display:none}}
   </style>
 </head>
 <body>
   <a class="skip" href="#main">跳转到正文</a>
-  <header><div class="wrap"><a class="brand" href="#main" aria-label="刘锦桉，返回首页"><span aria-hidden="true"></span>刘锦桉</a><nav aria-label="主导航"><a href="#about">关于我</a><a href="#interests">兴趣爱好</a><a href="#future">大学期待</a></nav></div></header>
+  <header class="site-header"><div class="wrap header-inner">
+    <a class="brand" href="#main" aria-label="刘锦桉，返回首页"><span class="brand-symbol" aria-hidden="true">LJA</span><span class="brand-name">刘锦桉</span><span class="brand-note">PERSONAL LAB / 2026</span></a>
+    <nav aria-label="主导航"><a href="#projects">作品</a><a href="#learning">学习</a><a href="#about">关于我</a><a class="nav-github" href="https://github.com/ANDY-bit-sys" target="_blank" rel="noopener noreferrer">GitHub <span class="arrow" aria-hidden="true">↗</span></a></nav>
+  </div></header>
   <main id="main">
-    <section class="hero"><div class="wrap hero-grid">
-      <div class="hero-copy"><p class="eyebrow">HELLO, WORLD</p><h1>你好，我是<br><em>刘锦桉。</em></h1><p class="lead">2026级集成电路1班新生。<br>喜欢探索新奇的项目，也喜欢在绿茵场上奔跑。<br>带着好奇心，开始我的大学旅程。</p><div class="actions"><a class="button primary" href="#about">认识我 <span aria-hidden="true">↗</span></a><a class="button" href="output/pdf/刘锦桉_个人简介_详细版.pdf" download>下载个人简介 <span aria-hidden="true">↓</span></a></div><p class="location">来自广东省广州市</p></div>
-      <div class="identity" aria-label="集成电路主题个人名片"><div class="identity-top"><span>A NEW CHAPTER</span><span>2026</span></div><svg class="circuit" viewBox="0 0 430 395" preserveAspectRatio="none" fill="none" aria-hidden="true"><g stroke="currentColor" stroke-width="1" opacity=".65"><path d="M0 102h80l35 35h45M0 215h146M430 150h-83l-33 33h-31M430 245h-87l-26-26h-34M190 0v89l20 20v36M270 0v77l-30 30v38M0 282h72l46-46h40M430 74h-65l-52 52h-38"/><circle cx="80" cy="102" r="4"/><circle cx="347" cy="150" r="4"/><circle cx="72" cy="282" r="4"/><circle cx="365" cy="74" r="4"/></g></svg><div class="chip"><strong>LJA</strong><small>STAY CURIOUS</small></div><div class="identity-bottom"><div><strong>集成电路 · 1班</strong><p>探索 / 实践 / 成长</p></div><span aria-hidden="true">↗</span></div></div>
+    <section class="hero" aria-labelledby="hero-title"><div class="wrap">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>刘锦桉的个人芯片实验室</p>
+          <h1 id="hero-title">把好奇心，<br><span>接入现实。</span></h1>
+          <p class="hero-name">你好，我是刘锦桉。</p>
+          <p class="hero-lead">2026级集成电路1班新生。<br>从一行 C 语言，到一张电路图，<br>把新奇的想法，慢慢变成可以看见的作品。</p>
+          <div class="hero-actions"><a class="button primary" href="#projects">进入作品展厅 <span class="arrow" aria-hidden="true">↗</span></a><a class="button secondary" href="output/pdf/刘锦桉_个人简介_详细版.pdf" download>下载个人简介 <span class="arrow" aria-hidden="true">↓</span></a></div>
+          <p class="hero-footnote"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" aria-hidden="true"><path d="M8 14s5-5.1 5-8A5 5 0 0 0 3 6c0 2.9 5 8 5 8Z"/><circle cx="8" cy="6" r="1.6"/></svg>广东 · 广州 <span aria-hidden="true">/</span> 保持好奇，边学边做</p>
+        </div>
+        <div class="chip-stage" id="chip-stage" aria-label="交互芯片名片">
+          <div class="stage-halo" aria-hidden="true"></div>
+          <div class="chip-board" id="chip-board"><svg viewBox="0 0 520 520" role="img" aria-label="深绿色电路板上的金属芯片，刻有刘锦桉的姓名缩写 LJA">
+            <defs>
+              <linearGradient id="board-fill" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#244a40"/><stop offset=".55" stop-color="#183a33"/><stop offset="1" stop-color="#102c2c"/></linearGradient>
+              <linearGradient id="chip-fill" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3b554b"/><stop offset=".25" stop-color="#27483e"/><stop offset=".7" stop-color="#1b352f"/><stop offset="1" stop-color="#122c29"/></linearGradient>
+              <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ecddac"/><stop offset=".42" stop-color="#b89460"/><stop offset=".63" stop-color="#e2c492"/><stop offset="1" stop-color="#896b44"/></linearGradient>
+              <pattern id="board-grid" width="26" height="26" patternUnits="userSpaceOnUse"><circle cx="13" cy="13" r=".6" fill="#8cbaa0" opacity=".2"/></pattern>
+              <pattern id="pins-top" width="16" height="24" patternUnits="userSpaceOnUse"><rect x="5" width="6" height="21" rx="1.5" fill="url(#metal)"/></pattern>
+              <pattern id="pins-side" width="24" height="16" patternUnits="userSpaceOnUse"><rect y="5" width="21" height="6" rx="1.5" fill="url(#metal)"/></pattern>
+              <filter id="glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              <filter id="chip-shadow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="7" dy="11" stdDeviation="9" flood-color="#020e0e" flood-opacity=".6"/></filter>
+            </defs>
+            <rect x="31" y="43" width="460" height="451" rx="20" fill="#0b201e" stroke="#2d5446" stroke-width="2"/>
+            <rect x="25" y="28" width="460" height="451" rx="20" fill="url(#board-fill)" stroke="#688970" stroke-width="1"/>
+            <rect x="25" y="28" width="460" height="451" rx="20" fill="url(#board-grid)"/>
+            <rect x="42" y="45" width="426" height="417" rx="10" fill="none" stroke="#6c9072" stroke-opacity=".27"/>
+            <g fill="none" stroke="#6d9c78" stroke-width="1.6" opacity=".5">
+              <path class="signal-about" d="M25 158h77l38 38h34M25 177h60l37 37h52M25 198h42l34 34h73M25 279h52l26-26h71M25 300h80l29-29h40"/>
+              <path class="signal-learning" d="M485 116h-66l-56 56h-26M485 138h-47l-52 52h-49M485 160h-29l-48 48h-71M350 28v77l-32 32v35M329 28v63l-29 29v52"/>
+              <path class="signal-projects" d="M485 324h-79l-30-30h-39M485 347h-96l-33-33h-19M485 371h-111l-40-40M260 479v-67l-19-19v-56M282 479v-84l-22-22v-36"/>
+              <path d="M65 479v-70l36-36h71M88 479v-50l37-37h87M140 28v61l47 47v36M161 28v48l44 44v52M485 257h-70l-21-21h-57"/>
+            </g>
+            <g fill="none" stroke="#84e5bc" stroke-width="1.8" opacity=".9" filter="url(#glow)">
+              <path class="signal-path" d="M25 177h60l37 37h52"/><path class="signal-path" d="M485 138h-47l-52 52h-49"/><path class="signal-path" d="M485 347h-96l-33-33h-19"/>
+            </g>
+            <g fill="#182b27" stroke="url(#metal)" stroke-width="1.5"><circle cx="59" cy="63" r="7"/><circle cx="450" cy="63" r="7"/><circle cx="59" cy="443" r="7"/><circle cx="450" cy="443" r="7"/><circle cx="101" cy="232" r="3"/><circle cx="407" cy="208" r="3"/><circle cx="125" cy="392" r="3"/><circle cx="389" cy="347" r="3"/></g>
+            <g fill="url(#metal)"><rect x="176" y="144" width="160" height="25" fill="url(#pins-top)"/><rect x="176" y="338" width="160" height="25" fill="url(#pins-top)"/><rect x="149" y="177" width="25" height="160" fill="url(#pins-side)"/><rect x="338" y="177" width="25" height="160" fill="url(#pins-side)"/></g>
+            <g filter="url(#chip-shadow)"><rect x="170" y="169" width="176" height="178" rx="10" fill="#0c2421" stroke="#bfa274" stroke-opacity=".6"/><rect x="168" y="164" width="176" height="178" rx="10" fill="url(#chip-fill)" stroke="url(#metal)" stroke-width="1.5"/><rect x="179" y="175" width="154" height="156" rx="5" fill="none" stroke="#8bb291" stroke-opacity=".28"/><path d="M183 202v-22h28M328 306v20h-25" fill="none" stroke="#d6bd83" stroke-opacity=".6"/></g>
+            <circle cx="189" cy="187" r="3" fill="#dcbd82"/>
+            <text x="256" y="261" text-anchor="middle" fill="url(#metal)" font-family="Consolas,monospace" font-size="47" letter-spacing="7">LJA</text>
+            <text x="256" y="285" text-anchor="middle" fill="#90ad8f" font-family="Consolas,monospace" font-size="8" letter-spacing="2">STAY CURIOUS</text>
+            <path d="M213 299h86" stroke="#8ca484" stroke-opacity=".5"/><text x="256" y="315" text-anchor="middle" fill="#698c72" font-family="Consolas,monospace" font-size="7" letter-spacing="1.5">PERSONAL LAB · 2026</text>
+            <g fill="#112921" stroke="#688770" stroke-width=".8"><rect x="84" y="93" width="33" height="12" rx="2"/><rect x="399" y="401" width="33" height="12" rx="2"/><rect x="65" y="334" width="11" height="30" rx="2"/><rect x="434" y="199" width="11" height="30" rx="2"/></g>
+            <g fill="url(#metal)"><rect x="84" y="94" width="5" height="10"/><rect x="112" y="94" width="5" height="10"/><rect x="399" y="402" width="5" height="10"/><rect x="427" y="402" width="5" height="10"/></g>
+            <text x="91" y="444" fill="#73987a" font-family="Consolas,monospace" font-size="8" letter-spacing="1.5">LJA / IC-01</text><text x="402" y="92" fill="#73987a" font-family="Consolas,monospace" font-size="7">2026</text>
+          </svg></div>
+          <a class="chip-link about" href="#about" data-signal="about"><span class="mono">01</span>认识我 <span aria-hidden="true">↗</span></a>
+          <a class="chip-link learning" href="#learning" data-signal="learning"><span class="mono">02</span>学习路线 <span aria-hidden="true">↗</span></a>
+          <a class="chip-link projects" href="#projects" data-signal="projects"><span class="mono">03</span>作品展厅 <span aria-hidden="true">↗</span></a>
+          <span class="stage-label" aria-hidden="true">A LITTLE CIRCUIT OF CURIOSITY</span><span class="stage-coordinate" aria-hidden="true">23.13° N / 113.26° E</span>
+        </div>
+      </div>
+      <div class="hero-bottom"><span><strong>C 语言 / 电路 / 有趣的项目 / 足球</strong></span><a href="#projects"><span class="mono">SCROLL TO EXPLORE</span><span class="arrow" aria-hidden="true">↓</span></a></div>
     </div></section>
-    <div class="wrap">
-      <section class="section about-grid" id="about"><div><div class="section-heading"><span class="number">01 /</span><h2>关于我</h2></div><p class="section-note">从广州出发，迎接新的学习生活。</p></div><div class="about-copy"><p>大家好，我叫刘锦桉，来自广东省广州市，是2026级集成电路1班的一名新生。</p><p>带着对大学生活的期待，我希望在新的学习阶段打好专业基础，也多接触课堂之外的新鲜事物，在学习与实践中慢慢找到自己想深入探索的方向。</p><h3>我的优势：主动学习，积累编程与电路基础</h3><p>我通过 B 站自学 C 语言，目前学习到指针章节，对 C 语言已有一定了解。此外，我还通过 B 站自学石群老师的《电路》课程，学习内容涵盖第一至第四章，逐步积累电路基础知识。这些学习经历体现了我主动学习的态度。</p><div class="facts"><span class="tag">广东 · 广州</span><span class="tag">2026级新生</span><span class="tag">集成电路</span><span class="tag">自学 C 语言 · 指针章节</span><span class="tag">自学电路 · 第一至第四章</span></div></div></section>
-      <section class="section" id="interests"><div class="section-heading"><span class="number">02 /</span><h2>兴趣，让生活更有意思</h2></div><div class="interests">
-        <article class="interest"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4m6-4v4M9 18v4m6-4v4M2 9h4m-4 6h4m12-6h4m-4 6h4M10 10h4v4h-4z"/></svg></div><span class="interest-label">EXPLORE</span><h3>研究新奇、有趣的项目</h3><p>一个特别的想法、一项有意思的功能，都能引起我的兴趣，让我想进一步了解它是怎样实现的。研究项目的乐趣，也在于把不熟悉的东西一点点弄明白。</p><div class="interest-footer">从一个小想法，到一次动手尝试。</div></article>
-        <article class="interest"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m12 7 5 4-2 5H9l-2-5zM12 3v4m5 4 4-2m-6 7 2 4m-8-4-2 4m0-9L3 9"/></svg></div><span class="interest-label">PLAY</span><h3>在球场上享受运动</h3><p>学习之外，我还喜欢踢足球。奔跑和对抗带来的活力，队友之间传球、配合的乐趣，都让我享受这项运动。希望在大学里继续保持这份爱好，认识志同道合的朋友。</p><div class="interest-footer">保持热爱，也保持向前的活力。</div></article>
-      </div></section>
-      <section class="section" id="future"><div class="section-heading"><span class="number">03 /</span><h2>大学里的三个小期待</h2></div><div class="journey"><article class="step"><span>LEARN / 01</span><h3>把基础学扎实</h3><p>认真学习专业知识，把不懂的问题逐个弄清楚，为之后的探索做好准备。</p></article><article class="step"><span>BUILD / 02</span><h3>把想法做出来</h3><p>从小项目入手，在动手实践中理解知识的用途，也积累解决问题的经验。</p></article><article class="step"><span>GROW / 03</span><h3>让生活更充实</h3><p>保持运动，结识朋友。在学习与兴趣之间找到自己的节奏，一点点进步。</p></article></div></section>
-      <section class="section" id="projects"><div class="section-heading"><span class="number">04 /</span><h2>我的第一个小游戏</h2></div><div class="contact" style="margin:0"><div><h3>芯片寻迹 · 3D 贪吃蛇</h3><p>在立体芯片上收集信号节点，支持方向键、触屏、AI 自动挑战和深浅主题切换。</p></div><a class="button" href="snake.html">开始玩贪吃蛇 <span aria-hidden="true">↗</span></a></div></section>
-      <section class="contact" aria-labelledby="contact-title"><div><h2 id="contact-title">一起聊聊有趣的想法。</h2><p>欢迎通过 GitHub 了解我正在探索的项目。</p></div><a class="button" href="https://github.com/ANDY-bit-sys" target="_blank" rel="noopener noreferrer">访问我的 GitHub <span aria-hidden="true">↗</span></a></section>
-    </div>
+
+    <section class="section" id="projects" aria-labelledby="projects-title"><div class="wrap">
+      <p class="section-kicker">01 / SELECTED EXPLORATIONS</p>
+      <div class="section-heading"><h2 id="projects-title">让想法，有了形状。</h2><p>从小游戏到电路仿真，记录我的动手尝试。<br>点开一件作品，看看它是怎样运行的。</p></div>
+      <div class="projects-grid">
+        <article class="project game reveal"><div class="project-visual"><img src="assets/previews/chip-snake.png" alt="实际游戏画面：三维芯片地图上的蓝色信号龙与金色食物节点" width="730" height="730" loading="lazy"><span class="visual-badge">PLAY / 3D SNAKE</span></div><div class="project-body"><div class="project-meta"><span>交互小游戏</span><span>01 / GAME</span></div><h3>芯片寻迹 · 3D 贪吃蛇</h3><p>让信号龙在芯片上寻找食物。可以亲自操作，也可以观看 AI 自动挑战，探索寻路与安全判断的逻辑。</p><div class="project-bottom"><div class="project-tags"><span>3D 芯片地图</span><span>AI 寻路</span></div><a class="project-open" href="snake.html">开始玩贪吃蛇 <span class="arrow" aria-hidden="true">↗</span></a></div></div></article>
+        <article class="project extra-project reveal"><div class="project-visual muyu-preview"><img src="assets/previews/dafeyu-muyu.png" alt="大肥鱼木鱼实际页面：蓝发角色、木鱼和功德计数" width="540" height="600" loading="lazy"><span class="visual-badge">PLAY / MUYU</span></div><div class="project-body"><div class="project-meta"><span>交互小游戏</span><span>02 / MUYU</span></div><h3>大肥鱼木鱼</h3><p>点击木鱼，或按下空格，听一声轻快的敲击，看功德一点点累积。用简单的互动，给忙碌的学习留一点放松时间。</p><div class="project-bottom"><div class="project-tags"><span>点击 / 空格</span><span>音效反馈</span></div><a class="project-open" href="https://andy-bit-sys.github.io/dafeyu-muyu/" target="_blank" rel="noopener noreferrer">开始敲木鱼 <span class="arrow" aria-hidden="true">↗</span></a></div></div></article>
+        <article class="project extra-project reveal"><div class="project-visual restaurant-preview"><img src="assets/previews/dafeyu-restaurant.png" alt="大肥鱼饭店游戏画面：豆包在厨房做饭，大肥鱼在餐厅为客人送餐" width="1688" height="780" loading="lazy"><span class="visual-badge">PLAY / LITTLE KITCHEN</span></div><div class="project-body"><div class="project-meta"><span>餐厅经营小游戏</span><span>03 / RESTAURANT</span></div><h3>大肥鱼饭店</h3><p>在“大肥鱼的小饭馆”里经营一家小店。拖放食材、搭配料理，让豆包掌勺、大肥鱼送餐，体验一顿热饭背后的忙碌与乐趣。</p><div class="project-bottom"><div class="project-tags"><span>食材搭配</span><span>餐厅经营</span></div><a class="project-open" href="https://andy-bit-sys.github.io/whales-little-kitchen/?v=achievement-rules-1009" target="_blank" rel="noopener noreferrer">进入小饭馆 <span class="arrow" aria-hidden="true">↗</span></a></div></div></article>
+        <article class="project reveal"><div class="project-visual"><img src="circuits/results/rc_schematic.png" alt="RC 低通滤波原理图，电阻 10 kΩ，电容 100 nF" width="1192" height="879" loading="lazy"></div><div class="project-body"><div class="project-meta"><span>电路仿真 / PySpice</span><span>04 / RC</span></div><h3>RC 低通滤波</h3><p>观察电容怎样充放电，以及不同频率的信号怎样通过电路。用波形与波特图对照理论计算。</p><div class="project-bottom"><div class="project-tags"><span>τ = 1 ms</span><span>fc ≈ 159 Hz</span></div><a class="project-open" href="circuits/results/rc_schematic.png" data-circuit="rc">看电路与结果 <span class="arrow" aria-hidden="true">↗</span></a></div></div></article>
+        <article class="project reveal"><div class="project-visual"><img src="circuits/results/thevenin_original.png" alt="戴维南定理原始网络：12 V 电压源、1 kΩ 与 2 kΩ 电阻" width="1260" height="880" loading="lazy"></div><div class="project-body"><div class="project-meta"><span>电路仿真 / PySpice</span><span>05 / THEVENIN</span></div><h3>戴维南等效验证</h3><p>把二端网络等效成一个电压源和电阻，再接入五种负载，比较原电路与等效电路的端口表现。</p><div class="project-bottom"><div class="project-tags"><span>Vth = 8 V</span><span>Rth ≈ 666.7 Ω</span></div><a class="project-open" href="circuits/results/thevenin_original.png" data-circuit="thevenin">看电路与结果 <span class="arrow" aria-hidden="true">↗</span></a></div></div></article>
+        <article class="project reveal"><div class="project-visual"><img src="circuits/results/mos_schematic.png" alt="NMOS 共源级放大电路的中文原理图" width="1600" height="1188" loading="lazy"></div><div class="project-body"><div class="project-meta"><span>电路仿真 / PySpice</span><span>06 / NMOS</span></div><h3>NMOS 共源级放大</h3><p>从静态工作点到小信号模型，观察输入与输出的反相关系。仿真材料已完成，相关原理仍在学习中。</p><div class="project-bottom"><div class="project-tags"><span>工作点</span><span>反相放大</span></div><a class="project-open" href="circuits/results/mos_schematic.png" data-circuit="mos">看电路与结果 <span class="arrow" aria-hidden="true">↗</span></a></div></div></article>
+      </div>
+      <div class="projects-source"><a href="https://github.com/ANDY-bit-sys/kaohe#circuits" target="_blank" rel="noopener noreferrer">查看仓库里的代码与开发记录 <span class="arrow" aria-hidden="true">↗</span></a></div>
+    </div></section>
+
+    <section class="section learning" id="learning" aria-labelledby="learning-title"><div class="wrap">
+      <p class="section-kicker">02 / LEARNING IN PROGRESS</p>
+      <div class="section-heading"><h2 id="learning-title">在 B 站，一点点打基础。</h2><p>主动学习，是我希望保持的习惯。<br>记录目前的学习内容，也为下一步留下空间。</p></div>
+      <div class="learning-grid">
+        <article class="learning-card reveal"><div class="learning-head"><span class="learning-icon" aria-hidden="true">C</span><div><h3>C 语言自学</h3><p>B 站课程 / 编程基础</p></div></div><p class="learning-status">当前学习到<strong>指针章节</strong></p><p>通过 B 站自学 C 语言，对 C 语言已有一定了解。希望在后续学习与项目尝试中，逐步积累编程经验。</p><div class="study-track"><span class="track-dot" aria-hidden="true"></span><span>B 站自学</span><span class="track-line" aria-hidden="true"></span><span class="current">目前：指针章节</span></div></article>
+        <article class="learning-card reveal"><div class="learning-head"><span class="learning-icon" aria-hidden="true">∿</span><div><h3>电路基础自学</h3><p>石群老师《电路》/ B 站课程</p></div></div><p class="learning-status">学习内容涵盖<strong>第一至第四章</strong></p><p>通过 B 站自学石群老师的《电路》课程，逐步积累电路基础知识，并结合考核中的电路材料继续理解与复核。</p><div class="study-track"><span class="track-dot" aria-hidden="true"></span><span>第一章</span><span class="track-line" aria-hidden="true"></span><span class="current">至第四章</span></div></article>
+      </div>
+      <p class="learning-note">学习记录反映目前接触的内容；项目完成后，也需要继续理解公式、复核结果，练习用自己的话解释原理。</p>
+    </div></section>
+
+    <section class="section" id="about" aria-labelledby="about-title"><div class="wrap about-grid">
+      <div class="about-left"><p class="section-kicker">03 / A LITTLE ABOUT ME</p><h2 id="about-title">从广州出发，<br>开始新的探索。</h2><p class="about-caption">课堂之外有好奇心，<br>球场之上有热爱。</p><div class="personal-details"><div class="personal-row"><span>姓名</span><strong>刘锦桉</strong></div><div class="personal-row"><span>家乡</span><strong>广东省广州市</strong></div><div class="personal-row"><span>年级与班级</span><strong>2026级 · 集成电路1班</strong></div><div class="personal-row"><span>我的优势</span><strong>主动学习 · 编程与电路基础</strong></div></div></div>
+      <div class="about-copy reveal"><p>大家好，我叫刘锦桉，<br>是2026级集成电路1班的一名新生。</p><p>带着对大学生活的期待，我希望打好专业基础，也多接触课堂之外的新鲜事物。对我来说，研究项目的乐趣，是把不熟悉的东西<em>一点点弄明白</em>，再把想法变成实际作品。</p><div class="interest-notes" id="interests"><article class="interest-note"><span class="mono">EXPLORE / 好奇</span><h3>研究新奇、有趣的项目</h3><p>一个特别的想法、一项有意思的功能，都能引起我的兴趣，让我想进一步了解它是怎样实现的。</p></article><article class="interest-note"><span class="mono">PLAY / 热爱</span><h3>在球场上享受运动</h3><p>我喜欢踢足球，也喜欢队友间传球、配合的乐趣。希望在大学里保持运动，认识志同道合的朋友。</p></article></div><div class="future-note" id="future"><strong>给大学生活的三个小期待</strong>把基础学扎实，把想法做出来，让生活更充实。在学习与兴趣之间，找到自己的节奏。</div></div>
+    </div></section>
+
+    <section class="contact-section" aria-labelledby="contact-title"><div class="wrap"><div class="contact"><div><p class="section-kicker">LET'S CONNECT</p><h2 id="contact-title">一起聊聊，有趣的想法。</h2><p>欢迎通过 GitHub，了解我正在探索的项目。</p></div><a class="button" href="https://github.com/ANDY-bit-sys" target="_blank" rel="noopener noreferrer">访问我的 GitHub <span class="arrow" aria-hidden="true">↗</span></a></div></div></section>
   </main>
-  <footer><div class="wrap"><span>© 2026 刘锦桉 · 保持好奇，慢慢成长。</span><a href="#main">回到顶部 ↑</a></div></footer>
+  <footer class="footer"><div class="wrap footer-inner"><span class="footer-mark">LJA / PERSONAL LAB</span><span>© 2026 刘锦桉 · 保持好奇，慢慢成长。</span><a href="#main">回到顶部 ↑</a></div></footer>
+
+  <dialog class="circuit-dialog" id="circuit-dialog" aria-labelledby="dialog-title">
+    <div class="dialog-header"><h2 id="dialog-title"></h2><button class="dialog-close" id="dialog-close" type="button" aria-label="关闭电路图">×</button></div>
+    <div class="dialog-tabs" id="dialog-tabs" role="group" aria-label="选择电路图或仿真结果"></div>
+    <figure class="dialog-figure"><img id="dialog-image" alt=""><figcaption id="dialog-caption" aria-live="polite"></figcaption></figure>
+    <div class="dialog-source"><a id="dialog-fullsize" href="circuits/results/rc_schematic.png" target="_blank" rel="noopener noreferrer">查看原图 <span class="arrow" aria-hidden="true">↗</span></a><a id="dialog-source" href="https://github.com/ANDY-bit-sys/kaohe#circuits" target="_blank" rel="noopener noreferrer">查看代码与计算说明 <span class="arrow" aria-hidden="true">↗</span></a></div>
+  </dialog>
+  <script>
+    (() => {
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const desktopMouse = window.matchMedia('(min-width: 761px) and (hover: hover) and (pointer: fine)');
+      const stage = document.getElementById('chip-stage');
+      const board = document.getElementById('chip-board');
+      const pointerResets = [];
+
+      // A mouse and a wide viewport are both required. Touch and reduced-motion users
+      // keep the same links and controls without the decorative motion.
+      function bindMouseEffect(element, update, clear) {
+        let frame = 0;
+        const reset = () => { cancelAnimationFrame(frame); clear(); };
+        element.addEventListener('pointermove', event => {
+          if (!desktopMouse.matches || reduceMotion.matches || event.pointerType !== 'mouse') return;
+          const {clientX, clientY} = event;
+          cancelAnimationFrame(frame);
+          frame = requestAnimationFrame(() => {
+            const rect = element.getBoundingClientRect();
+            update(clientX - rect.left, clientY - rect.top, rect);
+          });
+        });
+        element.addEventListener('pointerleave', reset);
+        pointerResets.push(reset);
+      }
+      const resetMouseEffects = () => pointerResets.forEach(reset => reset());
+      desktopMouse.addEventListener('change', resetMouseEffects);
+      reduceMotion.addEventListener('change', resetMouseEffects);
+
+      bindMouseEffect(stage, (x, y, rect) => {
+        board.style.transform = `rotateX(${20-(y/rect.height-.5)*10}deg) rotateY(${-15+(x/rect.width-.5)*12}deg) rotateZ(-7deg)`;
+      }, () => { board.style.transform = ''; });
+
+      const setPointerGlow = (element, x, y) => {
+        element.style.setProperty('--pointer-x', `${x}px`);
+        element.style.setProperty('--pointer-y', `${y}px`);
+        element.dataset.pointer = 'active';
+      };
+      const clearPointerGlow = element => {
+        delete element.dataset.pointer;
+        element.style.removeProperty('--pointer-x');
+        element.style.removeProperty('--pointer-y');
+      };
+      const hero = document.querySelector('.hero');
+      bindMouseEffect(hero, (x,y) => setPointerGlow(hero,x,y), () => clearPointerGlow(hero));
+      document.querySelectorAll('.project').forEach(card => {
+        bindMouseEffect(card, (x,y,rect) => {
+          setPointerGlow(card,x,y);
+          card.style.transform = `perspective(1000px) translateY(-5px) rotateX(${-(y/rect.height-.5)*4}deg) rotateY(${(x/rect.width-.5)*5}deg)`;
+        }, () => { clearPointerGlow(card); card.style.transform = ''; });
+      });
+      document.querySelectorAll('.hero-actions .button,.contact .button').forEach(button => {
+        bindMouseEffect(button, (x,y,rect) => {
+          button.style.transform = `translate(${(x/rect.width-.5)*8}px,${(y/rect.height-.5)*8}px)`;
+        }, () => { button.style.transform = ''; });
+      });
+      document.querySelectorAll('.chip-link').forEach(link => {
+        const light = () => { stage.dataset.signal = link.dataset.signal; };
+        const dim = () => { delete stage.dataset.signal; };
+        link.addEventListener('pointerenter', light);
+        link.addEventListener('pointerleave', dim);
+        link.addEventListener('focus', light);
+        link.addEventListener('blur', dim);
+      });
+      if (!reduceMotion.matches && desktopMouse.matches && 'IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+          if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+        }), {threshold: .08});
+        document.querySelectorAll('.reveal').forEach(element => observer.observe(element));
+        document.body.classList.add('motion-enabled');
+      }
+
+      const galleries = {
+        rc: {title:'RC 低通滤波', images:[
+          ['原理图','rc_schematic','电阻 10 kΩ、电容 100 nF，输出取电容两端。时间常数为 1 ms，截止频率约 159.15 Hz。'],
+          ['充放电波形','rc_transient','蓝色为输入，橙色为输出。下图放大首次充电过程，达到最终电压的约 63.212% 时，可测得时间常数。'],
+          ['波特图','rc_bode','上图是增益，下图是相位。频率升高后，输出衰减增大；理论曲线与 Ngspice 仿真曲线基本重合。']
+        ]},
+        thevenin: {title:'戴维南等效验证', images:[
+          ['原电路','thevenin_original','端口 a、b 开路时，分压得到 8 V。将独立电压源置零后，两个电阻并联，得到约 666.7 Ω。'],
+          ['等效电路','thevenin_equivalent','用 8 V 电压源与约 666.7 Ω 电阻串联，替代原二端网络，再接入负载。'],
+          ['负载验证','thevenin_loads','接入五种负载后，原电路、等效电路与理论计算的负载电压及电流基本一致。']
+        ]},
+        mos: {title:'NMOS 共源级放大', images:[
+          ['完整电路','mos_schematic','输入通过耦合电容接到栅极，输出取漏极。源极与衬底接地；先求静态工作点，再分析交流信号。'],
+          ['直流通路','mos_dc_path','直流分析时，耦合电容视为开路。栅极偏置由电阻分压确定。'],
+          ['小信号模型','mos_small_signal','中频近似下，耦合电容视为短路，电源是交流地。受控电流源与并联电阻决定小信号增益。'],
+          ['输入输出波形','mos_transient','输出交流分量相对于输入反相。图中的波形与增益来自 Ngspice 仿真，相关原理仍需继续学习与复核。']
+        ]}
+      };
+      const dialog = document.getElementById('circuit-dialog');
+      if (typeof dialog.showModal !== 'function') return;
+      const tabs = document.getElementById('dialog-tabs');
+      const image = document.getElementById('dialog-image');
+      const caption = document.getElementById('dialog-caption');
+      document.querySelectorAll('[data-circuit]').forEach(link => link.addEventListener('click', event => {
+        event.preventDefault();
+        const gallery = galleries[link.dataset.circuit];
+        document.getElementById('dialog-title').textContent = gallery.title;
+        tabs.replaceChildren();
+        gallery.images.forEach(([label, filename, description], index) => {
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.textContent = label;
+          button.setAttribute('aria-pressed', 'false');
+          button.addEventListener('click', () => {
+            tabs.querySelectorAll('button').forEach(tab => tab.setAttribute('aria-pressed', 'false'));
+            button.setAttribute('aria-pressed', 'true');
+            image.src = `circuits/results/${filename}.png`;
+            document.getElementById('dialog-fullsize').href = image.src;
+            image.alt = `${gallery.title}：${label}`;
+            caption.textContent = description;
+          });
+          tabs.append(button);
+          if (index === 0) button.click();
+        });
+        dialog.showModal();
+        document.body.classList.add('dialog-open');
+      }));
+      document.getElementById('dialog-close').addEventListener('click', () => dialog.close());
+      dialog.addEventListener('close', () => document.body.classList.remove('dialog-open'));
+      dialog.addEventListener('click', event => {
+        if (event.target !== dialog) return;
+        const rect = dialog.getBoundingClientRect();
+        if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) dialog.close();
+      });
+    })();
+  </script>
 </body>
 </html>
